@@ -1,7 +1,7 @@
 app.config(['$routeProvider', '$controllerProvider',
     '$compileProvider', '$filterProvider', '$provide', '$httpProvider',
 
-    function($routeProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $httpProvider) {
+    function ($routeProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $httpProvider) {
 
         /*
          * Se registran las referencias  a los componentes en el
@@ -16,7 +16,7 @@ app.config(['$routeProvider', '$controllerProvider',
             service: $provide.service
         };
 
-		$provide.factory('Auth', function() {
+        $provide.factory('Auth', function () {
             return window.authFactory;
         });
 
@@ -35,7 +35,7 @@ app.config(['$routeProvider', '$controllerProvider',
          */
         $routeProvider.otherwise({
             redirectTo: '/404'
-        });    
+        });
 
         /***********************************************************************
          Ejemplos
@@ -83,12 +83,12 @@ app.config(['$routeProvider', '$controllerProvider',
             titulo: 'cabecera'
 
         });
-        
+
         /***********************************************************************
          detalle1
          ***********************************************************************/
-        
-         $routeProvider.when('/cabecera/agregar-detalle-0', {
+
+        $routeProvider.when('/cabecera/agregar-detalle-0', {
             templateUrl: 'partials/cabecera/detalle1/crear-detalle1-partial.html',
             controller: 'CrearDetalle1Controller',
             titulo: 'Detalle 1'
@@ -101,13 +101,13 @@ app.config(['$routeProvider', '$controllerProvider',
             titulo: 'Detalle 1'
 
         });
-        
-        
-        $httpProvider.responseInterceptors.push(function($q) {
-            return function(promise) {
-                return promise.then(function(response) {
+
+
+        $httpProvider.responseInterceptors.push(function ($q) {
+            return function (promise) {
+                return promise.then(function (response) {
                     return response;
-                }, function(response) {
+                }, function (response) {
                     MasterUtils.redirectError(response.status);
                     response = MasterUtils.processResponse(response);
                     return $q.reject(response);
@@ -139,36 +139,27 @@ app.config(['$routeProvider', '$controllerProvider',
 /**
  * Utilizado para paso de parametro entre controller
  */
-app.value("tempStorage", {}).service("Navigator", function($location, tempStorage) {
+app.value("tempStorage", {}).service("Navigator", function ($location, tempStorage) {
     return {
         /**
          * @param   url
          * @param   args Parametros
          * @return
          */
-        goTo: function(url, args) {
+        goTo: function (url, args) {
             tempStorage.args = args;
             $location.path(url);
         }
     };
 });
 app.run(['$rootScope', '$location', 'tempStorage', 'Auth',
-    /**tempStorage  agregar en app.run como dependencia
-	 /************************************************************2do**********************************************/
+    function ($rootScope, $location, tempStorage, Auth) {
 
-    function($rootScope, $location, tempStorage, Auth) {
-        /**
-         * Utilizado para paso de parametro entre controller
-         */
-        $rootScope.$on('$routeChangeSuccess', function(evt, current, prev) {
+        /*$rootScope.$on('$routeChangeSuccess', function (evt, current, prev) {
             current.locals.$args = tempStorage.args;
             tempStorage.args = null;
         });
-        /**********************************************2do*************************************************************/
-
-
-
-        $rootScope.$on("$routeChangeStart", function(event, next, current) {
+        $rootScope.$on("$routeChangeStart", function (event, next, current) {
 
             if ($location.path() == "/") {
                 mostrarMenu();
@@ -176,16 +167,44 @@ app.run(['$rootScope', '$location', 'tempStorage', 'Auth',
                 ocultarMenu();
             }
         });
-
-        /*$rootScope.isAuthorized = function(rol) {
-            return Auth.authz.hasResourceRole(rol, 'modulo-ejemplo');
-        }*/
-
-        $rootScope.logout = function() {
-           /* Auth.loggedIn = false;
+        $rootScope.logout = function () {
+            Auth.loggedIn = false;
             var redirect = Auth.logoutUrl;
             Auth.authz = null;
-            window.location = redirect;*/
+            window.location = redirect;
+        };*/
+        $rootScope.$on("$routeChangeStart", function (event, next, current) {
+
+
+            if (!sessionStorage.getItem('userToken')) {
+
+                $location.path("/login");
+            }
+
+
+        });
+
+        $rootScope.logout = function () {
+            sessionStorage.clear();
+            var redirect = auth.logoutUrl;
+            window.location = redirect;
         };
-    }
-]);
+
+
+        $rootScope.esLogin = function () {
+            if ($location.path() == "/login") {
+                return true;
+            } else {
+                return false;
+            }
+
+        };
+        $rootScope.habilitarMenu = function (aplicacion, rolPorDefecto) {
+            return true;
+        };
+        $rootScope.habilitarSubMenu = function (rol) {
+            return Auth.authz.hasResourceRole(rol, 'postventa');
+            //return true;
+        };
+
+                }]);

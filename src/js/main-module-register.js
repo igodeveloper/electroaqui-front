@@ -1,2 +1,2 @@
 //se define la aplicación
-var app = angular.module('modulo-ejemplo', ['ngRoute', 'RouteResolverServices', 'directivesmodule', 'SynchronousRequestServices'])
+var app = angular.module('electroaqui', ['ngRoute', 'RouteResolverServices', 'directivesmodule', 'SynchronousRequestServices', 'AuthService'])
