@@ -20,85 +20,56 @@ app.config(['$routeProvider', '$controllerProvider',
             return window.authFactory;
         });
 
-        /*
-         *
-         * Mapemos los controladores a los templates
-         */
+
         $routeProvider.when('/', {
             templateUrl: 'partials/home-partial.html',
             controller: 'HomeController',
-            titulo: 'Modulo Ejemplo'
+            titulo: 'Electro Aqui'
         });
 
-        /* 
-         * GENERALES
-         */
         $routeProvider.otherwise({
             redirectTo: '/404'
         });
-
-        /***********************************************************************
-         Ejemplos
-         ***********************************************************************/
-        $routeProvider.when('/ciudades', {
-            templateUrl: 'partials/ciudades/ciudades-partial.html',
-            controller: 'CiudadesController',
-            titulo: 'ciudades'
+        
+        $routeProvider.when('/clientes', {
+            templateUrl: 'partials/clientes/clientes-partial.html',
+            controller: 'ClientesController',
+            titulo: 'Clientes'
 
         });
 
-        $routeProvider.when('/ciudades/agregar', {
-            templateUrl: 'partials/ciudades/crear-ciudades-partial.html',
-            controller: 'CrearCiudadesController',
-            titulo: 'ciudades'
+        $routeProvider.when('/clientes/agregar', {
+            templateUrl: 'partials/clientes/crear-clientes-partial.html',
+            controller: 'CrearClientesController',
+            titulo: 'Agregar'
 
         });
 
-        $routeProvider.when('/ciudades/modificar', {
-            templateUrl: 'partials/ciudades/modificar-ciudades-partial.html',
-            controller: 'ModificarCiudadesController',
-            titulo: 'ciudades'
+        $routeProvider.when('/clientes/modificar', {
+            templateUrl: 'partials/clientes/modificar-clientes-partial.html',
+            controller: 'ModificarClientesController',
+            titulo: 'Modificar'
 
         });
-        /***********************************************************************
-         Cabecera
-         ***********************************************************************/
-        $routeProvider.when('/cabecera', {
-            templateUrl: 'partials/cabecera/cabecera-partial.html',
-            controller: 'CabeceraController',
-            titulo: 'cabecera'
+        
+        $routeProvider.when('/marcas', {
+            templateUrl: 'partials/marcas/marcas-partial.html',
+            controller: 'MarcasController',
+            titulo: 'marcas'
 
         });
 
-        $routeProvider.when('/cabecera/agregar', {
-            templateUrl: 'partials/cabecera/crear-cabecera-partial.html',
-            controller: 'CrearCabeceraController',
-            titulo: 'cabecera'
+        $routeProvider.when('/marcas/agregar', {
+            templateUrl: 'partials/marcas/crear-marcas-partial.html',
+            controller: 'CrearMarcasController',
+            titulo: 'Agregar'
 
         });
 
-        $routeProvider.when('/cabecera/modificar', {
-            templateUrl: 'partials/cabecera/modificar-cabecera-partial.html',
-            controller: 'ModificarCabeceraController',
-            titulo: 'cabecera'
-
-        });
-
-        /***********************************************************************
-         detalle1
-         ***********************************************************************/
-
-        $routeProvider.when('/cabecera/agregar-detalle-0', {
-            templateUrl: 'partials/cabecera/detalle1/crear-detalle1-partial.html',
-            controller: 'CrearDetalle1Controller',
-            titulo: 'Detalle 1'
-
-        });
-
-        $routeProvider.when('/cabecera/modificar-detalle-0', {
-            templateUrl: 'partials/cabecera/detalle1/modificar-detalle1-partial.html',
-            controller: 'ModificarDetalle1Controller',
-            titulo: 'Detalle 1'
+        $routeProvider.when('/marcas/modificar', {
+            templateUrl: 'partials/marcas/modificar-marcas-partial.html',
+            controller: 'ModificarMarcasController',
+            titulo: 'Modificar'
 
         });
 
@@ -152,36 +123,13 @@ app.value("tempStorage", {}).service("Navigator", function ($location, tempStora
         }
     };
 });
-app.run(['$rootScope', '$location', 'tempStorage', 'Auth',
-    function ($rootScope, $location, tempStorage, Auth) {
+app.run(['$rootScope', '$location', 'tempStorage',
+    function ($rootScope, $location, tempStorage) {
 
-        /*$rootScope.$on('$routeChangeSuccess', function (evt, current, prev) {
-            current.locals.$args = tempStorage.args;
-            tempStorage.args = null;
-        });
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
-
-            if ($location.path() == "/") {
-                mostrarMenu();
-            } else {
-                ocultarMenu();
-            }
-        });
-        $rootScope.logout = function () {
-            Auth.loggedIn = false;
-            var redirect = Auth.logoutUrl;
-            Auth.authz = null;
-            window.location = redirect;
-        };*/
-        $rootScope.$on("$routeChangeStart", function (event, next, current) {
-
-
             if (!sessionStorage.getItem('userToken')) {
-
                 $location.path("/login");
             }
-
-
         });
 
         $rootScope.logout = function () {

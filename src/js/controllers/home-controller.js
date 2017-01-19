@@ -1,7 +1,7 @@
 app.controller('HomeController', ['$rootScope', '$scope', '$location',
-    function($rootScope, $scope, $location) {
+    function ($rootScope, $scope, $location) {
 
-        $rootScope.tituloModulo = "Modulo";
+        $rootScope.tituloModulo = "Electro Aqui";
 
 
     }

@@ -4,7 +4,7 @@ var masterDir = 'dist/' + modulo;
 var masterTemDir = masterDir + '/tmp';
 
 
-var puerto = 9876;
+var puerto = 9875;
 module.exports = function (grunt) {
     require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
     // Project configuration.
@@ -159,9 +159,9 @@ module.exports = function (grunt) {
                     }
                 },
                 proxies: [{
-                    context: '/master/api',
+                    context: '/electroaqui/',
                     host: 'localhost',
-                    port: 8088,
+                    port: 8080,
                     headers: {
                         'host': 'localhost'
                     }
@@ -218,6 +218,7 @@ module.exports = function (grunt) {
     });
     grunt.registerTask('default', ['build']);
     grunt.registerTask('js', ['concat:dist', 'copy:compile_module', 'clean:tmpDir']);
+    grunt.registerTask('base', ['copy:base', 'copy:compile_module', 'clean:tmpDir']);
     grunt.registerTask('partials', ['copy:partials', 'copy:compile_module', 'clean:tmpDir']);
     grunt.registerTask('css', ['copy:css', 'copy:compile_module', 'clean:tmpDir']);
     grunt.registerTask('copyFiles', ['copy:css', 'copy:img', 'copy:partials', 'copy:base']);

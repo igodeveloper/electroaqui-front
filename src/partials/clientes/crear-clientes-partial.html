@@ -1,0 +1,106 @@
+<!--
+@autor:     iván gomez
+@mail:      ivan.gomez@konecta.com.py
+-->
+<section>
+    <!-- Titulo de la pagina -->
+    <h1>Clientes</h1>
+
+    <div ui-breadcrumb></div>
+    <ui-blockui data-ui-blockui-config="uiBlockuiConfig" />
+
+    <div>
+        <!-- begin alert directive -->
+        <ui-alert alert-service="alertSuccesServices" alert-config="alertSuccessConfig" id="id_alertSuccessBox">
+        </ui-alert>
+
+        <ui-alert alert-service="alertErrorServices" alert-config="alertErrorConfig" id="id_alertErrorBox"></ui-alert>
+        <!-- end alert directive -->
+    </div>
+    <form class="form-horizontal" name="myForm" novalidate ng-submit="confirmar()">
+        <div class="form-group">
+
+
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Nombre</label>
+                <div ng-class="{'has-error':myForm.input0.$invalid}">
+                    <div class="input-group col-lg-5">
+                        <input type="text" class="form-control input-sm" name="input0" ng-model="datos.nombre" placeholder="" maxlength="5" uppercase ng-required="true" focus-me="true" />
+                    </div>
+                    <div class="custom-error" ng-show="myForm.input0.$dirty &&  myForm.input0.$invalid">
+                        <span ng-show="myForm.input0.$error.required">Requerido! </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Apellido</label>
+                <div ng-class="{'has-error':myForm.input1.$invalid}">
+                    <div class="input-group col-lg-5">
+                        <input type="text" class="form-control input-sm" name="input1" ng-model="datos.apellido" placeholder="" maxlength="8" uppercase ng-required="true" focus-me="false" />
+                        <div class="custom-error" ng-show="myForm.input1.$dirty &&  myForm.input1.$invalid">
+                            <span ng-show="myForm.input1.$error.required">Requerido! </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Documento</label>
+                <div ng-class="{'has-error':myForm.documento.$invalid}">
+                    <div class="input-group col-lg-5">
+                        <input type="text" class="form-control input-sm" name="documento" ng-model="datos.documento" placeholder="" maxlength="8" uppercase ng-required="true" focus-me="false" />
+                        <div class="custom-error" ng-show="myForm.documento.$dirty &&  myForm.documento.$invalid">
+                            <span ng-show="myForm.documento.$error.required">Requerido! </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Telefono</label>
+                <div ng-class="{'has-error':myForm.telefono.$invalid}">
+                    <div class="input-group col-lg-5">
+                        <input type="text" class="form-control input-sm" name="telefono" ng-model="datos.telefono" placeholder="" maxlength="8" uppercase ng-required="true" focus-me="false" />
+                        <div class="custom-error" ng-show="myForm.telefono.$dirty &&  myForm.telefono.$invalid">
+                            <span ng-show="myForm.telefono.$error.required">Requerido! </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Direccion</label>
+                <div ng-class="{'has-error':myForm.direccion.$invalid}">
+                    <div class="input-group col-lg-5">
+                        <input type="text" class="form-control input-sm" name="direccion" ng-model="datos.direccion" placeholder="" maxlength="8" uppercase ng-required="true" focus-me="false" />
+                        <div class="custom-error" ng-show="myForm.direccion.$dirty &&  myForm.direccion.$invalid">
+                            <span ng-show="myForm.direccion.$error.required">Requerido! </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Email</label>
+                <div ng-class="{'has-error':myForm.email.$invalid}">
+                    <div class="input-group col-lg-5">
+                        <input type="text" class="form-control input-sm" name="email" ng-model="datos.email" placeholder="" maxlength="8" uppercase ng-required="true" focus-me="false" />
+                        <div class="custom-error" ng-show="myForm.email.$dirty &&  myForm.email.$invalid">
+                            <span ng-show="myForm.email.$error.required">Requerido! </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            <fieldset>
+                <div class="text-center">
+                    <button type="submit" ng-disabled="myForm.$invalid" class="btn btn-success btn-sm">
+                        <i class="icon icon-check"></i>&nbsp;&nbsp;Guardar
+                    </button>
+                    <button ng-click="cancelar()" type="button" class="btn btn-danger btn-sm">
+                        <i class="icon icon-remove"></i>&nbsp;&nbsp;Cancelar
+                    </button>
+                </div>
+            </fieldset>
+        </div>
+    </form>
+    <!-- end form -->
+    </div>
+</section>
