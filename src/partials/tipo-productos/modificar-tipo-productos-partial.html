@@ -4,7 +4,7 @@
 -->
 <section>
     <!-- Titulo de la pagina -->
-    <h1>{{titulo}}</h1>
+    <h1>Tipo Productos</h1>
 
     <div ui-breadcrumb></div>
     <ui-blockui data-ui-blockui-config="uiBlockuiConfig" />
@@ -20,12 +20,21 @@
     <form class="form-horizontal" name="myForm" novalidate ng-submit="confirmar()">
         <div class="form-group">
 
+            <!-- marcas.id -->
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Id</label>
+                <div ng-class="{'has-error':myForm.input1.$invalid}">
+                    <div class="input-group col-lg-5">
+                        <input type="number" class="form-control input-sm" name="input1" ng-model="datos.id" placeholder="marcas.id" placeholder="" uppercase ng-required="true" disabled /> </div>
+                    <div class="custom-error" ng-show="myForm.input1.$dirty &&  myForm.input1.$invalid"> <span ng-show="myForm.input1.$error.required">Requerido! </span> <span ng-show="myForm.input1.$error.numerico">                      El campo debe ser numerico                  </span> </div>
+                </div>
+            </div>
             <!-- marcas.descripcion -->
             <div class="form-group">
                 <label class="col-lg-3 control-label">Descripcion</label>
                 <div ng-class="{'has-error':myForm.input2.$invalid}">
                     <div class="input-group col-lg-5">
-                        <input type="text" class="form-control input-sm" name="input2" ng-model="datos.descripcion" placeholder="" maxlength="120" uppercase ng-required="false" focus-me="false" /> </div>
+                        <input type="text" class="form-control input-sm" name="input2" ng-model="datos.descripcion" placeholder="" maxlength="120" uppercase ng-required="false" focus-me="true" /> </div>
                     <div class="custom-error" ng-show="myForm.input2.$dirty &&  myForm.input2.$invalid"> <span ng-show="myForm.input2.$error.required">Requerido! </span> </div>
                 </div>
             </div>

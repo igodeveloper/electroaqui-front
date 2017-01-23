@@ -2,12 +2,12 @@
  * Modulo controlador para la administración de la página de areas retencion
  * @table    fact_areas_retencion
  * @class
- * @name     kml3-frontend.module.facturacion.js.controllers.marcas-controller.js
+ * @name     kml3-frontend.module.facturacion.js.controllers.productos-controller.js
  *
  * @mail     <a href="mailto:ivan.gomez@konecta.com.py"/>
  * @author   <a iván gomez</>
  */
-app.controller('MarcasController', [
+app.controller('ProductosController', [
            '$scope', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', 'BaseServices',
             function ($scope, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, BaseServices) {
 
@@ -16,14 +16,20 @@ app.controller('MarcasController', [
          *  @public
          *  @type {Object}
          *  @field
-         *  @name kml3-frontend.module.facturacion.js.controllers.marcas-controller.js#datos
+         *  @name kml3-frontend.module.facturacion.js.controllers.productos-controller.js#datos
          */
         $scope.datos = {};
-        $scope.titulo = 'Marcas';
+        //$scope.totalGrilla = 0;
+
         $scope.generarBodyData = function (datos) {
             var bodyData = {
                 id: datos.id,
-                descripcion: datos.descripcion,
+                nombre: datos.nombre,
+                apellido: datos.apellido,
+                documento: datos.documento,
+                telefono: datos.telefono,
+                direccion: datos.direccion,
+                email: datos.email
             }
             return bodyData;
         };
@@ -31,7 +37,12 @@ app.controller('MarcasController', [
         $scope.generarParaJSON = function (datos) {
             var bodyData = {
                 id: datos.id,
-                descripcion: datos.descripcion,
+                nombre: datos.nombre,
+                apellido: datos.apellido,
+                documento: datos.documento,
+                telefono: datos.telefono,
+                direccion: datos.direccion,
+                email: datos.email
             }
             return bodyData;
         };
@@ -98,12 +109,12 @@ app.controller('MarcasController', [
          * @type {String}
          * @public
          */
-        var urlAccess = MasterUrl.serviceRest + 'marcas/';
+        var urlAccess = MasterUrl.serviceRest + 'productos/';
 
         /**
          *  Objeto de configuración de la directiva jqgrid
          *  @type {Object}                 
-         *  @name kml3-frontend.module.facturacion.js.controllers.marcas-controller.js#jqgridConfig
+         *  @name kml3-frontend.module.facturacion.js.controllers.productos-controller.js#jqgridConfig
          *  @public
          */
         var jqgridConfig = {
@@ -135,7 +146,34 @@ app.controller('MarcasController', [
                     hidden: false
                 },
                 {
-                    label: "Descripcion",
+                    label: "idTipoProducto",
+                    name: "idTipoProducto",
+                    index: "idTipoProducto",
+                    index: "center",
+                    width: 200,
+                    lasses: "wrappedCell",
+                    hidden: false
+                },
+                {
+                    label: "idMarcas",
+                    name: "idMarcas",
+                    index: "idMarcas",
+                    index: "center",
+                    width: 200,
+                    lasses: "wrappedCell",
+                    hidden: false
+                },
+                {
+                    label: "caracteristicas",
+                    name: "caracteristicas",
+                    index: "caracteristicas",
+                    index: "center",
+                    width: 200,
+                    lasses: "wrappedCell",
+                    hidden: false
+                },
+                {
+                    label: "descripcion",
                     name: "descripcion",
                     index: "descripcion",
                     index: "center",
@@ -183,7 +221,8 @@ app.controller('MarcasController', [
                 $scope.$apply($scope.rowSeleccionado = id);
                 $scope.$apply($scope.disabled = false);
             },
-            loadComplete: function (cellvalue) {}
+            loadComplete: function (cellvalue) {},
+            onPaging: function () {}
         };
 
         /** 
@@ -221,7 +260,7 @@ app.controller('MarcasController', [
          * @param path 
          * @function go()
          * @public
-         * @name kml3-frontend.module.facturacion.js.controllers.marcas-controller.js#go
+         * @name kml3-frontend.module.facturacion.js.controllers.productos-controller.js#go
          */
         $scope.go = function (path) {
             $location.path($location.path() + path);
@@ -231,7 +270,7 @@ app.controller('MarcasController', [
          * Función que Modifica un dato seleccionado del jqgrid
          * @function modificar()
          * @public
-         * @name kml3-frontend.module.facturacion.js.controllers.marcas-controller.js#modificar
+         * @name kml3-frontend.module.facturacion.js.controllers.productos-controller.js#modificar
          */
         $scope.modificar = function () {
             // codigo seleccionado de ejemplo, aqui se le debe pasar el codigo de la fila seleccionada
@@ -240,7 +279,7 @@ app.controller('MarcasController', [
                 var fila = $scope.tableParams.getGridParam("userData")[$scope.rowSeleccionado - 1];
 
                 $scope.selectedRow = $scope.tableParams.getRowData($scope.rowSeleccionado);
-
+                console.log(fila);
                 // Navigator utilizado para pasar filtros entre controller
                 Navigator.goTo($location.path() + '/modificar', {
                     dataM: fila
@@ -251,7 +290,7 @@ app.controller('MarcasController', [
         /**
          * Función que es invocada desde la vista para eliminar un recurso
          * @function eliminar ()
-         * @name kml3-frontend.module.facturacion.js.controllers.marcas-controller.js#eliminar
+         * @name kml3-frontend.module.facturacion.js.controllers.productos-controller.js#eliminar
          * @public
          */
         $scope.eliminar = function () {
@@ -259,7 +298,7 @@ app.controller('MarcasController', [
             if ($scope.rowSeleccionado) {
                 $scope.selectedRow = $scope.tableParams.getRowData($scope.rowSeleccionado);
 
-                BaseServices.eliminar($scope.selectedRow.id, 'marcas/').then(
+                BaseServices.eliminar($scope.selectedRow.id, 'productos/').then(
                     function (response) {
                         try {
                             if (response.status === 200) {
@@ -301,7 +340,7 @@ app.controller('MarcasController', [
         /**
          * Función que Limpia datos y pantalla
          * @function limpiar()
-         * @name kml3-frontend.module.facturacion.js.controllers.marcas-controller.js#limpiar
+         * @name kml3-frontend.module.facturacion.js.controllers.productos-controller.js#limpiar
          * @public
          */
         $scope.limpiar = function () {
@@ -319,16 +358,21 @@ app.controller('MarcasController', [
          * Funcion del controller, que se encarga de listar registros en base a un filtro
          * @param $scope.datos
          * @function buscar()
-         * @name kml3-frontend.module.facturacion.js.controllers.marcas-controller.js#buscar
+         * @name kml3-frontend.module.facturacion.js.controllers.productos-controller.js#buscar
          * @public
          */
         $scope.buscar = function () {
             $scope.disabled = true;
             MasterUtils.deleteUndefinedValues($scope.datos);
+            /*var post = $scope.tableParams.getGridParam("postData");
+            if (angular.toJson(post.filtros) != angular.toJson(JSON.stringify($scope.datos))) {
+                $scope.totalGrilla = 0;
+            }*/
 
             $scope.tableParams.setGridParam({
                 postData: {
-                    filtros: angular.toJson($scope.datos)
+                    filtros: angular.toJson($scope.datos),
+                    //total: $scope.totalGrilla
                 }
             });
             $scope.tableParams.setGridParam({
@@ -337,4 +381,34 @@ app.controller('MarcasController', [
             });
             $scope.tableParams.reloadGrid();
         };
+
+        $scope.marcas = function () {
+            var path = 'marcas/';
+            BaseServices.getAll(path, {}, -1).then(
+                function (response) {
+                    if (response.status == 200) {
+                        $scope.marcasLista = response.data;
+                    } else {
+                        $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
+                            "Ha ocurrido un error, inténtelo nuevamente mas tarde.");
+                    }
+                }
+            );
+        };
+        $scope.tipoProductos = function () {
+            var path = 'tipo-producto/';
+            BaseServices.getAll(path, {}, -1).then(
+                function (response) {
+                    console.log(response, response.data);
+                    if (response.status == 200) {
+                        $scope.tipoProductoLista = response.data;
+                    } else {
+                        $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
+                            "Ha ocurrido un error, inténtelo nuevamente mas tarde.");
+                    }
+                }
+            );
+        };
+        $scope.marcas();
+        $scope.tipoProductos();
 }]);

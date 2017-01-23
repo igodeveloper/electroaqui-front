@@ -2,9 +2,9 @@
  * Modulo controlador para la crearción de recursos areas retencion
  * @table    fact_areas_retencion
  * @class
- * @name     kml3-frontend.module.facturacion.js.controllers.areas-retencion-controller.js
+ * @name     kml3-frontend.module.facturacion.js.controllers.marcas-controller.js
  *
- * @mail     <a href="mailto:ivan.gomez@konecta.com.py"/>
+ * @mail     <a href="mailto:ivan.gomez@.com.py"/>
  * @author   <a iván gomez</>
  */
 /**
@@ -13,16 +13,11 @@
 app.controller('ModificarMarcasController', [
             '$scope', '$route', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', '$args', 'BaseServices',
             function ($scope, $route, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, $args, BaseServices) {
-
+        $scope.titulo = 'Marcas';
         $scope.generarBodyData = function (datos) {
             var bodyData = {
                 id: datos.id,
-                nombre: datos.nombre,
-                apellido: datos.apellido,
-                documento: datos.documento,
-                telefono: datos.telefono,
-                direccion: datos.direccion,
-                email: datos.email
+                descripcion: datos.descripcion,
             }
             return bodyData;
         };
@@ -30,12 +25,7 @@ app.controller('ModificarMarcasController', [
         $scope.generarParaJSON = function (datos) {
             var bodyData = {
                 id: datos.id,
-                nombre: datos.nombre,
-                apellido: datos.apellido,
-                documento: datos.documento,
-                telefono: datos.telefono,
-                direccion: datos.direccion,
-                email: datos.email
+                descripcion: datos.descripcion,
             }
             return bodyData;
         };
@@ -100,12 +90,12 @@ app.controller('ModificarMarcasController', [
          * Función que es llamada desde la vista al monento de confirmar
          * @function confirmar()
          * @public
-         * @name kml3-frontend.module.facturacion.js.controllers.crear-areas-retencion-controller.js#confirmar
+         * @name kml3-frontend.module.facturacion.js.controllers.crear-marcas-controller.js#confirmar
          */
         $scope.confirmar = function () {
 
             $scope.uiBlockuiConfig.bloquear = true;
-            BaseServices.modificar($scope.generarBodyData($scope.datos), 'areas-retencion')
+            BaseServices.modificar($scope.generarBodyData($scope.datos), 'marcas/')
                 .then(
                     function (response) {
                         try {
@@ -144,10 +134,10 @@ app.controller('ModificarMarcasController', [
          * Función que realiza la navegación al cancelar la operación
          * @function cancelar()
          * @public
-         * @name kml3-frontend.module.facturacion.js.controllers.crear-areas-retencion-controller.js#cancelar
+         * @name kml3-frontend.module.facturacion.js.controllers.crear-marcas-controller.js#cancelar
          */
         $scope.cancelar = function () {
-            $location.path('/Marcas')
+            $location.path('/marcas')
         };
 
         /**
@@ -185,7 +175,7 @@ app.controller('ModificarMarcasController', [
                  */
                 $scope.datos = $args.dataM;
             } else {
-                $location.path('/Marcas');
+                $location.path('/marcas');
             }
 
         };

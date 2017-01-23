@@ -18,8 +18,9 @@ app.controller('ClientesController', [
          *  @field
          *  @name kml3-frontend.module.facturacion.js.controllers.areas-retencion-controller.js#datos
          */
+        $scope.titulo = 'Clientes';
         $scope.datos = {};
-        $scope.totalGrilla = 0;
+        //$scope.totalGrilla = 0;
 
         $scope.generarBodyData = function (datos) {
             var bodyData = {
@@ -239,20 +240,8 @@ app.controller('ClientesController', [
                 $scope.$apply($scope.rowSeleccionado = id);
                 $scope.$apply($scope.disabled = false);
             },
-            loadComplete: function (cellvalue) {
-                $scope.totalGrilla = cellvalue.total;
-                $scope.disabled = true;
-                $scope.$apply();
-            },
-            onPaging: function () {
-                $scope.disabled = true;
-                $scope.tableParams.setGridParam({
-                    postData: {
-                        total: $scope.totalGrilla
-                    }
-                });
-                $scope.$apply();
-            }
+            loadComplete: function (cellvalue) {},
+            onPaging: function () {}
         };
 
         /** 
@@ -309,7 +298,7 @@ app.controller('ClientesController', [
                 var fila = $scope.tableParams.getGridParam("userData")[$scope.rowSeleccionado - 1];
 
                 $scope.selectedRow = $scope.tableParams.getRowData($scope.rowSeleccionado);
-
+                console.log(fila);
                 // Navigator utilizado para pasar filtros entre controller
                 Navigator.goTo($location.path() + '/modificar', {
                     dataM: fila
@@ -394,15 +383,15 @@ app.controller('ClientesController', [
         $scope.buscar = function () {
             $scope.disabled = true;
             MasterUtils.deleteUndefinedValues($scope.datos);
-            var post = $scope.tableParams.getGridParam("postData");
+            /*var post = $scope.tableParams.getGridParam("postData");
             if (angular.toJson(post.filtros) != angular.toJson(JSON.stringify($scope.datos))) {
                 $scope.totalGrilla = 0;
-            }
+            }*/
 
             $scope.tableParams.setGridParam({
                 postData: {
                     filtros: angular.toJson($scope.datos),
-                    total: $scope.totalGrilla
+                    //total: $scope.totalGrilla
                 }
             });
             $scope.tableParams.setGridParam({

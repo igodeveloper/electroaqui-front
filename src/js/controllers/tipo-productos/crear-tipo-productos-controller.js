@@ -2,14 +2,14 @@
  * Modulo controlador para la crearción de recursos areas retencion
  * @table    fact_areas_retencion
  * @class
- * @name     kml3-frontend.module.facturacion.js.controllers.marcas-controller.js
+ * @name     kml3-frontend.module.facturacion.js.controllers.tipo-productos-controller.js
  *
  * @author   <a iván gomez</>
  */
 /**
  * Se define el controller y sus dependencias.
  */
-app.controller('CrearMarcasController', [
+app.controller('CrearTipoProductosController', [
             '$scope', '$route', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', '$args', 'BaseServices',
             function ($scope, $route, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, $args, BaseServices) {
 
@@ -18,10 +18,9 @@ app.controller('CrearMarcasController', [
          *  @public
          *  @type {Object}
          *  @field
-         *  @name kml3-frontend.module.facturacion.js.controllers.crear-marcas-controller.js#datos
+         *  @name kml3-frontend.module.facturacion.js.controllers.crear-tipo-productos-controller.js#datos
          */
         $scope.datos = {};
-        $scope.titulo = 'Marcas';
 
         $scope.generarBodyData = function (datos) {
             var bodyData = {
@@ -99,12 +98,12 @@ app.controller('CrearMarcasController', [
          * Función que es llamada desde la vista al monento de confirmar
          * @function confirmar()
          * @public
-         * @name kml3-frontend.module.facturacion.js.controllers.crear-marcas-controller.js#confirmar
+         * @name kml3-frontend.module.facturacion.js.controllers.crear-tipo-productos-controller.js#confirmar
          */
         $scope.confirmar = function () {
 
             $scope.uiBlockuiConfig.bloquear = true;
-            BaseServices.insertar($scope.generarBodyData($scope.datos), 'marcas')
+            BaseServices.insertar($scope.generarBodyData($scope.datos), 'tipo-producto')
                 .then(
                     function (response) {
                         try {
@@ -143,10 +142,10 @@ app.controller('CrearMarcasController', [
          * Función que realiza la navegación al cancelar la operación
          * @function cancelar()
          * @public
-         * @name kml3-frontend.module.facturacion.js.controllers.crear-marcas-controller.js#cancelar
+         * @name kml3-frontend.module.facturacion.js.controllers.crear-tipo-productos-controller.js#cancelar
          */
         $scope.cancelar = function () {
-            $location.path('/marcas')
+            $location.path('/tipo-productos')
         };
             }
         ]);

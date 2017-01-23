@@ -221,24 +221,25 @@ app.factory('BaseServices', ['$http', 'SynchronousRequest',
              */
 
             getAll: function (path, datos, cantidad) {
-
-                return $http.get(path, {
+                var url = MasterUrl.serviceRest + path;
+                return $http.get(url, {
                     params: {
                         filtros: datos,
                         cantidad: cantidad
                     }
                 }).then(
                     function (succesResult) {
+                        console.log(succesResult);
                         customResult = {
                             status: succesResult.status,
-                            data: succesResult.data
+                            data: succesResult.data.lista
                         };
                         return customResult;
                     },
                     function (failResults) {
                         customResult = {
                             status: failResults.status,
-                            data: failResults.data
+                            data: failResults.data.lista
                         };
                         return customResult;
                     }

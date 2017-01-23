@@ -13,7 +13,7 @@
 app.controller('ModificarClientesController', [
             '$scope', '$route', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', '$args', 'BaseServices',
             function ($scope, $route, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, $args, BaseServices) {
-
+        $scope.titulo = 'Clientes';
         $scope.generarBodyData = function (datos) {
             var bodyData = {
                 id: datos.id,
@@ -105,7 +105,7 @@ app.controller('ModificarClientesController', [
         $scope.confirmar = function () {
 
             $scope.uiBlockuiConfig.bloquear = true;
-            BaseServices.modificar($scope.generarBodyData($scope.datos), 'areas-retencion')
+            BaseServices.modificar($scope.generarBodyData($scope.datos), 'clientes/')
                 .then(
                     function (response) {
                         try {
@@ -184,6 +184,7 @@ app.controller('ModificarClientesController', [
                  *  @name kml3-frontend.js.controllers.modificar-rubros-controller
                  */
                 $scope.datos = $args.dataM;
+                console.log($scope.datos);
             } else {
                 $location.path('/clientes');
             }

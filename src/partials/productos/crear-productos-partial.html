@@ -1,0 +1,81 @@
+<!--
+@autor:     iván gomez
+@mail:      ivan.gomez@konecta.com.py
+-->
+<section>
+    <!-- Titulo de la pagina -->
+    <h1>Clientes</h1>
+
+    <div ui-breadcrumb></div>
+    <ui-blockui data-ui-blockui-config="uiBlockuiConfig" />
+
+    <div>
+        <!-- begin alert directive -->
+        <ui-alert alert-service="alertSuccesServices" alert-config="alertSuccessConfig" id="id_alertSuccessBox">
+        </ui-alert>
+
+        <ui-alert alert-service="alertErrorServices" alert-config="alertErrorConfig" id="id_alertErrorBox"></ui-alert>
+        <!-- end alert directive -->
+    </div>
+    <form class="form-horizontal" name="myForm" novalidate ng-submit="confirmar()">
+        <div class="form-group">
+
+            <!-- productos.id_tipo_producto -->
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Tipo Producto</label>
+                <div ng-class="{'has-error':myForm.input2.$invalid}">
+                    <div class="input-group col-lg-5">
+                        <select ui-select2 class=" form-control input-sm " name="input2" ng-model="datos.idTipoProducto" placeholder="Seleccionar">
+                            <option value="">Seleccione</option>
+                            <option ng-repeat="l in tipoProductoLista" value="{{l.id}}">{{l.descripcion}}</option>
+                        </select>
+                    </div>
+                    <div class="custom-error" ng-show="myForm.input2.$dirty &&  myForm.input2.$invalid"> <span ng-show="myForm.input2.$error.required">Requerido! </span> <span ng-show="myForm.input2.$error.numerico">                      El campo debe ser numerico                  </span> </div>
+                </div>
+            </div>
+            <!-- productos.id_marcas -->
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Marcas</label>
+                <div ng-class="{'has-error':myForm.input3.$invalid}">
+                    <div class="input-group col-lg-5">
+                        <select ui-select2 class=" form-control input-sm " name="input3" ng-model="datos.idMarcas" placeholder="Seleccionar">
+                            <option value="">Seleccione</option>
+                            <option ng-repeat="l in marcasLista" value="{{l.id}}">{{l.descripcion}}</option>
+                        </select>
+                    </div>
+                    <div class="custom-error" ng-show="myForm.input3.$dirty &&  myForm.input3.$invalid"> <span ng-show="myForm.input3.$error.required">Requerido! </span> <span ng-show="myForm.input3.$error.numerico">                      El campo debe ser numerico                  </span> </div>
+                </div>
+            </div>
+            <!-- productos.caracteristicas -->
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Caracteristicas</label>
+                <div ng-class="{'has-error':myForm.input4.$invalid}">
+                    <div class="input-group col-lg-5">
+                        <input type="text" class="form-control input-sm" name="input4" ng-model="datos.caracteristicas" placeholder="" maxlength="200" uppercase ng-required="false" focus-me="true" /> </div>
+                    <div class="custom-error" ng-show="myForm.input4.$dirty &&  myForm.input4.$invalid"> <span ng-show="myForm.input4.$error.required">Requerido! </span> </div>
+                </div>
+            </div>
+            <!-- productos.descripcion -->
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Descripcion</label>
+                <div ng-class="{'has-error':myForm.input5.$invalid}">
+                    <div class="input-group col-lg-5">
+                        <input type="text" class="form-control input-sm" name="input5" ng-model="datos.descripcion" placeholder="" maxlength="300" uppercase ng-required="false" focus-me="false" /> </div>
+                    <div class="custom-error" ng-show="myForm.input5.$dirty &&  myForm.input5.$invalid"> <span ng-show="myForm.input5.$error.required">Requerido! </span> </div>
+                </div>
+            </div>
+            <br/>
+            <fieldset>
+                <div class="text-center">
+                    <button type="submit" ng-disabled="myForm.$invalid" class="btn btn-success btn-sm">
+                        <i class="icon icon-check"></i>&nbsp;&nbsp;Guardar
+                    </button>
+                    <button ng-click="cancelar()" type="button" class="btn btn-danger btn-sm">
+                        <i class="icon icon-remove"></i>&nbsp;&nbsp;Cancelar
+                    </button>
+                </div>
+            </fieldset>
+        </div>
+    </form>
+    <!-- end form -->
+</section>

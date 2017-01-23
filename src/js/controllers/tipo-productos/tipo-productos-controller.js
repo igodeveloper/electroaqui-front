@@ -2,12 +2,12 @@
  * Modulo controlador para la administración de la página de areas retencion
  * @table    fact_areas_retencion
  * @class
- * @name     kml3-frontend.module.facturacion.js.controllers.marcas-controller.js
+ * @name     kml3-frontend.module.facturacion.js.controllers.tipo-producto-controller.js
  *
  * @mail     <a href="mailto:ivan.gomez@konecta.com.py"/>
  * @author   <a iván gomez</>
  */
-app.controller('MarcasController', [
+app.controller('TipoProductosController', [
            '$scope', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', 'BaseServices',
             function ($scope, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, BaseServices) {
 
@@ -16,10 +16,10 @@ app.controller('MarcasController', [
          *  @public
          *  @type {Object}
          *  @field
-         *  @name kml3-frontend.module.facturacion.js.controllers.marcas-controller.js#datos
+         *  @name kml3-frontend.module.facturacion.js.controllers.tipo-producto-controller.js#datos
          */
         $scope.datos = {};
-        $scope.titulo = 'Marcas';
+
         $scope.generarBodyData = function (datos) {
             var bodyData = {
                 id: datos.id,
@@ -98,12 +98,12 @@ app.controller('MarcasController', [
          * @type {String}
          * @public
          */
-        var urlAccess = MasterUrl.serviceRest + 'marcas/';
+        var urlAccess = MasterUrl.serviceRest + 'tipo-producto/';
 
         /**
          *  Objeto de configuración de la directiva jqgrid
          *  @type {Object}                 
-         *  @name kml3-frontend.module.facturacion.js.controllers.marcas-controller.js#jqgridConfig
+         *  @name kml3-frontend.module.facturacion.js.controllers.tipo-producto-controller.js#jqgridConfig
          *  @public
          */
         var jqgridConfig = {
@@ -221,7 +221,7 @@ app.controller('MarcasController', [
          * @param path 
          * @function go()
          * @public
-         * @name kml3-frontend.module.facturacion.js.controllers.marcas-controller.js#go
+         * @name kml3-frontend.module.facturacion.js.controllers.tipo-producto-controller.js#go
          */
         $scope.go = function (path) {
             $location.path($location.path() + path);
@@ -231,7 +231,7 @@ app.controller('MarcasController', [
          * Función que Modifica un dato seleccionado del jqgrid
          * @function modificar()
          * @public
-         * @name kml3-frontend.module.facturacion.js.controllers.marcas-controller.js#modificar
+         * @name kml3-frontend.module.facturacion.js.controllers.tipo-producto-controller.js#modificar
          */
         $scope.modificar = function () {
             // codigo seleccionado de ejemplo, aqui se le debe pasar el codigo de la fila seleccionada
@@ -251,7 +251,7 @@ app.controller('MarcasController', [
         /**
          * Función que es invocada desde la vista para eliminar un recurso
          * @function eliminar ()
-         * @name kml3-frontend.module.facturacion.js.controllers.marcas-controller.js#eliminar
+         * @name kml3-frontend.module.facturacion.js.controllers.tipo-producto-controller.js#eliminar
          * @public
          */
         $scope.eliminar = function () {
@@ -259,7 +259,7 @@ app.controller('MarcasController', [
             if ($scope.rowSeleccionado) {
                 $scope.selectedRow = $scope.tableParams.getRowData($scope.rowSeleccionado);
 
-                BaseServices.eliminar($scope.selectedRow.id, 'marcas/').then(
+                BaseServices.eliminar($scope.selectedRow.id, 'tipo-producto/').then(
                     function (response) {
                         try {
                             if (response.status === 200) {
@@ -301,7 +301,7 @@ app.controller('MarcasController', [
         /**
          * Función que Limpia datos y pantalla
          * @function limpiar()
-         * @name kml3-frontend.module.facturacion.js.controllers.marcas-controller.js#limpiar
+         * @name kml3-frontend.module.facturacion.js.controllers.tipo-producto-controller.js#limpiar
          * @public
          */
         $scope.limpiar = function () {
@@ -319,7 +319,7 @@ app.controller('MarcasController', [
          * Funcion del controller, que se encarga de listar registros en base a un filtro
          * @param $scope.datos
          * @function buscar()
-         * @name kml3-frontend.module.facturacion.js.controllers.marcas-controller.js#buscar
+         * @name kml3-frontend.module.facturacion.js.controllers.tipo-producto-controller.js#buscar
          * @public
          */
         $scope.buscar = function () {

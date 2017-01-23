@@ -22,6 +22,7 @@ app.controller('CrearClientesController', [
          *  @name kml3-frontend.module.facturacion.js.controllers.crear-areas-retencion-controller.js#datos
          */
         $scope.datos = {};
+        $scope.titulo = 'Clientes';
 
         $scope.generarBodyData = function (datos) {
             var bodyData = {
