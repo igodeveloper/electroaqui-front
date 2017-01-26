@@ -52,7 +52,7 @@
                 <label class="col-lg-3 control-label">Documento</label>
                 <div ng-class="{'has-error':myForm.input4.$invalid}">
                     <div class="input-group col-lg-5">
-                        <input type="text" class="form-control input-sm" name="input4" ng-model="datos.documento" placeholder="" maxlength="10" uppercase ng-required="false" focus-me="false" /> </div>
+                        <input type="number" class="form-control input-sm" name="input4" ng-model="datos.documento" placeholder="" maxlength="10" uppercase ng-required="false" focus-me="false" /> </div>
                     <div class="custom-error" ng-show="myForm.input4.$dirty &&  myForm.input4.$invalid"> <span ng-show="myForm.input4.$error.required">Requerido! </span> </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                 <label class="col-lg-3 control-label">Email</label>
                 <div ng-class="{'has-error':myForm.input7.$invalid}">
                     <div class="input-group col-lg-5">
-                        <input type="text" class="form-control input-sm" name="input7" ng-model="datos.email" placeholder="" maxlength="200" uppercase ng-required="false" focus-me="false" /> </div>
+                        <input type="email" class="form-control input-sm" name="input7" ng-model="datos.email" placeholder="" maxlength="200" uppercase ng-required="false" focus-me="false" /> </div>
                     <div class="custom-error" ng-show="myForm.input7.$dirty &&  myForm.input7.$invalid"> <span ng-show="myForm.input7.$error.required">Requerido! </span> </div>
                 </div>
             </div>

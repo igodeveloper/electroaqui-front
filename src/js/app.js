@@ -17,10 +17,10 @@ app.config(['$routeProvider', '$controllerProvider',
             service: $provide.service
         };
 
+
         $provide.factory('Auth', function () {
             return window.authFactory;
         });
-
 
         $routeProvider.when('/', {
             templateUrl: 'partials/home-partial.html',
@@ -31,6 +31,8 @@ app.config(['$routeProvider', '$controllerProvider',
         $routeProvider.otherwise({
             redirectTo: '/404'
         });
+
+
 
         $routeProvider.when('/clientes', {
             templateUrl: 'partials/clientes/clientes-partial.html',
@@ -116,6 +118,21 @@ app.config(['$routeProvider', '$controllerProvider',
 
         });
 
+        $routeProvider.when('/facturas', {
+            templateUrl: 'partials/facturas/facturas-partial.html',
+            controller: 'FacturasController',
+            titulo: 'Facturas'
+
+        });
+
+        $routeProvider.when('/facturas/agregar', {
+            templateUrl: 'partials/facturas/crear-facturas-partial.html',
+            controller: 'CrearFacturasController',
+            titulo: 'Facturar'
+
+        });
+
+
 
 
         $httpProvider.responseInterceptors.push(function ($q) {
@@ -149,8 +166,8 @@ app.config(['$routeProvider', '$controllerProvider',
             };
         });*/
 
-    }
-]);
+                }
+                ]);
 app.value("tempStorage", {}).service("Navigator", function ($location, tempStorage) {
     return {
         /**
