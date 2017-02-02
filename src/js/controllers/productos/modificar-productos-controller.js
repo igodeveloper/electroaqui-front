@@ -21,6 +21,7 @@ app.controller('ModificarProductosController', [
                 idMarcas: datos.idMarcas,
                 caracteristicas: datos.caracteristicas,
                 descripcion: datos.descripcion,
+                precio: datos.precio,
             }
             return bodyData;
         };
@@ -32,6 +33,7 @@ app.controller('ModificarProductosController', [
                 idMarcas: datos.idMarcas,
                 caracteristicas: datos.caracteristicas,
                 descripcion: datos.descripcion,
+                precio: datos.precio,
             }
             return bodyData;
         };

@@ -138,67 +138,67 @@ app.controller('ClientesController', [
             },
             colModel: [
                 {
-                    label: "id",
+                    label: "Id",
                     name: "id",
                     index: "id",
-                    index: "center",
-                    width: 200,
-                    lasses: "wrappedCell",
+                    align: 'right',
+                    width: 50,
                     hidden: false
                 },
                 {
-                    label: "nombre",
+                    label: "Nombre",
                     name: "nombre",
                     index: "nombre",
-                    index: "center",
+                    align: 'right',
                     width: 200,
-                    lasses: "wrappedCell",
                     hidden: false
                 },
                 {
-                    label: "apellido",
+                    label: "Apellido",
                     name: "apellido",
                     index: "apellido",
-                    index: "center",
+                    align: 'right',
                     width: 200,
-                    lasses: "wrappedCell",
                     hidden: false
                 },
                 {
-                    label: "documento",
+                    label: "Documento",
                     name: "documento",
                     index: "documento",
-                    index: "center",
+                    align: "right",
                     width: 200,
-                    lasses: "wrappedCell",
-                    hidden: false
+                    hidden: false,
+                    formatter: 'number',
+                    formatoptions: {
+                        thousandsSeparator: ".",
+                        decimalPlaces: 0
+                    },
                 },
                 {
-                    label: "telefono",
+                    label: "Teléfono",
                     name: "telefono",
                     index: "telefono",
-                    index: "center",
-                    width: 200,
-                    lasses: "wrappedCell",
+                    align: 'right',
+                    width: 100,
+
                     hidden: false
                 },
                 {
-                    label: "direccion",
+                    label: "Dirección",
                     name: "direccion",
                     index: "direccion",
-                    index: "center",
+                    align: 'left',
                     width: 200,
-                    lasses: "wrappedCell",
-                    hidden: false
+
+                    hidden: true
                 },
                 {
-                    label: "email",
+                    label: "Email",
                     name: "email",
                     index: "email",
-                    index: "center",
+                    align: 'left',
                     width: 200,
-                    lasses: "wrappedCell",
-                    hidden: false
+                    hidden: true
                 },
                     ],
             jsonReader: {

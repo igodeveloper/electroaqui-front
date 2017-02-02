@@ -126,7 +126,7 @@ app.controller('MarcasController', [
             },
             colModel: [
                 {
-                    label: "id",
+                    label: "Id",
                     name: "id",
                     index: "id",
                     index: "center",
@@ -135,7 +135,7 @@ app.controller('MarcasController', [
                     hidden: false
                 },
                 {
-                    label: "Descripcion",
+                    label: "Descripción",
                     name: "descripcion",
                     index: "descripcion",
                     index: "center",

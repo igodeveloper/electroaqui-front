@@ -132,6 +132,13 @@ app.config(['$routeProvider', '$controllerProvider',
 
         });
 
+        $routeProvider.when('/facturas/consultar', {
+            templateUrl: 'partials/facturas/ver-facturas-partial.html',
+            controller: 'VerFacturasController',
+            titulo: 'Consultar'
+
+        });
+
 
 
 

@@ -22,32 +22,6 @@ app.controller('FacturasController', [
         $scope.datos = {};
         //$scope.totalGrilla = 0;
 
-        $scope.generarBodyData = function (datos) {
-            var bodyData = {
-                id: datos.id,
-                nombre: datos.nombre,
-                apellido: datos.apellido,
-                documento: datos.documento,
-                telefono: datos.telefono,
-                direccion: datos.direccion,
-                email: datos.email
-            }
-            return bodyData;
-        };
-
-        $scope.generarParaJSON = function (datos) {
-            var bodyData = {
-                id: datos.id,
-                nombre: datos.nombre,
-                apellido: datos.apellido,
-                documento: datos.documento,
-                telefono: datos.telefono,
-                direccion: datos.direccion,
-                email: datos.email
-            }
-            return bodyData;
-        };
-
         /**
          *  Objeto de configuración del alert Success
          *  @type {Object}
@@ -141,82 +115,130 @@ app.controller('FacturasController', [
                     label: "Id",
                     name: "id",
                     index: "id",
-                    index: "center",
+                    align: "center",
                     width: 200,
-                    lasses: "wrappedCell",
-                    hidden: false
+                    classes: "wrappedCell",
+                    hidden: true
                 },
                 {
+                    label: "Cliente",
+                    name: "cliente",
+                    index: "cliente",
+                    align: "center",
+                    width: 200,
+                    classes: "wrappedCell",
+                    hidden: false,
+                    formatter: function (cellvalue, options, rowObject) {
+                        var texto = 'No Disponible';
+                        angular.forEach($scope.clientesLista, function (value, key) {
+                            if (value.id == rowObject.idCliente)
+                                texto = value.nombre + ' ' + value.apellido;
+
+                        });
+                        return texto;
+                    }
+                }, {
                     label: "Talonario",
                     name: "talonario",
                     index: "talonario",
-                    index: "center",
+                    align: "center",
                     width: 200,
-                    lasses: "wrappedCell",
+                    classes: "wrappedCell",
                     hidden: false
                 },
                 {
-                    label: "Numero Comprobante",
+                    label: "Número Comprobante",
                     name: "numeroComprobante",
                     index: "numeroComprobante",
-                    index: "center",
+                    align: "center",
                     width: 200,
-                    lasses: "wrappedCell",
-                    hidden: false
+                    classes: "wrappedCell",
+                    hidden: false,
+                    formatter: function (cellvalue, options, rowObject) {
+                        var largo = rowObject.numeroComprobante.toString.length;
+                        var x = rowObject.numeroComprobante;
+                        console.log(largo, x);
+                        while (largo < 7) {
+                            x = '0' + x;
+                            largo++;
+                        }
+                        return x;
+                    }
                 },
                 {
                     label: "Id Cliente",
                     name: "idCliente",
                     index: "idCliente",
-                    index: "center",
+                    align: "center",
                     width: 200,
-                    lasses: "wrappedCell",
-                    hidden: false
+                    classes: "wrappedCell",
+                    hidden: true
                 },
+
                 {
                     label: "Total",
                     name: "total",
                     index: "total",
-                    index: "center",
-                    width: 200,
-                    lasses: "wrappedCell",
+                    align: "right",
+                    formatter: 'number',
+                    formatoptions: {
+                        thousandsSeparator: ".",
+                        decimalPlaces: 0
+                    },
                     hidden: false
                 },
                 {
                     label: "Total Iva",
                     name: "totalIva",
                     index: "totalIva",
-                    index: "center",
+                    align: "center",
                     width: 200,
-                    lasses: "wrappedCell",
-                    hidden: false
+                    formatter: 'number',
+                    formatoptions: {
+                        thousandsSeparator: ".",
+                        decimalPlaces: 0
+                    },
+                    classes: "wrappedCell",
+                    hidden: true
                 },
                 {
                     label: "Total Excenta",
                     name: "totalExcenta",
                     index: "totalExcenta",
-                    index: "center",
+                    align: "center",
                     width: 200,
-                    lasses: "wrappedCell",
-                    hidden: false
+                    formatter: 'number',
+                    formatoptions: {
+                        thousandsSeparator: ".",
+                        decimalPlaces: 0
+                    },
+                    classes: "wrappedCell",
+                    hidden: true
                 },
                 {
                     label: "Id Estado",
                     name: "idEstado",
                     index: "idEstado",
-                    index: "center",
+                    align: "center",
                     width: 200,
-                    lasses: "wrappedCell",
-                    hidden: false
+                    classes: "wrappedCell",
+                    hidden: true
                 },
                 {
-                    label: "Condicion",
+                    label: "Condición",
                     name: "condicion",
                     index: "condicion",
-                    index: "center",
+                    align: "center",
                     width: 200,
-                    lasses: "wrappedCell",
-                    hidden: false
+                    classes: "wrappedCell",
+                    hidden: false,
+                    formatter: function (cellvalue, options, rowObject) {
+
+                        if ("CT" == rowObject.condicion)
+                            return "CONTADO";
+                        if ("CR" == rowObject.condicion)
+                            return "CREDITO";
+                    }
                 },
                     ],
             jsonReader: {
@@ -318,7 +340,7 @@ app.controller('FacturasController', [
                 $scope.selectedRow = $scope.tableParams.getRowData($scope.rowSeleccionado);
                 console.log(fila);
                 // Navigator utilizado para pasar filtros entre controller
-                Navigator.goTo($location.path() + '/modificar', {
+                Navigator.goTo($location.path() + '/consultar', {
                     dataM: fila
                 });
             }
@@ -418,4 +440,19 @@ app.controller('FacturasController', [
             });
             $scope.tableParams.reloadGrid();
         };
+        $scope.getListas = function (path, lista, obj) {
+            var url = path + '/';
+
+            BaseServices.getAll(url, obj, -1).then(
+                function (response) {
+                    if (response.status == 200) {
+                        $scope[lista] = response.data;
+                    } else {
+                        $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
+                            "Ha ocurrido un error, inténtelo nuevamente mas tarde.");
+                    }
+                }
+            );
+        };
+        $scope.getListas('clientes', 'clientesLista', {});
 }]);

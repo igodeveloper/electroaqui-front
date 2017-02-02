@@ -229,7 +229,6 @@ app.factory('BaseServices', ['$http', 'SynchronousRequest',
                     }
                 }).then(
                     function (succesResult) {
-                        console.log(succesResult);
                         customResult = {
                             status: succesResult.status,
                             data: succesResult.data.lista

@@ -129,16 +129,16 @@ app.controller('TipoProductosController', [
                     label: "id",
                     name: "id",
                     index: "id",
-                    index: "center",
-                    width: 200,
+                    align: "left",
+                    width: 100,
                     lasses: "wrappedCell",
                     hidden: false
                 },
                 {
-                    label: "Descripcion",
+                    label: "Descripción",
                     name: "descripcion",
                     index: "descripcion",
-                    index: "center",
+                    align: "left",
                     width: 200,
                     lasses: "wrappedCell",
                     hidden: false

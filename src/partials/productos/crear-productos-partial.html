@@ -64,6 +64,15 @@
                     <div class="custom-error" ng-show="myForm.input5.$dirty &&  myForm.input5.$invalid"> <span ng-show="myForm.input5.$error.required">Requerido! </span> </div>
                 </div>
             </div>
+            <!-- productos.precio -->
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Precio</label>
+                <div ng-class="{'has-error':myForm.input6.$invalid}">
+                    <div class="input-group col-lg-5">
+                        <input type="number" class="form-control input-sm" name="input6" ng-model="datos.precio" ng-required="false" min="0" max="10000000" /> </div>
+                    <div class="custom-error" ng-show="myForm.input6.$dirty &&  myForm.input6.$invalid"> <span ng-show="myForm.input6.$error.required">Requerido! </span> <span ng-show="myForm.input6.$error.numerico">                      El campo debe ser numerico                  </span> </div>
+                </div>
+            </div>
             <br/>
             <fieldset>
                 <div class="text-center">

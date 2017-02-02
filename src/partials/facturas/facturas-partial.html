@@ -40,21 +40,26 @@
                             </div>
                             <!-- facturas.id_cliente -->
                             <div class="form-group">
-                                <label class="col-lg-4 control-label">Id Cliente</label>
+                                <label class="col-lg-4 control-label">Cliente</label>
                                 <div class="input-group col-lg-8">
-                                    <input type="text" class="form-control input-sm" ng-model="datos.idCliente" uppercase focus-me="false" /> </div>
-                            </div>
-                            <!-- facturas.id_estado -->
-                            <div class="form-group">
-                                <label class="col-lg-4 control-label">Id Estado</label>
-                                <div class="input-group col-lg-8">
-                                    <input type="text" class="form-control input-sm" ng-model="datos.idEstado" uppercase focus-me="false" /> </div>
+                                    <select ui-select2 class=" form-control input-sm" name="input2" ng-model="datos.idCliente" placeholder="Seleccionar">
+                                        <option value="">Todos</option>
+                                        <option ng-repeat="l in clientesLista" value="{{l.id}}">{{l.nombre}} {{l.apellido}} </option>
+                                    </select>
+                                </div>
                             </div>
                             <!-- facturas.condicion -->
                             <div class="form-group">
                                 <label class="col-lg-4 control-label">Condicion</label>
                                 <div class="input-group col-lg-8">
-                                    <input type="text" class="form-control input-sm" ng-model="datos.condicion" uppercase focus-me="false" /> </div>
+
+                                    <select ui-select2 class=" form-control input-sm" name="input2" ng-model="datos.condicion" placeholder="Seleccionar">
+                                        <option value="">Todos</option>
+                                        <option value="CT">Contado</option>
+                                        <option value="CR">Credito</option>
+
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <br/>
@@ -88,13 +93,13 @@
             <!-- begin boton modificar estandar-->
             <div class="form-group">
                 <button type="button" class="btn btn-success btn-sm" ng-click="modificar()" ng-disabled="disabled">
-                    <i class="icon icon-pencil"></i>&nbsp;&nbsp;Modificar
+                    <i class="icon icon-pencil"></i>&nbsp;&nbsp;Consultar
                 </button>
             </div>
             <!-- begin boton eliminar estandar-->
             <div class="form-group">
-                <button type="button" class="btn btn-danger btn-sm" ng-click="launch('eliminar')" ng-disabled="disabled">
-                    <i class="icon icon-trash"></i>&nbsp;&nbsp;Eliminar
+                <button type="button" class="btn btn-danger btn-sm" ng-click="launch('anular')" ng-disabled="disabled">
+                    <i class="icon icon-trash"></i>&nbsp;&nbsp;Anular
                 </button>
             </div>
         </div>

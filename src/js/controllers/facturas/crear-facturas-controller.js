@@ -24,32 +24,9 @@ app.controller('CrearFacturasController', [
         $scope.datos = {};
         $scope.titulo = 'Facturas';
         $scope.detalle = [];
+        $scope.fac = {};
+        $scope.fac.totalFactura = 0;
 
-        $scope.generarBodyData = function (datos) {
-            var bodyData = {
-                id: datos.id,
-                nombre: datos.nombre,
-                apellido: datos.apellido,
-                documento: datos.documento,
-                telefono: datos.telefono,
-                direccion: datos.direccion,
-                email: datos.email
-            }
-            return bodyData;
-        };
-
-        $scope.generarParaJSON = function (datos) {
-            var bodyData = {
-                id: datos.id,
-                nombre: datos.nombre,
-                apellido: datos.apellido,
-                documento: datos.documento,
-                telefono: datos.telefono,
-                direccion: datos.direccion,
-                email: datos.email
-            }
-            return bodyData;
-        };
 
         /**
          *  Objeto de configuración del alert Success
@@ -114,9 +91,8 @@ app.controller('CrearFacturasController', [
          * @name kml3-frontend.module.facturacion.js.controllers.crear-areas-retencion-controller.js#confirmar
          */
         $scope.confirmar = function () {
-
             $scope.uiBlockuiConfig.bloquear = true;
-            BaseServices.insertar($scope.generarBodyData($scope.datos), 'clientes/')
+            BaseServices.insertar($scope.getJsonFormater(), 'facturas/')
                 .then(
                     function (response) {
                         try {
@@ -159,14 +135,31 @@ app.controller('CrearFacturasController', [
          * @name kml3-frontend.module.facturacion.js.controllers.crear-areas-retencion-controller.js#cancelar
          */
         $scope.cancelar = function () {
-            $location.path('/clientes')
+            $location.path('/facturas')
         };
+        $scope.clientes = function () {
+            angular.forEach($scope.clientesLista, function (value, key) {
+                if (value.id == $scope.fac.idCliente) {
+                    $scope.fac.direccion = value.direccion;
+                    $scope.fac.ruc = value.documento;
+                    $scope.fac.fecha = new Date();
+                }
+            });
+        };
+        $scope.detalles = function () {
+            angular.forEach($scope.productosLista, function (value, key) {
+                if (value.id == $scope.det.producto) {
+                    $scope.det.descripcion = value.descripcion;
+                    $scope.det.precio = value.precio;
+                }
+            });
+        };
+
         $scope.getListas = function (path, lista) {
             var url = path + '/';
             BaseServices.getAll(url, {}, -1).then(
                 function (response) {
                     if (response.status == 200) {
-                        console.log(response);
                         $scope[lista] = response.data;
                     } else {
                         $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
@@ -176,16 +169,54 @@ app.controller('CrearFacturasController', [
             );
         };
         $scope.agregarDetalle = function () {
-            var obj = {
-                cantidad: $scope.det.cantidad,
-                descripcion: $scope.det.producto,
-                unitario: $scope.det.precio,
-                total: $scope.det.precio * $scope.det.cantidad
+            if ($scope.det.cantidad == null || $scope.det.producto == null || $scope.det.producto == "" || $scope.det.precio == null) {
+                $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
+                    "Debe setear la cantidad, el producto y el precio para agregar un producto");
+            } else {
+                var obj = {
+                    cantidad: $scope.det.cantidad,
+                    idProducto: $scope.det.producto,
+                    idImpuesto: 1,
+                    descripcion: $scope.det.descripcion,
+                    montoUnitario: $scope.det.precio,
+                    montoTotal: $scope.det.precio * $scope.det.cantidad
+
+                }
+                $scope.fac.totalFactura = $scope.fac.totalFactura + obj.montoTotal;
+                $scope.fac.totalIva = 0;
+                $scope.fac.totalExcenta = 0;
+                $scope.detalle.push(obj);
+                MasterUtils.deleteValues($scope.det);
             }
-            $scope.detalle.push(obj);
-            MasterUtils.deleteValues($scope.det);
+
         };
+        $scope.removeItem = function (index) {
+            $scope.fac.totalFactura = $scope.fac.totalFactura - $scope.detalle[index].total;
+            $scope.detalle.splice(index, 1);
+
+        };
+        $scope.getJsonFormater = function (index) {
+            var factura = {
+                talonario: "001-001",
+                numeroComprobante: 0000001,
+                idCliente: $scope.fac.idCliente,
+                total: $scope.fac.totalFactura,
+                totalIva: $scope.fac.totalIva,
+                totalExcenta: $scope.fac.totalExcenta,
+                idEstado: 3,
+                //condicion: $scope.fac.condicion,
+                condicion: "CT",
+            }
+            var detalle = $scope.detalle;
+            for (i = 0; i < detalle.length; i++) {
+                delete detalle[i].descripcion;
+            }
+            factura.detalle = detalle;
+            return factura;
+
+
+        };
+
         $scope.getListas('clientes', 'clientesLista');
         $scope.getListas('productos', 'productosLista');
-    }
-]);
+}]);

@@ -24,12 +24,11 @@ app.controller('ProductosController', [
         $scope.generarBodyData = function (datos) {
             var bodyData = {
                 id: datos.id,
-                nombre: datos.nombre,
-                apellido: datos.apellido,
-                documento: datos.documento,
-                telefono: datos.telefono,
-                direccion: datos.direccion,
-                email: datos.email
+                idTipoProducto: datos.idTipoProducto,
+                idMarcas: datos.idMarcas,
+                caracteristicas: datos.caracteristicas,
+                descripcion: datos.descripcion,
+                precio: datos.precio,
             }
             return bodyData;
         };
@@ -37,12 +36,11 @@ app.controller('ProductosController', [
         $scope.generarParaJSON = function (datos) {
             var bodyData = {
                 id: datos.id,
-                nombre: datos.nombre,
-                apellido: datos.apellido,
-                documento: datos.documento,
-                telefono: datos.telefono,
-                direccion: datos.direccion,
-                email: datos.email
+                idTipoProducto: datos.idTipoProducto,
+                idMarcas: datos.idMarcas,
+                caracteristicas: datos.caracteristicas,
+                descripcion: datos.descripcion,
+                precio: datos.precio,
             }
             return bodyData;
         };
@@ -137,49 +135,90 @@ app.controller('ProductosController', [
             },
             colModel: [
                 {
-                    label: "id",
+                    label: "Id",
                     name: "id",
                     index: "id",
-                    index: "center",
-                    width: 200,
-                    lasses: "wrappedCell",
+                    width: 50,
+
                     hidden: false
                 },
                 {
                     label: "idTipoProducto",
                     name: "idTipoProducto",
                     index: "idTipoProducto",
-                    index: "center",
+                    width: 50,
+                    hidden: true
+                },
+                {
+                    label: "Tipo Producto",
+                    name: "tipoProducto",
+                    index: "tipoProducto",
                     width: 200,
-                    lasses: "wrappedCell",
-                    hidden: false
+                    hidden: false,
+                    formatter: function (cellvalue, options, rowObject) {
+                        var texto = 'No Disponible';
+                        angular.forEach($scope.tipoProductoLista, function (value, key) {
+                            if (value.id == rowObject.idTipoProducto)
+                                texto = value.descripcion;
+
+                        });
+                        return texto;
+                    }
                 },
                 {
                     label: "idMarcas",
                     name: "idMarcas",
                     index: "idMarcas",
-                    index: "center",
-                    width: 200,
-                    lasses: "wrappedCell",
-                    hidden: false
+                    width: 50,
+                    hidden: true
                 },
                 {
-                    label: "caracteristicas",
+                    label: "Marcas",
+                    name: "marcas",
+                    index: "marcas",
+                    width: 200,
+                    hidden: false,
+                    formatter: function (cellvalue, options, rowObject) {
+                        var texto = 'No Disponible';
+                        angular.forEach($scope.marcasLista, function (value, key) {
+                            if (value.id == rowObject.idTipoProducto)
+                                texto = value.descripcion;
+
+                        });
+                        return texto;
+                    }
+                },
+                {
+                    label: "Caracteristicas",
                     name: "caracteristicas",
                     index: "caracteristicas",
-                    index: "center",
-                    width: 200,
-                    lasses: "wrappedCell",
+                    align: "left",
+                    width: 250,
+
                     hidden: false
                 },
                 {
-                    label: "descripcion",
+                    label: "Descripción",
                     name: "descripcion",
                     index: "descripcion",
-                    index: "center",
-                    width: 200,
-                    lasses: "wrappedCell",
+                    align: "left",
+                    width: 280,
+
                     hidden: false
+                },
+                {
+                    label: "Precio",
+                    name: "precio",
+                    index: "precio",
+                    align: "right",
+                    width: 100,
+
+                    hidden: false,
+                    formatter: 'number',
+                    formatoptions: {
+                        thousandsSeparator: ".",
+                        decimalPlaces: 0
+                    },
                 }
                     ],
             jsonReader: {

@@ -29,7 +29,7 @@
                             <label class="col-sm-2 control-label">Cliente</label>
                             <div ng-class="{'has-error':myForm.input2.$invalid}">
                                 <div class="input-group col-sm-9">
-                                    <select ui-select2 class=" form-control" name="input2" ng-model="fac.idCliente" placeholder="Seleccionar" ng-change="clientes()">
+                                    <select ui-select2 class=" form-control" name="input2" ng-model="fac.idCliente" placeholder="Seleccionar" ng-change="clientes()" disabled>
                                         <option value="">Seleccione</option>
                                         <option ng-repeat="l in clientesLista" value="{{l.id}}">{{l.nombre}} {{l.apellido}} </option>
                                     </select>
@@ -63,16 +63,16 @@
                     <div class="panel-heading">Datos Factura</div>
                     <div class="panel-body">
                         <div class="form-group text-center">
-                            <label class="col-sm-12">Timbrado Nro: 123456{{fac.timbrado}}</label>
+                            <label class="col-sm-12">Timbrado Nro: {{fac.timbrado}}</label>
                         </div>
                         <div class="form-group text-center">
-                            <label class="col-sm-12">Vigencia: 123456{{fac.vigencia}}</label>
+                            <label class="col-sm-12">Vigencia: {{fac.vigencia}}</label>
                         </div>
                         <div class="form-group text-center">
-                            <label class="col-sm-12">RUC: 123456{{fac.ruc}}</label>
+                            <label class="col-sm-12">RUC: {{fac.ruc}}</label>
                         </div>
                         <div class="form-group text-center">
-                            <label class="col-sm-12">Factura: 123456{{fac.talonario}}</label>
+                            <label class="col-sm-12">Factura: {{fac.talonario}} - {{fac.numeroComprobante}}</label>
                         </div>
                     </div>
                 </div>
@@ -83,43 +83,23 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">Detalle de la factura</div>
                     <div class="panel-body">
-                        <div class="form-inline">
-                            <div class="col-sm-2">
-                                <input type="number" class="form-control" id="cantidad" ng-model="det.cantidad" placeholder="Cantidad" min="0" max="2000">
-                            </div>
-                            <div class="col-sm-6">
-                                <select ui-select2 class="form-control" ng-model="det.producto" placeholder="Seleccionar" ng-change="detalles()">
-                                    <option value="">Seleccione</option>
-                                    <option ng-repeat="l in productosLista" value="{{l.id}}">{{l.descripcion}}</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-3">
-                                <input type="number" class="form-control" id="precio" ng-model="det.precio" placeholder="Precio Unitario" min="1" max="1000000000">
-                            </div>
-                            <button type="button" class="btn btn-default" ng-click="agregarDetalle()">+</button>
-                        </div>
+
                         <div class="row col-lg-12">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-
-                                        <th>cantidad</th>
+                                        <th class="text-right">cantidad</th>
                                         <th>descripcion</th>
-                                        <th>unitario</th>
-                                        <th>total</th>
-                                        <th>remove</th>
+                                        <th class="text-right">unitario</th>
+                                        <th class="text-right">total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="l in detalle">
-                                        <td>{{l.cantidad | number}} </td>
-                                        <td>{{l.descripcion}}</td>
-                                        <td>{{l.montoUnitario | number}} </td>
-                                        <td>{{l.montoTotal | number}} </td>
-                                        <td>
-                                            <button class="btn btn-default" ng-click="removeItem($index)">-</button>
-                                        </td>
-
+                                        <td class="text-right">{{l.cantidad | number}} </td>
+                                        <td>{{l.producto}}</td>
+                                        <td class="text-right">{{l.montoUnitario | number}} </td>
+                                        <td class="text-right">{{l.montoTotal | number}} </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -131,7 +111,7 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">Totales</div>
                     <div class="panel-body">
-                        Total Factura : {{fac.totalFactura}} Total IVA : {{fac.totalIva}} Total totalExcenta : {{fac.totalExcenta}}
+                        Total Factura : {{fac.total}} Total IVA : {{fac.totalIva}} Total totalExcenta : {{fac.totalExcenta}}
 
                     </div>
                 </div>
@@ -141,11 +121,8 @@
         <br/>
         <fieldset>
             <div class="text-center">
-                <button type="submit" ng-disabled="myForm.$invalid || detalle.length <= 0" class="btn btn-success btn-sm">
-                    <i class="icon icon-check"></i>&nbsp;&nbsp;Facturar
-                </button>
                 <button ng-click="cancelar()" type="button" class="btn btn-danger btn-sm">
-                    <i class="icon icon-remove"></i>&nbsp;&nbsp;Cancelar
+                    <i class="icon icon-remove"></i>&nbsp;&nbsp;Volver
                 </button>
             </div>
         </fieldset>
