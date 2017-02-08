@@ -10,7 +10,7 @@
 /**
  * Se define el controller y sus dependencias.
  */
-app.controller('VerFacturasController', [
+app.controller('CuotasFacturasController', [
             '$scope', '$route', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', 'BaseServices', '$args',
 
             function ($scope, $route, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, BaseServices, $args) {
@@ -26,6 +26,7 @@ app.controller('VerFacturasController', [
         $scope.detalle = [];
         $scope.fac = {};
         $scope.fac.totalFactura = 0;
+        $scope.datos = {};
 
         /**
          *  Objeto de configuración del alert Success
@@ -92,14 +93,6 @@ app.controller('VerFacturasController', [
         $scope.cancelar = function () {
             $location.path('/facturas')
         };
-        $scope.clientes = function () {
-            angular.forEach($scope.clientesLista, function (value, key) {
-                if (value.id == $scope.fac.idCliente) {
-                    $scope.fac.direccion = value.direccion;
-                    $scope.fac.ruc = value.documento;
-                }
-            });
-        };
 
         $scope.getListas = function (path, lista, obj) {
             var url = path + '/';
@@ -115,6 +108,9 @@ app.controller('VerFacturasController', [
                 }
             );
         };
+        $scope.calculaCuota = function () {
+            $scope.datos.montoCuotas = $scope.datos.total / $scope.datos.coutas;
+        }
         $scope.init = function () {
             /**
              *  Objeto que donde se almacena los dato ingresados en los formularios
@@ -122,8 +118,6 @@ app.controller('VerFacturasController', [
              *  @field
              */
             $scope.getListas('clientes', 'clientesLista', {});
-            $scope.getListas('productos', 'productosLista', {});
-
             if ($args) {
                 /**
                  *  Objeto  que almacena los filtros obtenidos del formulario
@@ -132,8 +126,12 @@ app.controller('VerFacturasController', [
                  *  @field
                  *  @name kml3-frontend.js.controllers.modificar-rubros-controller
                  */
-                $scope.fac = $args.dataM;
-                $scope.clientes();
+                $scope.datos = $args.dataM;
+                console.log($args.dataM);
+                $scope.datos.factura = $args.dataM.talonario + "-" + ("0000000" + $args.dataM.numeroComprobante).slice(-7);
+                $scope.datos.fechaFactura = new Date($args.dataM.fechaFactura);
+                $scope.datos.coutas = 1;
+                $scope.calculaCuota();
                 $scope.getListas('facturas-detalle', 'detalle', {
                     idFacturas: $scope.fac.id
                 });

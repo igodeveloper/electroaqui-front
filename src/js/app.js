@@ -138,6 +138,12 @@ app.config(['$routeProvider', '$controllerProvider',
             titulo: 'Consultar'
 
         });
+        $routeProvider.when('/facturas/cuotas', {
+            templateUrl: 'partials/facturas/cuotas-facturas-partial.html',
+            controller: 'CuotasFacturasController',
+            titulo: 'Cuotas'
+
+        });
 
 
 

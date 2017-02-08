@@ -138,20 +138,36 @@ app.controller('FacturasController', [
                         return texto;
                     }
                 }, {
+                    label: "Fecha Emision",
+                    name: "fechaFactura",
+                    index: "fechaFactura",
+                    align: "center",
+                    width: 180,
+                    classes: "wrappedCell",
+                    hidden: false,
+                    formatter: function (cellValue, options) {
+                        if (cellValue) {
+                            return $filter('date')(new Date(cellValue), 'dd/MM/yyyy hh:mm:ss');
+                        } else {
+                            return '';
+                        }
+                    }
+                }, {
                     label: "Talonario",
                     name: "talonario",
                     index: "talonario",
                     align: "center",
-                    width: 200,
+                    width: 150,
                     classes: "wrappedCell",
                     hidden: false
                 },
+
                 {
                     label: "Número Comprobante",
                     name: "numeroComprobante",
                     index: "numeroComprobante",
                     align: "center",
-                    width: 200,
+                    width: 180,
                     classes: "wrappedCell",
                     hidden: false,
                     formatter: function (cellvalue, options, rowObject) {
@@ -192,7 +208,7 @@ app.controller('FacturasController', [
                     name: "totalIva",
                     index: "totalIva",
                     align: "center",
-                    width: 200,
+                    width: 150,
                     formatter: 'number',
                     formatoptions: {
                         thousandsSeparator: ".",
@@ -206,7 +222,7 @@ app.controller('FacturasController', [
                     name: "totalExcenta",
                     index: "totalExcenta",
                     align: "center",
-                    width: 200,
+                    width: 150,
                     formatter: 'number',
                     formatoptions: {
                         thousandsSeparator: ".",
@@ -229,7 +245,7 @@ app.controller('FacturasController', [
                     name: "condicion",
                     index: "condicion",
                     align: "center",
-                    width: 200,
+                    width: 150,
                     classes: "wrappedCell",
                     hidden: false,
                     formatter: function (cellvalue, options, rowObject) {
@@ -341,6 +357,19 @@ app.controller('FacturasController', [
                 console.log(fila);
                 // Navigator utilizado para pasar filtros entre controller
                 Navigator.goTo($location.path() + '/consultar', {
+                    dataM: fila
+                });
+            }
+        };
+        $scope.cuotas = function () {
+            // codigo seleccionado de ejemplo, aqui se le debe pasar el codigo de la fila seleccionada
+            if ($scope.rowSeleccionado) {
+
+                var fila = $scope.tableParams.getGridParam("userData")[$scope.rowSeleccionado - 1];
+                console.log(fila);
+                $scope.selectedRow = $scope.tableParams.getRowData($scope.rowSeleccionado);
+                // Navigator utilizado para pasar filtros entre controller
+                Navigator.goTo($location.path() + '/cuotas', {
                     dataM: fila
                 });
             }

@@ -1,0 +1,160 @@
+<!--
+@autor:     iván gomez
+@mail:      ivan.gomez@konecta.com.py
+-->
+<section>
+    <!-- Titulo de la pagina -->
+    <h1>Facturas</h1>
+
+    <div ui-breadcrumb></div>
+    <ui-blockui data-ui-blockui-config="uiBlockuiConfig" />
+
+    <div>
+        <!-- begin alert directive -->
+        <ui-alert alert-service="alertSuccesServices" alert-config="alertSuccessConfig" id="id_alertSuccessBox">
+        </ui-alert>
+
+        <ui-alert alert-service="alertErrorServices" alert-config="alertErrorConfig" id="id_alertErrorBox"></ui-alert>
+        <!-- end alert directive -->
+    </div>
+    <form class="form-horizontal" name="myForm" novalidate ng-submit="confirmar()">
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Datos Clientes</div>
+                    <div class="panel-body">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Cliente</label>
+                                <div ng-class="{'has-error':myForm.input2.$invalid}">
+                                    <div class="input-group col-sm-8">
+                                        <select ui-select2 class=" form-control" name="input2" ng-model="datos.idCliente" placeholder="Seleccionar" disabled>
+                                            <option value="">Seleccione</option>
+                                            <option ng-repeat="l in clientesLista" value="{{l.id}}">{{l.nombre}} {{l.apellido}} </option>
+                                        </select>
+                                    </div>
+                                    <div class="custom-error" ng-show="myForm.input2.$dirty &&  myForm.input2.$invalid"> <span ng-show="myForm.input2.$error.required">Requerido! </span> <span ng-show="myForm.input2.$error.numerico">                      El campo debe ser numerico                  </span> </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Factura</label>
+                                <div ng-class="{'has-error':myForm.input12.$invalid}">
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" class="form-control " name="input12" ng-model="datos.factura" ng-required="true" disabled/>
+                                    </div>
+                                    <div class="custom-error" ng-show="myForm.input12.$dirty &&  myForm.input12.$invalid"> <span ng-show="myForm.input12.$error.required">Requerido! </span> <span ng-show="myForm.input12.$error.numerico">                      El campo debe ser numerico                  </span> </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Fecha Factura</label>
+                                <div ng-class="{'has-error':myForm.input13.$invalid}">
+                                    <div class="input-group col-sm-8">
+                                        <ui-datetimepicker name="input13" disable-timepicker='true' ng-model='datos.fechaFactura' date-format='dd/MM/yyyy' placeholder='Seleccione una Fecha' ng-disabled="true" required='false'>
+                                        </ui-datetimepicker>
+                                    </div>
+                                    <div class="custom-error" ng-show="myForm.input13.$dirty &&  myForm.input13.$invalid"> <span ng-show="myForm.input13.$error.required">Requerido! </span> <span ng-show="myForm.input13.$error.numerico">                      El campo debe ser numerico                  </span> </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Monto Total</label>
+                                <div ng-class="{'has-error':myForm.input0.$invalid}">
+                                    <div class="input-group col-sm-8">
+                                        <strong>
+                                            <span id="currency-default">{{datos.total | currency:"Gs"}}</span>
+                                        </strong>
+                                    </div>
+                                    <div class="custom-error" ng-show="myForm.input0.$dirty &&  myForm.input0.$invalid"> <span ng-show="myForm.input0.$error.required">Requerido! </span> <span ng-show="myForm.input0.$error.numerico">                      El campo debe ser numerico                  </span> </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Cuotas</label>
+                                <div ng-class="{'has-error':myForm.input3.$invalid}">
+                                    <div class="input-group col-sm-8">
+                                        <input type="number" class="form-control " name="input3" ng-model="datos.coutas" validate-number ng-required="true" ng-change="calculaCuota()" />
+                                    </div>
+                                    <div class="custom-error" ng-show="myForm.input3.$dirty &&  myForm.input3.$invalid"> <span ng-show="myForm.input3.$error.required">Requerido! </span> <span ng-show="myForm.input3.$error.numerico">                      El campo debe ser numerico                  </span> </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Monto Cuota</label>
+                                <div ng-class="{'has-error':myForm.input4.$invalid}">
+                                    <div class="input-group col-sm-8">
+                                        <strong>
+                                            <span id="currency-default">{{datos.montoCuotas | currency:"Gs"}}</span>
+                                        </strong>
+                                    </div>
+                                    <div class="custom-error" ng-show="myForm.input4.$dirty &&  myForm.input4.$invalid"> <span ng-show="myForm.input4.$error.required">Requerido! </span> <span ng-show="myForm.input4.$error.numerico">                      El campo debe ser numerico                  </span> </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Fecha Inicio</label>
+                                <div ng-class="{'has-error':myForm.input15.$invalid}">
+                                    <div class="input-group col-sm-8">
+                                        <ui-datetimepicker name="input15" ng-model="datos.fechaEmision" disable-timepicker=true label-format="EEEE, MMMM d, yyyy" date-format="dd/MM/yyyy" placeholder="Seleccione una Fecha" ng-required="false" focus-me="false"> </ui-datetimepicker>
+                                    </div>
+                                    <div class="custom-error" ng-show="myForm.input15.$dirty &&  myForm.input15.$invalid"> <span ng-show="myForm.input15.$error.required">Requerido! </span> <span ng-show="myForm.input15.$error.numerico">                      El campo debe ser numerico                  </span> </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-horizontal">
+                                <button type="submit" ng-click="generarCuotas()" class="btn btn-custom btn-sm">
+                                    Generar <i class="icon-search icon-large"></i>
+                                </button>
+                                <button type="submit" ng-click="limpiar()" class="btn btn-warning btn-sm">
+                                    Limpiar <i class="icon-eraser icon-large"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Detalle de la factura</div>
+                        <div class="panel-body">
+
+                            <div class="row col-lg-12">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-right">cantidad</th>
+                                            <th>descripcion</th>
+                                            <th class="text-right">unitario</th>
+                                            <th class="text-right">total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="l in detalle">
+                                            <td class="text-right">{{l.cantidad | number}} </td>
+                                            <td>{{l.producto}}</td>
+                                            <td class="text-right">{{l.montoUnitario | number}} </td>
+                                            <td class="text-right">{{l.montoTotal | number}} </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            <fieldset>
+                <div class="text-center">
+                    <button ng-click="cancelar()" type="button" class="btn btn-danger btn-sm">
+                        <i class="icon icon-remove"></i>&nbsp;&nbsp;Volver
+                    </button>
+                </div>
+            </fieldset>
+    </form>
+    <!-- end form -->
+</section>
