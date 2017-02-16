@@ -64,7 +64,7 @@
                                 <div ng-class="{'has-error':myForm.input0.$invalid}">
                                     <div class="input-group col-sm-8">
                                         <strong>
-                                            <span id="currency-default">{{datos.total | currency:"Gs"}}</span>
+                                            Gs. <span id="currency-default">{{datos.total | number:0}}</span>
                                         </strong>
                                     </div>
                                     <div class="custom-error" ng-show="myForm.input0.$dirty &&  myForm.input0.$invalid"> <span ng-show="myForm.input0.$error.required">Requerido! </span> <span ng-show="myForm.input0.$error.numerico">                      El campo debe ser numerico                  </span> </div>
@@ -75,7 +75,7 @@
                                 <label class="col-sm-3 control-label">Cuotas</label>
                                 <div ng-class="{'has-error':myForm.input3.$invalid}">
                                     <div class="input-group col-sm-8">
-                                        <input type="number" class="form-control " name="input3" ng-model="datos.coutas" validate-number ng-required="true" ng-change="calculaCuota()" />
+                                        <input type="number" class="form-control " name="input3" ng-model="datos.cuotas" validate-number ng-required="true" ng-change="calculaCuota()" min="1" />
                                     </div>
                                     <div class="custom-error" ng-show="myForm.input3.$dirty &&  myForm.input3.$invalid"> <span ng-show="myForm.input3.$error.required">Requerido! </span> <span ng-show="myForm.input3.$error.numerico">                      El campo debe ser numerico                  </span> </div>
                                 </div>
@@ -85,19 +85,10 @@
                                 <div ng-class="{'has-error':myForm.input4.$invalid}">
                                     <div class="input-group col-sm-8">
                                         <strong>
-                                            <span id="currency-default">{{datos.montoCuotas | currency:"Gs"}}</span>
+                                            Gs. <span id="currency-default">{{datos.montoCuotas | number:0}}</span>
                                         </strong>
                                     </div>
                                     <div class="custom-error" ng-show="myForm.input4.$dirty &&  myForm.input4.$invalid"> <span ng-show="myForm.input4.$error.required">Requerido! </span> <span ng-show="myForm.input4.$error.numerico">                      El campo debe ser numerico                  </span> </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Fecha Inicio</label>
-                                <div ng-class="{'has-error':myForm.input15.$invalid}">
-                                    <div class="input-group col-sm-8">
-                                        <ui-datetimepicker name="input15" ng-model="datos.fechaEmision" disable-timepicker=true label-format="EEEE, MMMM d, yyyy" date-format="dd/MM/yyyy" placeholder="Seleccione una Fecha" ng-required="false" focus-me="false"> </ui-datetimepicker>
-                                    </div>
-                                    <div class="custom-error" ng-show="myForm.input15.$dirty &&  myForm.input15.$invalid"> <span ng-show="myForm.input15.$error.required">Requerido! </span> <span ng-show="myForm.input15.$error.numerico">                      El campo debe ser numerico                  </span> </div>
                                 </div>
                             </div>
 
@@ -105,10 +96,10 @@
                         </div>
                         <div class="col-lg-2">
                             <div class="form-horizontal">
-                                <button type="submit" ng-click="generarCuotas()" class="btn btn-custom btn-sm">
-                                    Generar <i class="icon-search icon-large"></i>
+                                <button type="button" ng-click="generarCuotas()" class="btn btn-success btn-sm">
+                                    Generar <i class="icon-plus icon-large"></i>
                                 </button>
-                                <button type="submit" ng-click="limpiar()" class="btn btn-warning btn-sm">
+                                <button type="button" ng-click="limpiar()" class="btn btn-warning btn-sm">
                                     Limpiar <i class="icon-eraser icon-large"></i>
                                 </button>
                             </div>
@@ -116,45 +107,57 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">Detalle de la factura</div>
-                        <div class="panel-body">
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Detalle de cuotas</div>
+                    <div class="panel-body">
 
-                            <div class="row col-lg-12">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-right">cantidad</th>
-                                            <th>descripcion</th>
-                                            <th class="text-right">unitario</th>
-                                            <th class="text-right">total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="l in detalle">
-                                            <td class="text-right">{{l.cantidad | number}} </td>
-                                            <td>{{l.producto}}</td>
-                                            <td class="text-right">{{l.montoUnitario | number}} </td>
-                                            <td class="text-right">{{l.montoTotal | number}} </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div class="col-lg-12">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-right">Cuota</th>
+                                        <th class="text-right">Monto</th>
+                                        <th class="text-right">Interes</th>
+                                        <th class="text-right">Monto Interes</th>
+                                        <th class="text-right">Monto Total</th>
+                                        <th class="text-right">Fecha Emision</th>
+                                        <th class="text-right">Fecha Vencimiento</th>
+                                        <th class="text-right">Fecha Pago</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="l in detalle">
+                                        <td class="text-right">{{l.cuota}}</td>
+                                        <td class="text-right">{{l.monto | number:0}}</td>
+                                        <td class="text-right">{{l.interes | number:0}}</td>
+                                        <td class="text-right">{{l.montoInteres | number:0}}</td>
+                                        <td class="text-right">{{l.montoTotal | number:0}}</td>
+                                        <td class="text-right">{{l.fechaEmision | date:'dd-MM-yyyy'}}</td>
+                                        <td class="text-right">{{l.fechaVencimiento | date:'dd-MM-yyyy'}}</td>
+                                        <td class="text-right">{{l.fechaPago | date:'dd-MM-yyyy'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <br/>
-            <fieldset>
-                <div class="text-center">
-                    <button ng-click="cancelar()" type="button" class="btn btn-danger btn-sm">
-                        <i class="icon icon-remove"></i>&nbsp;&nbsp;Volver
-                    </button>
-                </div>
-            </fieldset>
+        <br/>
+        <fieldset>
+            <div class="text-center">
+                <button type="submit" ng-disabled="myForm.$invalid || detalle.length <= 0" class="btn btn-success btn-sm">
+                    <i class="icon icon-check"></i>&nbsp;&nbsp;Guardar
+                </button>
+                <button ng-click="cancelar()" type="button" class="btn btn-danger btn-sm">
+                    <i class="icon icon-remove"></i>&nbsp;&nbsp;Volver
+                </button>
+            </div>
+        </fieldset>
     </form>
     <!-- end form -->
 </section>

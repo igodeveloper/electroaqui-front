@@ -116,9 +116,9 @@ app.controller('FacturasController', [
                     name: "id",
                     index: "id",
                     align: "center",
-                    width: 200,
+                    width: 50,
                     classes: "wrappedCell",
-                    hidden: true
+                    hidden: false
                 },
                 {
                     label: "Cliente",
@@ -157,7 +157,7 @@ app.controller('FacturasController', [
                     name: "talonario",
                     index: "talonario",
                     align: "center",
-                    width: 150,
+                    width: 120,
                     classes: "wrappedCell",
                     hidden: false
                 },
@@ -167,13 +167,13 @@ app.controller('FacturasController', [
                     name: "numeroComprobante",
                     index: "numeroComprobante",
                     align: "center",
-                    width: 180,
+                    width: 160,
                     classes: "wrappedCell",
                     hidden: false,
                     formatter: function (cellvalue, options, rowObject) {
                         var largo = rowObject.numeroComprobante.toString.length;
                         var x = rowObject.numeroComprobante;
-                        console.log(largo, x);
+                        // console.log(largo, x);
                         while (largo < 7) {
                             x = '0' + x;
                             largo++;
@@ -196,6 +196,7 @@ app.controller('FacturasController', [
                     name: "total",
                     index: "total",
                     align: "right",
+                    width: 180,
                     formatter: 'number',
                     formatoptions: {
                         thousandsSeparator: ".",
@@ -354,7 +355,7 @@ app.controller('FacturasController', [
                 var fila = $scope.tableParams.getGridParam("userData")[$scope.rowSeleccionado - 1];
 
                 $scope.selectedRow = $scope.tableParams.getRowData($scope.rowSeleccionado);
-                console.log(fila);
+                //console.log(fila);
                 // Navigator utilizado para pasar filtros entre controller
                 Navigator.goTo($location.path() + '/consultar', {
                     dataM: fila
@@ -366,7 +367,7 @@ app.controller('FacturasController', [
             if ($scope.rowSeleccionado) {
 
                 var fila = $scope.tableParams.getGridParam("userData")[$scope.rowSeleccionado - 1];
-                console.log(fila);
+                //console.log(fila);
                 $scope.selectedRow = $scope.tableParams.getRowData($scope.rowSeleccionado);
                 // Navigator utilizado para pasar filtros entre controller
                 Navigator.goTo($location.path() + '/cuotas', {

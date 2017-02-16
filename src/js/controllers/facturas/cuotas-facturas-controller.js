@@ -94,6 +94,28 @@ app.controller('CuotasFacturasController', [
             $location.path('/facturas')
         };
 
+        $scope.generarCuotas = function () {
+            var fecha = new Date();
+            var fechaEmision = new Date();
+            $scope.limpiar();
+            for (var i = 1; i <= $scope.datos.cuotas; i++) {
+                var obj = {
+                    idFactura: $scope.datos.id,
+                    idCliente: $scope.datos.idCliente,
+                    cuota: i,
+                    monto: $scope.datos.montoCuotas,
+                    interes: 0,
+                    montoInteres: 0,
+                    montoTotal: $scope.datos.montoCuotas,
+                    fechaEmision: fechaEmision.setMonth(fechaEmision.getMonth() + 0),
+                    fechaVencimiento: fecha.setMonth(fecha.getMonth() + 1),
+                    fechaPago: ""
+                };
+                console.log(obj);
+                $scope.detalle.push(obj);
+            }
+        };
+
         $scope.getListas = function (path, lista, obj) {
             var url = path + '/';
 
@@ -109,8 +131,53 @@ app.controller('CuotasFacturasController', [
             );
         };
         $scope.calculaCuota = function () {
-            $scope.datos.montoCuotas = $scope.datos.total / $scope.datos.coutas;
-        }
+            $scope.datos.montoCuotas = $scope.datos.total / $scope.datos.cuotas;
+        };
+        $scope.limpiar = function () {
+            $scope.detalle = [];
+            $scope.cuotas = 1;
+        };
+        $scope.confirmar = function () {
+            $scope.uiBlockuiConfig.bloquear = true;
+            var obj = {
+                idFactura: $scope.datos.id,
+                listaChequera: $scope.detalle
+            }
+            BaseServices.insertar(obj, 'chequera/cuotas')
+                .then(
+                    function (response) {
+                        try {
+                            if (response.status === 201) {
+
+                                $scope.bloqueoFormulario = true;
+
+                                dlg = $dialogs.notify("Notificación", "Sus datos se guardaron con éxito!");
+                                dlg.result.then(function (btn) {
+                                    $route.reload();
+                                }, function (btn) {});
+
+                            } else {
+                                if (response.data.messages != null) {
+                                    $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
+                                        response.data.messages);
+                                } else {
+                                    $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
+                                        "Ha ocurrido un error inesperado, por favor inténtelo más tarde");
+                                }
+                            }
+                        } catch (err) {
+                            if (response.data.messages != null) {
+                                $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
+                                    response.data.messages);
+                            } else {
+                                $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
+                                    "Ha ocurrido un error inesperado, por favor inténtelo más tarde");
+                            }
+                        }
+                        $scope.uiBlockuiConfig.bloquear = false;
+                    }
+                );
+        };
         $scope.init = function () {
             /**
              *  Objeto que donde se almacena los dato ingresados en los formularios
@@ -127,14 +194,12 @@ app.controller('CuotasFacturasController', [
                  *  @name kml3-frontend.js.controllers.modificar-rubros-controller
                  */
                 $scope.datos = $args.dataM;
-                console.log($args.dataM);
+
                 $scope.datos.factura = $args.dataM.talonario + "-" + ("0000000" + $args.dataM.numeroComprobante).slice(-7);
                 $scope.datos.fechaFactura = new Date($args.dataM.fechaFactura);
-                $scope.datos.coutas = 1;
+                $scope.datos.cuotas = 1;
+                console.log($scope.datos);
                 $scope.calculaCuota();
-                $scope.getListas('facturas-detalle', 'detalle', {
-                    idFacturas: $scope.fac.id
-                });
             } else {
                 $scope.cancelar();
             }

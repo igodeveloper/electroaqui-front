@@ -25,7 +25,7 @@
                 <label class="col-lg-3 control-label">Id</label>
                 <div ng-class="{'has-error':myForm.input1.$invalid}">
                     <div class="input-group col-lg-5">
-                        <input type="number" class="form-control input-sm" name="input1" ng-model="datos.id" validate-number ng-required="true" ng-disabled="true" /> </div>
+                        <input type="number" class="form-control input-sm" name="input1" ng-model="datos.id" validate-number ng-disabled="true" /> </div>
                     <div class="custom-error" ng-show="myForm.input1.$dirty &&  myForm.input1.$invalid"> <span ng-show="myForm.input1.$error.required">Requerido! </span> <span ng-show="myForm.input1.$error.numerico">                      El campo debe ser numerico                  </span> </div>
                 </div>
             </div>
