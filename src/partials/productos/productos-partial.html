@@ -22,65 +22,59 @@
             <!-- begin panel -->
             <div class="panel-heading">Búsqueda</div>
             <div class="panel-body">
+
                 <!-- form-horizontal contenedor principarl botones inptus-->
                 <form class="form-horizontal" role="form" name="busquedaForm">
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <!-- productos.id -->
-                            <div class="form-group">
-                                <label class="col-lg-4 control-label">Id</label>
-                                <div class="input-group col-lg-8">
-                                    <input type="text" class="form-control input-sm" ng-model="datos.id" placeholder="" uppercase focus-me="false" /> </div>
-                            </div>
-                            <!-- productos.id_tipo_producto -->
-                            <div class="form-group">
-                                <label class="col-lg-4 control-label">Tipo Producto</label>
-                                <div class="input-group col-lg-8">
-                                    <select ui-select2 class=" form-control input-sm " name="idTipoProducto" ng-model="datos.idTipoProducto" placeholder="Seleccionar">
+                    <div class="col-lg-5">
+                        <!-- productos.id -->
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">Filtrado</label>
+                            <div class="input-group col-lg-8">
+                                <input type="text" class="form-control input-sm" ng-model="datos.filtrado" ng-change="filtrado()" placeholder="Introduzca un texto de al menos 4 caracteres" uppercase focus-me="false" /> </div>
+                        </div>
+                        <!-- productos.id_tipo_producto -->
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">Tipo Producto</label>
+                            <div class="input-group col-lg-8">
+                                <select ui-select2 class=" form-control input-sm " name="idTipoProducto" ng-model="datos.idTipoProducto" placeholder="Seleccionar">
                                         <option value="">Todos</option>
                                         <option ng-repeat="l in tipoProductoLista" value="{{l.id}}">{{l.descripcion}}</option>
                                     </select>
-                                </div>
                             </div>
-                            <!-- productos.id_marcas -->
-                            <div class="form-group">
-                                <label class="col-lg-4 control-label">Marcas</label>
-                                <div class="input-group col-lg-8">
-                                    <select ui-select2 class=" form-control input-sm " name="idMarcas" ng-model="datos.idMarcas" placeholder="Seleccionar">
+                        </div>
+                        <!-- productos.id_marcas -->
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">Marcas</label>
+                            <div class="input-group col-lg-8">
+                                <select ui-select2 class=" form-control input-sm " name="idMarcas" ng-model="datos.idMarcas" placeholder="Seleccionar">
                                         <option value="">Todos</option>
                                         <option ng-repeat="l in marcasLista" value="{{l.id}}">{{l.descripcion}}</option>
                                     </select>
-                                </div>
-                            </div>
-                            <!-- productos.caracteristicas -->
-                            <div class="form-group">
-                                <label class="col-lg-4 control-label">Caracteristicas</label>
-                                <div class="input-group col-lg-8">
-                                    <input type="text" class="form-control input-sm" ng-model="datos.caracteristicas" placeholder="" uppercase focus-me="false" /> </div>
-                            </div>
-                            <!-- productos.descripcion -->
-                            <div class="form-group">
-                                <label class="col-lg-4 control-label">Descripcion</label>
-                                <div class="input-group col-lg-8">
-                                    <input type="text" class="form-control input-sm" ng-model="datos.descripcion" placeholder="" uppercase focus-me="false" /> </div>
                             </div>
                         </div>
-
-
-                        <div class="col-lg-8">
-                            <form sf-schema="schema" sf-form="form" sf-model="model"></form>
+                    </div>
+                    <div class="col-lg-5">
+                        <!-- productos.caracteristicas -->
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">Caracteristicas</label>
+                            <div class="input-group col-lg-8">
+                                <input type="text" class="form-control input-sm" ng-model="datos.caracteristicas" placeholder="" uppercase focus-me="false" /> </div>
                         </div>
-                        <br/>
-                        <br/>
-                        <div class="col-lg-4">
-                            <div class="form-horizontal">
-                                <button type="submit" ng-click="buscar()" class="btn btn-custom btn-sm">
+                        <!-- productos.descripcion -->
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">Descripcion</label>
+                            <div class="input-group col-lg-8">
+                                <input type="text" class="form-control input-sm" ng-model="datos.descripcion" placeholder="" uppercase focus-me="false" /> </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-horizontal">
+                            <button type="submit" ng-click="buscar()" class="btn btn-custom btn-sm">
                                     Buscar <i class="icon-search icon-large"></i>
                                 </button>
-                                <button type="submit" ng-click="limpiar()" class="btn btn-warning btn-sm">
+                            <button type="submit" ng-click="limpiar()" class="btn btn-warning btn-sm">
                                     Limpiar <i class="icon-eraser icon-large"></i>
                                 </button>
-                            </div>
                         </div>
                     </div>
                     <!-- end grupo de Botones buscar limpiar -->

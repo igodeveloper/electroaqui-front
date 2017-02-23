@@ -21,7 +21,10 @@ app.controller('ModificarProductosController', [
                 idMarcas: datos.idMarcas,
                 caracteristicas: datos.caracteristicas,
                 descripcion: datos.descripcion,
-                precio: datos.precio,
+                precioFinal: datos.precioFinal,
+                precioLista: datos.precioLista,
+                costo: datos.costo,
+                factorVenta: datos.factorVenta
             }
             return bodyData;
         };
@@ -33,7 +36,10 @@ app.controller('ModificarProductosController', [
                 idMarcas: datos.idMarcas,
                 caracteristicas: datos.caracteristicas,
                 descripcion: datos.descripcion,
-                precio: datos.precio,
+                precioFinal: datos.precioFinal,
+                precioLista: datos.precioLista,
+                costo: datos.costo,
+                factorVenta: datos.factorVenta
             }
             return bodyData;
         };
@@ -146,6 +152,11 @@ app.controller('ModificarProductosController', [
          */
         $scope.cancelar = function () {
             $location.path('/productos')
+        };
+
+        $scope.calculaPrecio = function () {
+            $scope.datos.precioLista = $scope.datos.costo * $scope.datos.factorVenta;
+            $scope.datos.precioFinal = $scope.datos.costo * $scope.datos.factorVenta;
         };
 
         /**

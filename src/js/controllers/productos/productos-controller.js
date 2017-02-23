@@ -8,8 +8,8 @@
  * @author   <a iván gomez</>
  */
 app.controller('ProductosController', [
-           '$scope', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', 'BaseServices',
-            function ($scope, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, BaseServices) {
+    '$scope', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', 'BaseServices',
+    function($scope, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, BaseServices) {
 
         /**
          *  Objeto  que almacena los filtros obtenidos del formulario
@@ -21,26 +21,34 @@ app.controller('ProductosController', [
         $scope.datos = {};
         //$scope.totalGrilla = 0;
 
-        $scope.generarBodyData = function (datos) {
+        $scope.generarBodyData = function(datos) {
             var bodyData = {
                 id: datos.id,
                 idTipoProducto: datos.idTipoProducto,
                 idMarcas: datos.idMarcas,
                 caracteristicas: datos.caracteristicas,
                 descripcion: datos.descripcion,
-                precio: datos.precio,
+                precioFinal: datos.precioFinal,
+                precioLista: datos.precioLista,
+                costo: datos.costo,
+                factorVenta: datos.factorVenta,
+                filtrado: datos.filtrado
             }
             return bodyData;
         };
 
-        $scope.generarParaJSON = function (datos) {
+        $scope.generarParaJSON = function(datos) {
             var bodyData = {
                 id: datos.id,
                 idTipoProducto: datos.idTipoProducto,
                 idMarcas: datos.idMarcas,
                 caracteristicas: datos.caracteristicas,
                 descripcion: datos.descripcion,
-                precio: datos.precio,
+                precioFinal: datos.precioFinal,
+                precioLista: datos.precioLista,
+                costo: datos.costo,
+                factorVenta: datos.factorVenta,
+                filtrado: datos.filtrado
             }
             return bodyData;
         };
@@ -124,17 +132,16 @@ app.controller('ProductosController', [
             rowNum: 10,
             rowList: [],
             postData: {
-                cantidad: function () {
+                cantidad: function() {
                     return $scope.tableParams.getGridParam("rowNum");
                 },
-                inicio: function () {
+                inicio: function() {
                     return $scope.tableParams.getRowsStart();
                 },
                 orderBy: "id",
                 orderDir: "ASC"
             },
-            colModel: [
-                {
+            colModel: [{
                     label: "Id",
                     name: "id",
                     index: "id",
@@ -155,9 +162,9 @@ app.controller('ProductosController', [
                     index: "tipoProducto",
                     width: 200,
                     hidden: false,
-                    formatter: function (cellvalue, options, rowObject) {
+                    formatter: function(cellvalue, options, rowObject) {
                         var texto = 'No Disponible';
-                        angular.forEach($scope.tipoProductoLista, function (value, key) {
+                        angular.forEach($scope.tipoProductoLista, function(value, key) {
                             if (value.id == rowObject.idTipoProducto)
                                 texto = value.descripcion;
 
@@ -178,9 +185,9 @@ app.controller('ProductosController', [
                     index: "marcas",
                     width: 200,
                     hidden: false,
-                    formatter: function (cellvalue, options, rowObject) {
+                    formatter: function(cellvalue, options, rowObject) {
                         var texto = 'No Disponible';
-                        angular.forEach($scope.marcasLista, function (value, key) {
+                        angular.forEach($scope.marcasLista, function(value, key) {
                             if (value.id == rowObject.idTipoProducto)
                                 texto = value.descripcion;
 
@@ -195,7 +202,7 @@ app.controller('ProductosController', [
                     align: "left",
                     width: 250,
 
-                    hidden: false
+                    hidden: true
                 },
                 {
                     label: "Descripción",
@@ -205,14 +212,50 @@ app.controller('ProductosController', [
                     width: 280,
 
                     hidden: false
-                },
-                {
-                    label: "Precio",
-                    name: "precio",
-                    index: "precio",
+                }, {
+                    label: "Costo",
+                    name: "costo",
+                    index: "costo",
                     align: "right",
                     width: 100,
-
+                    hidden: false,
+                    formatter: 'number',
+                    formatoptions: {
+                        thousandsSeparator: ".",
+                        decimalPlaces: 0
+                    },
+                }, {
+                    label: "Factor",
+                    name: "factorVenta",
+                    index: "factorVenta",
+                    align: "right",
+                    width: 60,
+                    hidden: false,
+                    formatter: 'number',
+                    formatoptions: {
+                        thousandsSeparator: ".",
+                        decimalPlaces: 2
+                    },
+                },
+                {
+                    label: "Precio Lista",
+                    name: "precioLista",
+                    index: "precioLista",
+                    align: "right",
+                    width: 150,
+                    hidden: false,
+                    formatter: 'number',
+                    formatoptions: {
+                        thousandsSeparator: ".",
+                        decimalPlaces: 0
+                    },
+                },
+                {
+                    label: "Precio Final",
+                    name: "precioFinal",
+                    index: "precioFinal",
+                    align: "right",
+                    width: 150,
                     hidden: false,
                     formatter: 'number',
                     formatoptions: {
@@ -220,11 +263,12 @@ app.controller('ProductosController', [
                         decimalPlaces: 0
                     },
                 }
-                    ],
+
+            ],
             jsonReader: {
                 repeatitems: false,
                 root: "lista",
-                total: function (data) {
+                total: function(data) {
                     var total = Math.ceil(data.total /
                         $scope.tableParams.getGridParam("rowNum"));
                     return total;
@@ -239,14 +283,14 @@ app.controller('ProductosController', [
             gridview: false,
             hidegrid: false,
             altRows: true,
-            loadError: function (xhr, st, err) {
+            loadError: function(xhr, st, err) {
                 var response = MasterJqgridUtils.processResponseJqgrid(xhr, $scope.tableParams);
                 if (xhr.status !== 404) {
                     $scope.alertErrorServices.addSimpleAlert("operationError", null, response.data.messages);
                     $scope.$apply();
                 }
             },
-            onSortCol: function (index, iCol, sortorder) {
+            onSortCol: function(index, iCol, sortorder) {
                 $scope.tableParams.setGridParam({
                     postData: {
                         orderBy: index,
@@ -256,12 +300,12 @@ app.controller('ProductosController', [
                 $scope.disabled = true;
                 $scope.$apply();
             },
-            onSelectRow: function (id, status, e) {
+            onSelectRow: function(id, status, e) {
                 $scope.$apply($scope.rowSeleccionado = id);
                 $scope.$apply($scope.disabled = false);
             },
-            loadComplete: function (cellvalue) {},
-            onPaging: function () {}
+            loadComplete: function(cellvalue) {},
+            onPaging: function() {}
         };
 
         /** 
@@ -278,18 +322,18 @@ app.controller('ProductosController', [
          * @public
          * @param {string}which identificador del popup definido localmente entre la vista y el contralador
          */
-        $scope.launch = function (which) {
+        $scope.launch = function(which) {
             var dlg = null;
             switch (which) {
 
-            case 'eliminar':
-                dlg = $dialogs.warningConfirm("Por Favor Confirmar", "Esta Seguro que desea eliminar el registro?");
-                dlg.result.then(function (btn) {
-                    $scope.eliminar();
-                }, function (btn) {
+                case 'eliminar':
+                    dlg = $dialogs.warningConfirm("Por Favor Confirmar", "Esta Seguro que desea eliminar el registro?");
+                    dlg.result.then(function(btn) {
+                        $scope.eliminar();
+                    }, function(btn) {
 
-                });
-                break;
+                    });
+                    break;
 
             }; // end switch
         };
@@ -301,24 +345,29 @@ app.controller('ProductosController', [
          * @public
          * @name kml3-frontend.module.facturacion.js.controllers.productos-controller.js#go
          */
-        $scope.go = function (path) {
+        $scope.go = function(path) {
             $location.path($location.path() + path);
         };
 
+        $scope.filtrado = function() {
+            if ($scope.datos.filtrado.length > 3) {
+                $scope.buscar();
+            }
+        };
         /**
          * Función que Modifica un dato seleccionado del jqgrid
          * @function modificar()
          * @public
          * @name kml3-frontend.module.facturacion.js.controllers.productos-controller.js#modificar
          */
-        $scope.modificar = function () {
+        $scope.modificar = function() {
             // codigo seleccionado de ejemplo, aqui se le debe pasar el codigo de la fila seleccionada
             if ($scope.rowSeleccionado) {
 
                 var fila = $scope.tableParams.getGridParam("userData")[$scope.rowSeleccionado - 1];
 
                 $scope.selectedRow = $scope.tableParams.getRowData($scope.rowSeleccionado);
-                console.log(fila);
+
                 // Navigator utilizado para pasar filtros entre controller
                 Navigator.goTo($location.path() + '/modificar', {
                     dataM: fila
@@ -332,13 +381,13 @@ app.controller('ProductosController', [
          * @name kml3-frontend.module.facturacion.js.controllers.productos-controller.js#eliminar
          * @public
          */
-        $scope.eliminar = function () {
+        $scope.eliminar = function() {
             $scope.uiBlockuiConfig.bloquear = true;
             if ($scope.rowSeleccionado) {
                 $scope.selectedRow = $scope.tableParams.getRowData($scope.rowSeleccionado);
 
                 BaseServices.eliminar($scope.selectedRow.id, 'productos/').then(
-                    function (response) {
+                    function(response) {
                         try {
                             if (response.status === 200) {
                                 $scope.alertSuccesServices.addSimpleAlert("success", null, "Los datos se eliminaron correctamente");
@@ -382,7 +431,7 @@ app.controller('ProductosController', [
          * @name kml3-frontend.module.facturacion.js.controllers.productos-controller.js#limpiar
          * @public
          */
-        $scope.limpiar = function () {
+        $scope.limpiar = function() {
 
             MasterUtils.deleteValues($scope.datos);
 
@@ -400,7 +449,7 @@ app.controller('ProductosController', [
          * @name kml3-frontend.module.facturacion.js.controllers.productos-controller.js#buscar
          * @public
          */
-        $scope.buscar = function () {
+        $scope.buscar = function() {
             $scope.disabled = true;
             MasterUtils.deleteUndefinedValues($scope.datos);
             /*var post = $scope.tableParams.getGridParam("postData");
@@ -421,10 +470,10 @@ app.controller('ProductosController', [
             $scope.tableParams.reloadGrid();
         };
 
-        $scope.marcas = function () {
+        $scope.marcas = function() {
             var path = 'marcas/';
             BaseServices.getAll(path, {}, -1).then(
-                function (response) {
+                function(response) {
                     if (response.status == 200) {
                         $scope.marcasLista = response.data;
                     } else {
@@ -434,11 +483,11 @@ app.controller('ProductosController', [
                 }
             );
         };
-        $scope.tipoProductos = function () {
+        $scope.tipoProductos = function() {
             var path = 'tipo-producto/';
             BaseServices.getAll(path, {}, -1).then(
-                function (response) {
-                    console.log(response, response.data);
+                function(response) {
+
                     if (response.status == 200) {
                         $scope.tipoProductoLista = response.data;
                     } else {
@@ -450,4 +499,5 @@ app.controller('ProductosController', [
         };
         $scope.marcas();
         $scope.tipoProductos();
-}]);
+    }
+]);

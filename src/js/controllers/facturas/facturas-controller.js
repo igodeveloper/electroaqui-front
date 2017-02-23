@@ -8,8 +8,8 @@
  * @author   <a iván gomez</>
  */
 app.controller('FacturasController', [
-           '$scope', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', 'BaseServices',
-            function ($scope, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, BaseServices) {
+    '$scope', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', 'BaseServices',
+    function($scope, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, BaseServices) {
 
         /**
          *  Objeto  que almacena los filtros obtenidos del formulario
@@ -101,17 +101,16 @@ app.controller('FacturasController', [
             rowNum: 10,
             rowList: [],
             postData: {
-                cantidad: function () {
+                cantidad: function() {
                     return $scope.tableParams.getGridParam("rowNum");
                 },
-                inicio: function () {
+                inicio: function() {
                     return $scope.tableParams.getRowsStart();
                 },
-                orderBy: "id",
-                orderDir: "ASC"
+                orderBy: "fechaFactura",
+                orderDir: "DESC"
             },
-            colModel: [
-                {
+            colModel: [{
                     label: "Id",
                     name: "id",
                     index: "id",
@@ -124,13 +123,13 @@ app.controller('FacturasController', [
                     label: "Cliente",
                     name: "cliente",
                     index: "cliente",
-                    align: "center",
+                    align: "left",
                     width: 200,
                     classes: "wrappedCell",
                     hidden: false,
-                    formatter: function (cellvalue, options, rowObject) {
+                    formatter: function(cellvalue, options, rowObject) {
                         var texto = 'No Disponible';
-                        angular.forEach($scope.clientesLista, function (value, key) {
+                        angular.forEach($scope.clientesLista, function(value, key) {
                             if (value.id == rowObject.idCliente)
                                 texto = value.nombre + ' ' + value.apellido;
 
@@ -142,10 +141,10 @@ app.controller('FacturasController', [
                     name: "fechaFactura",
                     index: "fechaFactura",
                     align: "center",
-                    width: 180,
+                    width: 150,
                     classes: "wrappedCell",
                     hidden: false,
-                    formatter: function (cellValue, options) {
+                    formatter: function(cellValue, options) {
                         if (cellValue) {
                             return $filter('date')(new Date(cellValue), 'dd/MM/yyyy hh:mm:ss');
                         } else {
@@ -163,14 +162,14 @@ app.controller('FacturasController', [
                 },
 
                 {
-                    label: "Número Comprobante",
+                    label: "Comprobante",
                     name: "numeroComprobante",
                     index: "numeroComprobante",
                     align: "center",
-                    width: 160,
+                    width: 140,
                     classes: "wrappedCell",
                     hidden: false,
-                    formatter: function (cellvalue, options, rowObject) {
+                    formatter: function(cellvalue, options, rowObject) {
                         var largo = rowObject.numeroComprobante.toString.length;
                         var x = rowObject.numeroComprobante;
                         // console.log(largo, x);
@@ -196,7 +195,7 @@ app.controller('FacturasController', [
                     name: "total",
                     index: "total",
                     align: "right",
-                    width: 180,
+                    width: 120,
                     formatter: 'number',
                     formatoptions: {
                         thousandsSeparator: ".",
@@ -246,10 +245,10 @@ app.controller('FacturasController', [
                     name: "condicion",
                     index: "condicion",
                     align: "center",
-                    width: 150,
+                    width: 130,
                     classes: "wrappedCell",
                     hidden: false,
-                    formatter: function (cellvalue, options, rowObject) {
+                    formatter: function(cellvalue, options, rowObject) {
 
                         if ("CT" == rowObject.condicion)
                             return "CONTADO";
@@ -257,11 +256,26 @@ app.controller('FacturasController', [
                             return "CREDITO";
                     }
                 },
-                    ],
+                {
+                    label: "Chequera",
+                    name: "chequera",
+                    index: "chequera",
+                    align: "center",
+                    width: 80,
+                    classes: "wrappedCell",
+                    hidden: false,
+                    formatter: function(cellvalue, options, rowObject) {
+                        if ("S" == cellvalue)
+                            return "SI";
+                        if ("N" == cellvalue)
+                            return "NO";
+                    }
+                },
+            ],
             jsonReader: {
                 repeatitems: false,
                 root: "lista",
-                total: function (data) {
+                total: function(data) {
                     var total = Math.ceil(data.total /
                         $scope.tableParams.getGridParam("rowNum"));
                     return total;
@@ -276,14 +290,14 @@ app.controller('FacturasController', [
             gridview: false,
             hidegrid: false,
             altRows: true,
-            loadError: function (xhr, st, err) {
+            loadError: function(xhr, st, err) {
                 var response = MasterJqgridUtils.processResponseJqgrid(xhr, $scope.tableParams);
                 if (xhr.status !== 404) {
                     $scope.alertErrorServices.addSimpleAlert("operationError", null, response.data.messages);
                     $scope.$apply();
                 }
             },
-            onSortCol: function (index, iCol, sortorder) {
+            onSortCol: function(index, iCol, sortorder) {
                 $scope.tableParams.setGridParam({
                     postData: {
                         orderBy: index,
@@ -293,12 +307,12 @@ app.controller('FacturasController', [
                 $scope.disabled = true;
                 $scope.$apply();
             },
-            onSelectRow: function (id, status, e) {
+            onSelectRow: function(id, status, e) {
                 $scope.$apply($scope.rowSeleccionado = id);
                 $scope.$apply($scope.disabled = false);
             },
-            loadComplete: function (cellvalue) {},
-            onPaging: function () {}
+            loadComplete: function(cellvalue) {},
+            onPaging: function() {}
         };
 
         /** 
@@ -315,18 +329,18 @@ app.controller('FacturasController', [
          * @public
          * @param {string}which identificador del popup definido localmente entre la vista y el contralador
          */
-        $scope.launch = function (which) {
+        $scope.launch = function(which) {
             var dlg = null;
             switch (which) {
 
-            case 'eliminar':
-                dlg = $dialogs.warningConfirm("Por Favor Confirmar", "Esta Seguro que desea eliminar el registro?");
-                dlg.result.then(function (btn) {
-                    $scope.eliminar();
-                }, function (btn) {
+                case 'eliminar':
+                    dlg = $dialogs.warningConfirm("Por Favor Confirmar", "Esta Seguro que desea eliminar el registro?");
+                    dlg.result.then(function(btn) {
+                        $scope.eliminar();
+                    }, function(btn) {
 
-                });
-                break;
+                    });
+                    break;
 
             }; // end switch
         };
@@ -338,7 +352,7 @@ app.controller('FacturasController', [
          * @public
          * @name kml3-frontend.module.facturacion.js.controllers.areas-retencion-controller.js#go
          */
-        $scope.go = function (path) {
+        $scope.go = function(path) {
             $location.path($location.path() + path);
         };
 
@@ -348,7 +362,7 @@ app.controller('FacturasController', [
          * @public
          * @name kml3-frontend.module.facturacion.js.controllers.areas-retencion-controller.js#modificar
          */
-        $scope.modificar = function () {
+        $scope.modificar = function() {
             // codigo seleccionado de ejemplo, aqui se le debe pasar el codigo de la fila seleccionada
             if ($scope.rowSeleccionado) {
 
@@ -362,7 +376,7 @@ app.controller('FacturasController', [
                 });
             }
         };
-        $scope.cuotas = function () {
+        $scope.cuotas = function() {
             // codigo seleccionado de ejemplo, aqui se le debe pasar el codigo de la fila seleccionada
             if ($scope.rowSeleccionado) {
 
@@ -382,13 +396,13 @@ app.controller('FacturasController', [
          * @name kml3-frontend.module.facturacion.js.controllers.areas-retencion-controller.js#eliminar
          * @public
          */
-        $scope.eliminar = function () {
+        $scope.eliminar = function() {
             $scope.uiBlockuiConfig.bloquear = true;
             if ($scope.rowSeleccionado) {
                 $scope.selectedRow = $scope.tableParams.getRowData($scope.rowSeleccionado);
 
                 BaseServices.eliminar($scope.selectedRow.id, 'facturas/').then(
-                    function (response) {
+                    function(response) {
                         try {
                             if (response.status === 200) {
                                 $scope.alertSuccesServices.addSimpleAlert("success", null, "Los datos se eliminaron correctamente");
@@ -432,7 +446,7 @@ app.controller('FacturasController', [
          * @name kml3-frontend.module.facturacion.js.controllers.areas-retencion-controller.js#limpiar
          * @public
          */
-        $scope.limpiar = function () {
+        $scope.limpiar = function() {
 
             MasterUtils.deleteValues($scope.datos);
 
@@ -450,7 +464,7 @@ app.controller('FacturasController', [
          * @name kml3-frontend.module.facturacion.js.controllers.areas-retencion-controller.js#buscar
          * @public
          */
-        $scope.buscar = function () {
+        $scope.buscar = function() {
             $scope.disabled = true;
             MasterUtils.deleteUndefinedValues($scope.datos);
             /*var post = $scope.tableParams.getGridParam("postData");
@@ -470,11 +484,11 @@ app.controller('FacturasController', [
             });
             $scope.tableParams.reloadGrid();
         };
-        $scope.getListas = function (path, lista, obj) {
+        $scope.getListas = function(path, lista, obj) {
             var url = path + '/';
 
             BaseServices.getAll(url, obj, -1).then(
-                function (response) {
+                function(response) {
                     if (response.status == 200) {
                         $scope[lista] = response.data;
                     } else {
@@ -485,4 +499,5 @@ app.controller('FacturasController', [
             );
         };
         $scope.getListas('clientes', 'clientesLista', {});
-}]);
+    }
+]);

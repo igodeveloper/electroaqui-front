@@ -4,7 +4,7 @@
 -->
 <section>
     <!-- Titulo de la pagina -->
-    <h1>Clientes</h1>
+    <h1>Productos</h1>
 
     <div ui-breadcrumb></div>
     <ui-blockui data-ui-blockui-config="uiBlockuiConfig" />
@@ -64,27 +64,57 @@
                     <div class="custom-error" ng-show="myForm.input5.$dirty &&  myForm.input5.$invalid"> <span ng-show="myForm.input5.$error.required">Requerido! </span> </div>
                 </div>
             </div>
-            <!-- productos.precio -->
+            <!-- productos.costo -->
             <div class="form-group">
-                <label class="col-lg-3 control-label">Precio</label>
-                <div ng-class="{'has-error':myForm.input6.$invalid}">
+                <label class="col-lg-3 control-label">Costo</label>
+                <div ng-class="{'has-error':myForm.input8.$invalid}">
                     <div class="input-group col-lg-5">
-                        <input type="number" class="form-control input-sm" name="input6" ng-model="datos.precio" ng-required="false" min="0" max="10000000" /> </div>
-                    <div class="custom-error" ng-show="myForm.input6.$dirty &&  myForm.input6.$invalid"> <span ng-show="myForm.input6.$error.required">Requerido! </span> <span ng-show="myForm.input6.$error.numerico">                      El campo debe ser numerico                  </span> </div>
+                        <input type="number" class="form-control input-sm" name="input8" 
+                        ng-model="datos.costo" ng-required="false" min="0" max="100000000" step="100" ng-change="calculaPrecio()"/> </div>
+                        <div class="custom-error" ng-show="myForm.input8.$dirty &&  myForm.input8.$invalid"> <span ng-show="myForm.input8.$error.required">Requerido! </span> <span ng-show="myForm.input8.$error.numerico">                      El campo debe ser numerico                  </span> </div>
+                    </div>
                 </div>
-            </div>
-            <br/>
-            <fieldset>
-                <div class="text-center">
-                    <button type="submit" ng-disabled="myForm.$invalid" class="btn btn-success btn-sm">
+
+                <!-- productos.factorVenta -->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Factor Venta</label>
+                    <div ng-class="{'has-error':myForm.input9.$invalid}">
+                        <div class="input-group col-lg-5">
+                            <input type="number" class="form-control input-sm" name="input9" ng-model="datos.factorVenta" ng-change="calculaPrecio()" ng-required="false" min="0" max="99.99" step="0.01" /> </div>
+                        <div class="custom-error" ng-show="myForm.input9.$dirty &&  myForm.input9.$invalid"> <span ng-show="myForm.input9.$error.required">Requerido! </span> <span ng-show="myForm.input9.$error.numerico">                      El campo debe ser numerico                  </span> </div>
+                    </div>
+                </div>
+                <!-- productos.precioLista -->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Precio Lista</label>
+                    <div ng-class="{'has-error':myForm.input6.$invalid}">
+                        <div class="input-group col-lg-5">
+                            <input type="number" class="form-control input-sm" name="input6" ng-model="datos.precioLista" 
+                            ng-required="false" min="0" max="100000000" step="100" disabled/> </div>
+                        <div class="custom-error" ng-show="myForm.input6.$dirty &&  myForm.input6.$invalid"> <span ng-show="myForm.input6.$error.required">Requerido! </span> <span ng-show="myForm.input6.$error.numerico">                      El campo debe ser numerico                  </span> </div>
+                    </div>
+                </div>
+                <!-- productos.precioFinal -->
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Precio Final</label>
+                    <div ng-class="{'has-error':myForm.input7.$invalid}">
+                        <div class="input-group col-lg-5">
+                            <input type="number" class="form-control input-sm" name="input7" ng-model="datos.precioFinal" ng-required="false" min="0" max="100000000" step="100"/> </div>
+                        <div class="custom-error" ng-show="myForm.input7.$dirty &&  myForm.input7.$invalid"> <span ng-show="myForm.input7.$error.required">Requerido! </span> <span ng-show="myForm.input7.$error.numerico">                      El campo debe ser numerico                  </span> </div>
+                    </div>
+                </div>
+                <br/>
+                <fieldset>
+                    <div class="text-center">
+                        <button type="submit" ng-disabled="myForm.$invalid" class="btn btn-success btn-sm">
                         <i class="icon icon-check"></i>&nbsp;&nbsp;Guardar
                     </button>
-                    <button ng-click="cancelar()" type="button" class="btn btn-danger btn-sm">
+                        <button ng-click="cancelar()" type="button" class="btn btn-danger btn-sm">
                         <i class="icon icon-remove"></i>&nbsp;&nbsp;Cancelar
                     </button>
-                </div>
-            </fieldset>
-        </div>
+                    </div>
+                </fieldset>
+            </div>
     </form>
     <!-- end form -->
 </section>

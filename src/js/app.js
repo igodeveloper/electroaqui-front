@@ -2,7 +2,7 @@ app.config(['$routeProvider', '$controllerProvider',
     '$compileProvider', '$filterProvider', '$provide', '$httpProvider',
 
 
-    function ($routeProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $httpProvider) {
+    function($routeProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $httpProvider) {
 
         /*
          * Se registran las referencias  a los componentes en el
@@ -18,7 +18,7 @@ app.config(['$routeProvider', '$controllerProvider',
         };
 
 
-        $provide.factory('Auth', function () {
+        $provide.factory('Auth', function() {
             return window.authFactory;
         });
 
@@ -26,6 +26,10 @@ app.config(['$routeProvider', '$controllerProvider',
             templateUrl: 'partials/home-partial.html',
             controller: 'HomeController',
             titulo: 'Electro Aqui'
+        });
+        $routeProvider.when('/login', {
+            templateUrl: 'partials/login-tmpl.html',
+            controller: 'LoginController'
         });
 
         $routeProvider.otherwise({
@@ -148,11 +152,11 @@ app.config(['$routeProvider', '$controllerProvider',
 
 
 
-        $httpProvider.responseInterceptors.push(function ($q) {
-            return function (promise) {
-                return promise.then(function (response) {
+        $httpProvider.responseInterceptors.push(function($q) {
+            return function(promise) {
+                return promise.then(function(response) {
                     return response;
-                }, function (response) {
+                }, function(response) {
                     MasterUtils.redirectError(response.status);
                     response = MasterUtils.processResponse(response);
                     return $q.reject(response);
@@ -179,45 +183,45 @@ app.config(['$routeProvider', '$controllerProvider',
             };
         });*/
 
-                }
-                ]);
-app.value("tempStorage", {}).service("Navigator", function ($location, tempStorage) {
+    }
+]);
+app.value("tempStorage", {}).service("Navigator", function($location, tempStorage) {
     return {
         /**
          * @param   url
          * @param   args Parametros
          * @return
          */
-        goTo: function (url, args) {
+        goTo: function(url, args) {
             tempStorage.args = args;
             $location.path(url);
         }
     };
 });
 app.run(['$rootScope', '$location', 'tempStorage',
-    function ($rootScope, $location, tempStorage) {
+    function($rootScope, $location, tempStorage) {
         /**
          * Utilizado para paso de parametro entre controller
          */
-        $rootScope.$on('$routeChangeSuccess', function (evt, current, prev) {
+        $rootScope.$on('$routeChangeSuccess', function(evt, current, prev) {
             current.locals.$args = tempStorage.args;
             tempStorage.args = null;
         });
 
-        $rootScope.$on("$routeChangeStart", function (event, next, current) {
+        $rootScope.$on("$routeChangeStart", function(event, next, current) {
             if (!sessionStorage.getItem('userToken')) {
                 $location.path("/login");
             }
         });
 
-        $rootScope.logout = function () {
+        $rootScope.logout = function() {
             sessionStorage.clear();
             var redirect = auth.logoutUrl;
             window.location = redirect;
         };
 
 
-        $rootScope.esLogin = function () {
+        $rootScope.esLogin = function() {
             if ($location.path() == "/login") {
                 return true;
             } else {
@@ -225,12 +229,13 @@ app.run(['$rootScope', '$location', 'tempStorage',
             }
 
         };
-        $rootScope.habilitarMenu = function (aplicacion, rolPorDefecto) {
+        $rootScope.habilitarMenu = function(aplicacion, rolPorDefecto) {
             return true;
         };
-        $rootScope.habilitarSubMenu = function (rol) {
+        $rootScope.habilitarSubMenu = function(rol) {
             return Auth.authz.hasResourceRole(rol, 'postventa');
             //return true;
         };
 
-}]);
+    }
+]);
