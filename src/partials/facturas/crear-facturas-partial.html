@@ -29,7 +29,7 @@
                             <label class="col-sm-2 control-label">Cliente</label>
                             <div ng-class="{'has-error':myForm.input2.$invalid}">
                                 <div class="input-group col-sm-9">
-                                    <select ui-select2 class=" form-control" name="input2" ng-model="fac.idCliente" placeholder="Seleccionar" ng-change="clientes()">
+                                    <select ui-select2 class=" form-control" name="input2" ng-model="fac.idCliente" placeholder="Seleccionar" required ng-change="clientes()">
                                         <option value="">Seleccione</option>
                                         <option ng-repeat="l in clientesLista" value="{{l.id}}">{{l.nombre}} {{l.apellido}} </option>
                                     </select>
@@ -72,7 +72,28 @@
                             <label class="col-sm-12">RUC: 123456{{fac.ruc}}</label>
                         </div>
                         <div class="form-group text-center">
-                            <label class="col-sm-12">Factura: 123456{{fac.talonario}}</label>
+                            <label class="col-sm-3">Factura:</label>
+                            <div class="col-sm-4">
+                                <div ng-class="{'has-error':myForm.inputT.$invalid}">
+                                    <div class="">
+                                        <input type="text" class="form-control" name="inputT" required ng-model="fac.talonario" placeholder="001-001">
+
+                                    </div>
+                                    <div class="custom-error" ng-show="myForm.inputT.$dirty &&  
+                                    myForm.inputT.$invalid"> <span ng-show="myForm.inputT.$error.required">Requerido! </span>
+                                        <span ng-show="myForm.inputT.$error.numerico">                      El campo debe ser numerico                  </span> </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div ng-class="{'has-error':myForm.inputN.$invalid}">
+                                    <div class="">
+                                        <input type="text" class="form-control" name="inputN" ng-model="fac.numeroComprobante" required maxlength="7" placeholder="0000001">
+                                    </div>
+                                    <div class="custom-error" ng-show="myForm.inputN.$dirty &&  myForm.inputN.$invalid">
+                                        <span ng-show="myForm.inputN.$error.required">Requerido! </span> <span ng-show="myForm.inputN.$error.numerico">                      El campo debe ser numerico                  </span> </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>

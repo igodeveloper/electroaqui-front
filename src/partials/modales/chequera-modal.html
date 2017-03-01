@@ -1,0 +1,265 @@
+<div class="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Chequera</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-default">
+
+                    <div class="panel-body" id="chequera">
+                        <style>
+                            body {
+                                width: 700px;
+                            }
+                            
+                            table {
+                                border-collapse: collapse;
+                                width: 100%;
+                                font-size: x-small;
+                            }
+                            
+                            th,
+                            td {
+                                padding: 8px;
+                                text-align: left;
+                                border-bottom: 1px solid #ddd;
+                            }
+                        </style>
+                        <table ng-repeat="l in datos.detalle">
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan=" 4 ">
+                                                    <p style="text-align:left ">
+                                                        Electro Aqui
+                                                    </p>
+                                                    <p style="text-align:center ">
+                                                        CHEQUERA DE PAGO
+                                                    </p>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>
+                                                        Nombre:
+                                                    </p>
+
+                                                </td>
+                                                <td colspan="3 ">
+                                                    <p>
+                                                        {{datos.cliente}}
+                                                    </p>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Factura : <br>{{datos.factura}}
+
+                                                </td>
+                                                <td>
+                                                    Plazo
+
+                                                </td>
+                                                <td>
+                                                    Cuota
+
+                                                </td>
+                                                <td>
+                                                    Vencimiento
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    {{datos.totalFactura | number:0}}
+
+                                                </td>
+                                                <td>
+                                                    {{datos.cuotas}}
+
+                                                </td>
+                                                <td>
+                                                    {{$index+1}} /{{datos.cuotas}}
+
+                                                </td>
+                                                <td>
+                                                    {{l.fechaVencimiento | date:'dd-MM-yyyy'}}
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Imp. Cuota
+
+                                                </td>
+                                                <td colspan="2 ">
+                                                    Fecha Pago
+
+                                                </td>
+                                                <td>
+                                                    Int. Pun p/ día
+
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    {{l.montoTotal | number:0}}
+
+                                                </td>
+                                                <td colspan="2 ">
+                                                    ..../..../....
+
+                                                </td>
+                                                <td>
+                                                    150
+
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2 ">
+                                                    Total Int. Puni.:
+
+                                                </td>
+                                                <td colspan="2 ">
+                                                    Total pagar:
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan=" 4 ">
+                                                    <p style="text-align:left ">
+                                                        Electro Aqui
+                                                    </p>
+                                                    <p style="text-align:center ">
+                                                        CHEQUERA DE PAGO
+                                                    </p>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>
+                                                        Nombre:
+                                                    </p>
+
+                                                </td>
+                                                <td colspan="3 ">
+                                                    <p>
+                                                        {{datos.cliente}}
+                                                    </p>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Factura :<br> {{datos.factura}}
+
+                                                </td>
+                                                <td>
+                                                    Plazo
+
+                                                </td>
+                                                <td>
+                                                    Cuota
+
+                                                </td>
+                                                <td>
+                                                    Vencimiento
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    {{datos.totalFactura | number:0}}
+
+                                                </td>
+                                                <td>
+                                                    {{datos.cuotas}}
+
+                                                </td>
+                                                <td>
+                                                    {{$index+1}} /{{datos.cuotas}}
+
+                                                </td>
+                                                <td>
+                                                    {{l.fechaVencimiento | date:'dd-MM-yyyy'}}
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Imp. Cuota
+
+                                                </td>
+                                                <td colspan="2 ">
+                                                    Fecha Pago
+
+                                                </td>
+                                                <td>
+                                                    Int. Pun p/ día
+
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    {{l.montoTotal | number:0}}
+
+                                                </td>
+                                                <td colspan="2 ">
+                                                    ..../..../....
+
+                                                </td>
+                                                <td>
+                                                    150
+
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2 ">
+                                                    Total Int. Puni.:
+
+                                                </td>
+                                                <td colspan="2 ">
+                                                    Total pagar:
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer ">
+
+                <button type="button " class="btn btn-primary btn-sm " ng-click="imprimir() " ng-disabled="(nameDialog.$dirty && nameDialog.$invalid) || nameDialog.$pristine ">
+					<i class="icon icon-check "></i>&nbsp;&nbsp;Imprimir
+				</button>
+
+                <button ng-click="cancel() " type="button " ng-disabled="disabledForm " class="btn btn-danger btn-sm ">
+					<i class="icon icon-remove "></i>&nbsp;&nbsp;Cancelar
+				</button>
+
+
+            </div>
+        </div>
+    </div>
+</div>

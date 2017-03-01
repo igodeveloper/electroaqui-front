@@ -153,25 +153,13 @@ app.controller('CuotasFacturasController', [
                             if (response.status === 201) {
 
                                 $scope.bloqueoFormulario = true;
-
-                                /*dlg = $dialogs.notify("Notificación", "Sus datos se guardaron con éxito!");
+                                dlg = $dialogs.notify("Notificación", "Sus datos se guardaron con éxito!");
+                                $args.dataM.chequera = 'S';
                                 dlg.result.then(function(btn) {
-                                    $route.reload();
-                                }, function(btn) {});*/
-                                dlg = $dialogs.create(
-                                    'partials/modales/pagare-modal.html',
-                                    'PagareController', {
-
-
-                                    }, {
-                                        key: false,
-                                        back: 'static'
-                                    }
-                                );
-                                dlg.result.then(function() {
-                                    $location.path('/facturas');
-
-                                });
+                                    Navigator.goTo($location.path('/facturas/consultar'), {
+                                        dataM: $args.dataM
+                                    });
+                                }, function(btn) {});
 
                             } else {
                                 if (response.data.messages != null) {
@@ -201,6 +189,36 @@ app.controller('CuotasFacturasController', [
             myWindow.document.write(table);
             myWindow.print();
         };
+
+        $scope.chequera = function() {
+            dlg = $dialogs.create(
+                'partials/modales/chequera-modal.html',
+                'ChequeraController', {
+                    detalle: $scope.detalle,
+                    cuotas: $scope.datos.cuotas,
+                    cliente: $scope.datos.cliente,
+                    factura: $scope.datos.factura,
+                    totalFactura: $scope.datos.total
+
+                }, {
+                    key: false,
+                    back: 'static'
+                }
+            );
+            dlg.result.then(function() {
+                $scope.cancelar();
+            });
+        };
+        $scope.clientes = function() {
+            angular.forEach($scope.clientesLista, function(value, key) {
+                if (value.id == $scope.fac.idCliente) {
+                    $scope.datos.cliente = value.nombre + " " + value.apellido;
+                    $scope.datos.ruc = value.documento;
+                    $scope.datos.documento = value.documento;
+                    $scope.fac.telefono = value.telefono;
+                }
+            });
+        };
         $scope.init = function() {
             /**
              *  Objeto que donde se almacena los dato ingresados en los formularios
@@ -220,7 +238,6 @@ app.controller('CuotasFacturasController', [
 
                 $scope.datos.factura = $args.dataM.talonario + "-" + ("0000000" + $args.dataM.numeroComprobante).slice(-7);
                 $scope.datos.fechaFactura = new Date($args.dataM.fechaFactura);
-                console.log($scope.datos);
                 if ($scope.datos.chequera == "S") {
                     $scope.getListas('chequera', 'detalle', { "idFactura": $scope.datos.id });
 
@@ -229,24 +246,10 @@ app.controller('CuotasFacturasController', [
 
                 }
                 $scope.calculaCuota();
+                $scope.clientes();
             } else {
                 $scope.cancelar();
             }
-            dlg = $dialogs.create(
-                'partials/modales/pagare-modal.html',
-                'PagareController', {
-                    nombre: 'hola este es su mombre',
-                    apellido: 'este es su apellido'
-
-                }, {
-                    key: false,
-                    back: 'static'
-                }
-            );
-            dlg.result.then(function() {
-                $location.path('/facturas');
-
-            });
 
         };
         $scope.init();

@@ -11,8 +11,8 @@
  * Se define el controller y sus dependencias.
  */
 app.controller('CrearFacturasController', [
-            '$scope', '$route', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', 'BaseServices',
-            function ($scope, $route, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, BaseServices) {
+    '$scope', '$route', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', 'BaseServices',
+    function($scope, $route, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, BaseServices) {
 
         /**
          *  Objeto  que almacena los filtros obtenidos del formulario
@@ -90,20 +90,24 @@ app.controller('CrearFacturasController', [
          * @public
          * @name kml3-frontend.module.facturacion.js.controllers.crear-areas-retencion-controller.js#confirmar
          */
-        $scope.confirmar = function () {
+        $scope.confirmar = function() {
             $scope.uiBlockuiConfig.bloquear = true;
-            BaseServices.insertar($scope.getJsonFormater(), 'facturas/')
+            var obj = $scope.getJsonFormater();
+            BaseServices.insertar(obj, 'facturas/')
                 .then(
-                    function (response) {
+                    function(response) {
                         try {
                             if (response.status === 201) {
 
                                 $scope.bloqueoFormulario = true;
 
                                 dlg = $dialogs.notify("Notificación", "Sus datos se guardaron con éxito!");
-                                dlg.result.then(function (btn) {
-                                    $route.reload();
-                                }, function (btn) {});
+                                dlg.result.then(function(btn) {
+                                    Navigator.goTo($location.path('/facturas/consultar'), {
+                                        dataM: response.data
+                                    });
+                                }, function(btn) {});
+
 
                             } else {
                                 if (response.data.messages != null) {
@@ -134,11 +138,11 @@ app.controller('CrearFacturasController', [
          * @public
          * @name kml3-frontend.module.facturacion.js.controllers.crear-areas-retencion-controller.js#cancelar
          */
-        $scope.cancelar = function () {
+        $scope.cancelar = function() {
             $location.path('/facturas')
         };
-        $scope.clientes = function () {
-            angular.forEach($scope.clientesLista, function (value, key) {
+        $scope.clientes = function() {
+            angular.forEach($scope.clientesLista, function(value, key) {
                 if (value.id == $scope.fac.idCliente) {
                     $scope.fac.direccion = value.direccion;
                     $scope.fac.ruc = value.documento;
@@ -146,8 +150,8 @@ app.controller('CrearFacturasController', [
                 }
             });
         };
-        $scope.detalles = function () {
-            angular.forEach($scope.productosLista, function (value, key) {
+        $scope.detalles = function() {
+            angular.forEach($scope.productosLista, function(value, key) {
                 if (value.id == $scope.det.producto) {
                     $scope.det.descripcion = value.descripcion;
                     $scope.det.precio = value.precio;
@@ -155,10 +159,10 @@ app.controller('CrearFacturasController', [
             });
         };
 
-        $scope.getListas = function (path, lista) {
+        $scope.getListas = function(path, lista) {
             var url = path + '/';
             BaseServices.getAll(url, {}, -1).then(
-                function (response) {
+                function(response) {
                     if (response.status == 200) {
                         $scope[lista] = response.data;
                     } else {
@@ -168,7 +172,7 @@ app.controller('CrearFacturasController', [
                 }
             );
         };
-        $scope.agregarDetalle = function () {
+        $scope.agregarDetalle = function() {
             if ($scope.det.cantidad == null || $scope.det.producto == null || $scope.det.producto == "" || $scope.det.precio == null) {
                 $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
                     "Debe setear la cantidad, el producto y el precio para agregar un producto");
@@ -190,22 +194,28 @@ app.controller('CrearFacturasController', [
             }
 
         };
-        $scope.removeItem = function (index) {
-            $scope.fac.totalFactura = $scope.fac.totalFactura - $scope.detalle[index].total;
+        $scope.removeItem = function(index) {
+            //  $scope.fac.totalFactura = parseInt($scope.fac.totalFactura) - parseInt($scope.detalle[index].total);
+
             $scope.detalle.splice(index, 1);
+            $scope.fac.totalFactura = 0;
+            angular.forEach($scope.detalle, function(value, key) {
+                $scope.fac.totalFactura = +parseInt(value.montoTotal);
+            });
 
         };
-        $scope.getJsonFormater = function (index) {
+        $scope.getJsonFormater = function(index) {
             var factura = {
-                talonario: "001-001",
-                numeroComprobante: 0000001,
+                talonario: $scope.fac.talonario,
+                numeroComprobante: $scope.fac.numeroComprobante,
                 idCliente: $scope.fac.idCliente,
                 total: $scope.fac.totalFactura,
                 totalIva: $scope.fac.totalIva,
                 totalExcenta: $scope.fac.totalExcenta,
                 idEstado: 3,
-                //condicion: $scope.fac.condicion,
                 condicion: "CT",
+                chequera: "N",
+                fechaFactura: new Date()
             }
             var detalle = $scope.detalle;
             for (i = 0; i < detalle.length; i++) {
@@ -219,4 +229,5 @@ app.controller('CrearFacturasController', [
 
         $scope.getListas('clientes', 'clientesLista');
         $scope.getListas('productos', 'productosLista');
-}]);
+    }
+]);

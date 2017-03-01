@@ -10,8 +10,8 @@
  * Se define el controller y sus dependencias.
  */
 app.controller('CrearTipoProductosController', [
-            '$scope', '$route', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', '$args', 'BaseServices',
-            function ($scope, $route, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, $args, BaseServices) {
+    '$scope', '$route', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', '$args', 'BaseServices',
+    function($scope, $route, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, $args, BaseServices) {
 
         /**
          *  Objeto  que almacena los filtros obtenidos del formulario
@@ -22,7 +22,7 @@ app.controller('CrearTipoProductosController', [
          */
         $scope.datos = {};
 
-        $scope.generarBodyData = function (datos) {
+        $scope.generarBodyData = function(datos) {
             var bodyData = {
                 id: datos.id,
                 descripcion: datos.descripcion,
@@ -30,7 +30,7 @@ app.controller('CrearTipoProductosController', [
             return bodyData;
         };
 
-        $scope.generarParaJSON = function (datos) {
+        $scope.generarParaJSON = function(datos) {
             var bodyData = {
                 id: datos.id,
                 descripcion: datos.descripcion,
@@ -100,21 +100,21 @@ app.controller('CrearTipoProductosController', [
          * @public
          * @name kml3-frontend.module.facturacion.js.controllers.crear-tipo-productos-controller.js#confirmar
          */
-        $scope.confirmar = function () {
+        $scope.confirmar = function() {
 
             $scope.uiBlockuiConfig.bloquear = true;
             BaseServices.insertar($scope.generarBodyData($scope.datos), 'tipo-producto')
                 .then(
-                    function (response) {
+                    function(response) {
                         try {
                             if (response.status === 201) {
-
+                                console.log(response.data);
                                 $scope.bloqueoFormulario = true;
 
                                 dlg = $dialogs.notify("Notificación", "Sus datos se guardaron con éxito!");
-                                dlg.result.then(function (btn) {
+                                dlg.result.then(function(btn) {
                                     $route.reload();
-                                }, function (btn) {});
+                                }, function(btn) {});
 
                             } else {
                                 if (response.data.messages != null) {
@@ -144,8 +144,8 @@ app.controller('CrearTipoProductosController', [
          * @public
          * @name kml3-frontend.module.facturacion.js.controllers.crear-tipo-productos-controller.js#cancelar
          */
-        $scope.cancelar = function () {
+        $scope.cancelar = function() {
             $location.path('/tipo-productos')
         };
-            }
-        ]);
+    }
+]);

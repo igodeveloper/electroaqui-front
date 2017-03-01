@@ -8,10 +8,10 @@
  * @author  <a> iván gomez </a>
  */
 app.factory('BaseServices', ['$http', 'SynchronousRequest',
-             function ($http, synchronousRequestServices) {
+    function($http, synchronousRequestServices) {
         return {
 
-            getURI: function (uri) {
+            getURI: function(uri) {
                 return $http.get(uri);
             },
 
@@ -20,19 +20,18 @@ app.factory('BaseServices', ['$http', 'SynchronousRequest',
              * @params codigo código del Recurso
              * @return {Object} wrapper request response del Backend
              */
-            get: function (datos, path) {
+            get: function(path) {
 
-                var urlServicioRest = MasterUrl.serviceRest + path +
-                    '?keyParam= ' + encodeURIComponent(JSON.stringify(datos));
+                var urlServicioRest = MasterUrl.serviceRest + path;
                 return $http.get(urlServicioRest, {}).then(
-                    function (succesResults) {
+                    function(succesResults) {
                         customResult = {
                             status: succesResults.status,
                             data: succesResults.data
                         };
                         return customResult;
                     },
-                    function (failResults) {
+                    function(failResults) {
                         customResult = {
                             status: failResults.status,
                             data: failResults.data
@@ -47,7 +46,7 @@ app.factory('BaseServices', ['$http', 'SynchronousRequest',
              * @param codigo
              * @returns {objeto a JSON para que sea utlizable}
              */
-            getSync: function (datos, path) {
+            getSync: function(datos, path) {
 
                 var urlServicioRest = MasterUrl.serviceRest + path +
                     '?keyParam= ' + encodeURIComponent(JSON.stringify(datos));
@@ -71,7 +70,7 @@ app.factory('BaseServices', ['$http', 'SynchronousRequest',
              * @param orderDir
              * @returns {lista}
              */
-            listar: function (filtro, inicio, cantidad, orderBy, orderDir, path) {
+            listar: function(filtro, inicio, cantidad, orderBy, orderDir, path) {
 
                 var filtrosJson = angular.toJson(filtro);
 
@@ -104,7 +103,7 @@ app.factory('BaseServices', ['$http', 'SynchronousRequest',
                 return $http.get(urlServicioRest, {
                     filtros: JSON.stringify(queryParams)
                 }).then(
-                    function (succesResults) {
+                    function(succesResults) {
                         customResult = {
                             status: succesResults.status,
                             data: succesResults.data.lista
@@ -113,7 +112,7 @@ app.factory('BaseServices', ['$http', 'SynchronousRequest',
                         return customResult;
                     },
 
-                    function (failResults) {
+                    function(failResults) {
                         customResult = {
                             status: failResults.status,
 
@@ -131,14 +130,14 @@ app.factory('BaseServices', ['$http', 'SynchronousRequest',
              * @return {Object} request response del Backend
              */
 
-            insertar: function (datos, path) {
+            insertar: function(datos, path) {
 
                 var urlServicioRest = MasterUrl.serviceRest + path;
 
                 $http.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 
                 return $http.post(urlServicioRest, datos, {}).then(
-                    function (succesResults) {
+                    function(succesResults) {
                         var customResult = {
                             status: succesResults.status,
                             data: succesResults.data,
@@ -146,7 +145,7 @@ app.factory('BaseServices', ['$http', 'SynchronousRequest',
                         };
                         return customResult;
                     },
-                    function (failResults) {
+                    function(failResults) {
                         var customResult = {
                             status: failResults.status,
                             data: failResults.data
@@ -161,7 +160,7 @@ app.factory('BaseServices', ['$http', 'SynchronousRequest',
              * @params todos los necesarios para la modificación de un recurso
              * @return {Object} wrapper request response del Backend
              */
-            modificar: function (datos, path) {
+            modificar: function(datos, path) {
 
                 var urlServicioRest = MasterUrl.serviceRest + path;
 
@@ -169,14 +168,14 @@ app.factory('BaseServices', ['$http', 'SynchronousRequest',
 
                 return $http.put(
                     urlServicioRest, datos, {}).then(
-                    function (succesResults) {
+                    function(succesResults) {
                         var customResult = {
                             status: succesResults.status,
                             data: succesResults.data
                         };
                         return customResult;
                     },
-                    function (failResults) {
+                    function(failResults) {
                         var customResult = {
                             status: failResults.status,
                             data: failResults.data
@@ -191,18 +190,18 @@ app.factory('BaseServices', ['$http', 'SynchronousRequest',
              * @params {string} la URI
              * @return {Object} request response del Backend
              */
-            eliminar: function (datos, path) {
+            eliminar: function(datos, path) {
 
                 var urlServicioRest = MasterUrl.serviceRest + path + datos;
                 return $http.delete(urlServicioRest, {}).then(
-                    function (succesResults) {
+                    function(succesResults) {
                         var customResult = {
                             status: succesResults.status,
                             data: succesResults.data
                         };
                         return customResult;
                     },
-                    function (failResults) {
+                    function(failResults) {
                         var customResult = {
                             status: failResults.status,
                             data: failResults.data
@@ -220,7 +219,7 @@ app.factory('BaseServices', ['$http', 'SynchronousRequest',
              * @returns {lista}
              */
 
-            getAll: function (path, datos, cantidad) {
+            getAll: function(path, datos, cantidad) {
                 var url = MasterUrl.serviceRest + path;
                 return $http.get(url, {
                     params: {
@@ -228,14 +227,14 @@ app.factory('BaseServices', ['$http', 'SynchronousRequest',
                         cantidad: cantidad
                     }
                 }).then(
-                    function (succesResult) {
+                    function(succesResult) {
                         customResult = {
                             status: succesResult.status,
                             data: succesResult.data.lista
                         };
                         return customResult;
                     },
-                    function (failResults) {
+                    function(failResults) {
                         customResult = {
                             status: failResults.status,
                             data: failResults.data.lista

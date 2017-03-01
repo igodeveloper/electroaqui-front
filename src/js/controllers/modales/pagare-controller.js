@@ -8,6 +8,7 @@ app.controller('PagareController', ['$scope', 'serviciosjqgrid', '$modalInstance
          *
          * @name kml3.module.js.controllers.ventanas-emergentes.BusquedaEjemploController#cliente
          */
+        console.log(data);
         var month = new Array(11);
         month[0] = "Enero";
         month[1] = "Febrero";
@@ -51,7 +52,7 @@ app.controller('PagareController', ['$scope', 'serviciosjqgrid', '$modalInstance
             var myWindow = window.open('', '', 'width=800, height=600');
             myWindow.document.write(table);
             myWindow.print();
-            $modalInstance.close();
+            $modalInstance.dismiss('canceled');
         }; // end save
 
         /*Función al cual se invoca cuando ocurre un keyup en el popUp

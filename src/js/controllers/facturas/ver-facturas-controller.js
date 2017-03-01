@@ -11,9 +11,9 @@
  * Se define el controller y sus dependencias.
  */
 app.controller('VerFacturasController', [
-            '$scope', '$route', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', 'BaseServices', '$args',
+    '$scope', '$route', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', 'BaseServices', '$args',
 
-            function ($scope, $route, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, BaseServices, $args) {
+    function($scope, $route, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, BaseServices, $args) {
 
         /**
          *  Objeto  que almacena los filtros obtenidos del formulario
@@ -89,23 +89,25 @@ app.controller('VerFacturasController', [
          * @public
          * @name kml3-frontend.module.facturacion.js.controllers.crear-areas-retencion-controller.js#cancelar
          */
-        $scope.cancelar = function () {
+        $scope.cancelar = function() {
             $location.path('/facturas')
         };
-        $scope.clientes = function () {
-            angular.forEach($scope.clientesLista, function (value, key) {
+        $scope.clientes = function() {
+            angular.forEach($scope.clientesLista, function(value, key) {
                 if (value.id == $scope.fac.idCliente) {
                     $scope.fac.direccion = value.direccion;
                     $scope.fac.ruc = value.documento;
+                    $scope.fac.documento = value.documento;
+                    $scope.fac.telefono = value.telefono;
                 }
             });
         };
 
-        $scope.getListas = function (path, lista, obj) {
+        $scope.getListas = function(path, lista, obj) {
             var url = path + '/';
 
             BaseServices.getAll(url, obj, -1).then(
-                function (response) {
+                function(response) {
                     if (response.status == 200) {
                         $scope[lista] = response.data;
                     } else {
@@ -115,7 +117,60 @@ app.controller('VerFacturasController', [
                 }
             );
         };
-        $scope.init = function () {
+        $scope.getFactura = function(id) {
+            var url = 'facturas/' + id;
+            $scope.uiBlockuiConfig.bloquear = true;
+            BaseServices.get(url).then(
+                function(response) {
+                    if (response.status == 200) {
+                        $scope.fac = response.data;
+                    } else {
+                        $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
+                            "Ha ocurrido un error, inténtelo nuevamente mas tarde.");
+                    }
+                }
+            );
+            $scope.uiBlockuiConfig.bloquear = false;
+        };
+        $scope.launch = function(which) {
+            var dlg = null;
+            switch (which) {
+
+                case 'pagare':
+                    dlg = $dialogs.create(
+                        'partials/modales/pagare-modal.html',
+                        'PagareController', $scope.fac, {
+                            key: false,
+                            back: 'static'
+                        }
+                    );
+                    dlg.result.then(function() {
+                        $scope.cancelar();
+                    });
+                    break;
+                case 'chequera':
+                    dlg = $dialogs.create(
+                        'partials/modales/chequera-modal.html',
+                        'ChequeraController', $scope.fac, {
+                            key: false,
+                            back: 'static'
+                        }
+                    );
+                    dlg.result.then(function() {
+                        $scope.cancelar();
+                    });
+                    break;
+                case 'generarCuota':
+                    Navigator.goTo($location.path('/facturas/cuotas'), {
+                        dataM: $scope.fac
+                    });
+                    break;
+                case 'cancelar':
+                    $scope.cancelar();
+
+            }; // end switch
+        };
+        $scope.init = function() {
             /**
              *  Objeto que donde se almacena los dato ingresados en los formularios
              *  @type {Object}
@@ -133,9 +188,11 @@ app.controller('VerFacturasController', [
                  *  @name kml3-frontend.js.controllers.modificar-rubros-controller
                  */
                 $scope.fac = $args.dataM;
+                // $scope.getFactura($args.dataM.id);
+                $scope.fac.facturas = $args.dataM.talonario + "-" + ("0000000" + $args.dataM.numeroComprobante).slice(-7);
                 $scope.clientes();
                 $scope.getListas('facturas-detalle', 'detalle', {
-                    idFacturas: $scope.fac.id
+                    idFacturas: $args.dataM.id
                 });
             } else {
                 $scope.cancelar();

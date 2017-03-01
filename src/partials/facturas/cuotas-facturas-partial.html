@@ -58,7 +58,7 @@
                             </div>
 
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Monto Total</label>
                                 <div ng-class="{'has-error':myForm.input0.$invalid}">
@@ -94,7 +94,7 @@
 
 
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <div class="form-horizontal">
                                 <button type="button" ng-click="generarCuotas()" ng-disabled="datos.chequera == 'S'" class="btn btn-success btn-sm">
                                     Generar <i class="icon-plus icon-large"></i>
@@ -102,8 +102,8 @@
                                 <button type="button" ng-click="limpiar()" ng-disabled="datos.chequera == 'S'" class="btn btn-warning btn-sm">
                                     Limpiar <i class="icon-eraser icon-large"></i>
                                 </button>
-                                <button type="button" ng-click="printIt()" class="btn btn-warning btn-sm">
-                                    Imprimir <i class="icon-eraser icon-large"></i>
+                                <button ng-click="chequera()" type="button" ng-disabled="datos.chequera !== 'S'" class="btn btn-danger btn-sm">
+                                    <i class="icon icon-remove"></i>&nbsp;&nbsp;Imprimir
                                 </button>
                             </div>
                         </div>

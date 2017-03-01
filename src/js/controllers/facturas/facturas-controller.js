@@ -170,9 +170,9 @@ app.controller('FacturasController', [
                     classes: "wrappedCell",
                     hidden: false,
                     formatter: function(cellvalue, options, rowObject) {
-                        var largo = rowObject.numeroComprobante.toString.length;
+                        var a = '' + rowObject.numeroComprobante;
                         var x = rowObject.numeroComprobante;
-                        // console.log(largo, x);
+                        var largo = a.length;
                         while (largo < 7) {
                             x = '0' + x;
                             largo++;
@@ -270,6 +270,15 @@ app.controller('FacturasController', [
                         if ("N" == cellvalue)
                             return "NO";
                     }
+                },
+                {
+                    label: "MontoLetras",
+                    name: "montoLetras",
+                    index: "montoLetras",
+                    align: "center",
+                    width: 80,
+                    classes: "wrappedCell",
+                    hidden: true
                 },
             ],
             jsonReader: {

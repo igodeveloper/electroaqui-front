@@ -1,8 +1,8 @@
 <div class="modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Listado de Ejemplo</h4>
+                <h4 class="modal-title">Pagare</h4>
             </div>
             <div class="modal-body">
                 <div class="panel panel-default">
@@ -13,33 +13,39 @@
                                 <tbody>
                                     <tr>
                                         <td>
+                                            <img src="../../img/electroaqui.png" style="width:150px; height:150px">
                                             <p align="center" style="text-align:center">
 
                                                 PAGARE A LA ORDEN
                                             </p>
                                             <p style="text-align:right">
-                                                Asunción,……….de…………………de………
+                                                Asunción,{{datos.dia}} .de {{datos.mes}} de {{datos.anho}}
 
                                             </p>
-                                            <p style="text-align:left">Factura N°: 001-001-0000076 </p>
+                                            <p style="text-align:left">Factura N°: {{datos.facturas}} </p>
                                             <p style="text-align:justify">
                                                 El Día {{datos.dia}} del mes de {{datos.mes}} del ano {{datos.anho}}. Pagaré(mos) solidariamente y sin protesto a la Orden de “ELECTRO AQUÍ” de VICTOR RODRIGO ESPINOLA VERA, con Cédula de Identidad Civil N°2.997.160, en su domicilio de la Ciudad de San
-                                                Lorenzo, calle Pa’i Giménez, entre Nicanor Ríos y 24 de Junio la cantidad de Gs.2.136.000 (GUARANIES DOS MILLONES CIENTO TREINTA Y SEIS MIL).----------------------------------- Por igual valor recibido en
-                                                efectivo a mi/nuestra entera satisfacción. La mora se producirá por mero vencimiento del plazo sin necesidad de protesto de ningún requerimiento judicial o extrajudicial por parte del acreedor. La falta
-                                                de pago de este documento a su vencimiento originará automáticamente el decaimiento de los plazos señalados en todos los demás documentos y causará de pleno derecho del vencimiento anticipado de los pagarés
-                                                no vencidos pudiendo el Acreedor exigir el pago inmediato del saldo total de la deuda. La mora originara también automáticamente una pena del…………además del interés legal del…………por ciento anual a partir
-                                                de la fecha de vencimiento de cada uno de los pagarés reclamados los que continuarán devengándose hasta el reembolso total del crédito y sin que ello implique novación, prorroga o espera. El pago de la pena
-                                                estipulada en ningún caso implicará la extinción de la obligación principal. Todas las partes intervinientes en este documento se someten a la jurisdicción y competencia de los Jueces y Tribunales de la
-                                                ciudad de Asunción y declaran prorrogado cualquier otra que pudiera corresponder.----------------------------------------------------------------------------- Por el presente instrumento les autorizo en
-                                                forma irrevocable otorgando suficiente mandato en los términos del Art. 917 Inc. A) del código civil, para que por propia cuenta o a través de empresas especializadas de nuestro medio puedan recabar información
-                                                en plaza referente a mi situación patrimonial, solvencia o el cumplimiento de mis obligaciones comerciales, como así también a la verificación, confirmación y/o certificación de los datos por mi proveídos
-                                                a fin de que puedan contar con los elementos de juicio y análisis necesarios para la concesión del crédito que me encuentro gestionando de igual manera y en términos, les autorizo para que en caso de un
-                                                atraso superior a 90 días en el pago del presente crédito o de cualquier otra deuda pendiente que mantenga con Ud(s). Incluyan mi nombre personal o Razón social que represente, en el Registro General de
-                                                Morosos INFORMCONF como así también proporcionar dicha información a terceros interesados.---------------------------------------------------------------------------------------------------------------------------
+                                                Lorenzo, calle Pa’i Giménez, entre Nicanor Ríos y 24 de Junio la cantidad de Gs.{{datos.total}} ({{datos.montoLetras}}).----------------------------------- Por igual valor recibido en efectivo a mi/nuestra
+                                                entera satisfacción. La mora se producirá por mero vencimiento del plazo sin necesidad de protesto de ningún requerimiento judicial o extrajudicial por parte del acreedor. La falta de pago de este documento
+                                                a su vencimiento originará automáticamente el decaimiento de los plazos señalados en todos los demás documentos y causará de pleno derecho del vencimiento anticipado de los pagarés no vencidos pudiendo el
+                                                Acreedor exigir el pago inmediato del saldo total de la deuda. La mora originara también automáticamente una pena del…………además del interés legal del…………por ciento anual a partir de la fecha de vencimiento
+                                                de cada uno de los pagarés reclamados los que continuarán devengándose hasta el reembolso total del crédito y sin que ello implique novación, prorroga o espera. El pago de la pena estipulada en ningún caso
+                                                implicará la extinción de la obligación principal. Todas las partes intervinientes en este documento se someten a la jurisdicción y competencia de los Jueces y Tribunales de la ciudad de Asunción y declaran
+                                                prorrogado cualquier otra que pudiera corresponder.----------------------------------------------------------------------------- Por el presente instrumento les autorizo en forma irrevocable otorgando suficiente
+                                                mandato en los términos del Art. 917 Inc. A) del código civil, para que por propia cuenta o a través de empresas especializadas de nuestro medio puedan recabar información en plaza referente a mi situación
+                                                patrimonial, solvencia o el cumplimiento de mis obligaciones comerciales, como así también a la verificación, confirmación y/o certificación de los datos por mi proveídos a fin de que puedan contar con los
+                                                elementos de juicio y análisis necesarios para la concesión del crédito que me encuentro gestionando de igual manera y en términos, les autorizo para que en caso de un atraso superior a 90 días en el pago
+                                                del presente crédito o de cualquier otra deuda pendiente que mantenga con Ud(s). Incluyan mi nombre personal o Razón social que represente, en el Registro General de Morosos INFORMCONF como así también proporcionar
+                                                dicha información a terceros interesados.---------------------------------------------------------------------------------------------------------------------------
 
                                             </p>
                                             <p align="left" style="text-align:left">
-                                                Cliente Código: 5443951. Nombre: {{datos.nombre}} {{datos.apellido}} Dirección: MAURICIO CARDOZO OCAMPOS C/ 1° DE MAYO. Teléfono: 0971937009. Cédula de Identidad Civil: 5443951. Firma:_________________________________________
+                                                Cliente Código: {{datos.idCliente}} </br>
+                                                Nombre: {{datos.cliente}}</br>
+                                                Dirección: {{datos.direccion}} </br>
+                                                Teléfono: {{datos.telefono}} </br>
+                                                Cédula de Identidad Civil: {{datos.documento}} </br>
+                                                Firma:_________________________________________
                                             </p>
 
                                         </td>

@@ -72,7 +72,7 @@
                             <label class="col-sm-12">RUC: {{fac.ruc}}</label>
                         </div>
                         <div class="form-group text-center">
-                            <label class="col-sm-12">Factura: {{fac.talonario}} - {{fac.numeroComprobante}}</label>
+                            <label class="col-sm-12">Factura: {{fac.facturas}}</label>
                         </div>
                     </div>
                 </div>
@@ -121,9 +121,16 @@
         <br/>
         <fieldset>
             <div class="text-center">
-                <button ng-click="cancelar()" type="button" class="btn btn-danger btn-sm">
+                <button ng-click="launch('cancelar')" type="button" class="btn btn-danger btn-sm">
                     <i class="icon icon-remove"></i>&nbsp;&nbsp;Volver
                 </button>
+                <button ng-click="launch('pagare')" type="button" class="btn btn-info btn-sm">
+                    <i class="icon icon-search"></i>&nbsp;&nbsp;Pagare
+                </button>
+                <button ng-click="launch('generarCuota')" type="button" class="btn btn-custom btn-sm">
+                    <i class="icon icon-search"></i>&nbsp;&nbsp;Cuotas
+                </button>
+
             </div>
         </fieldset>
     </form>
