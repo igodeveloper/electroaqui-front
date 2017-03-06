@@ -11,8 +11,8 @@
  * Se define el controller y sus dependencias.
  */
 app.controller('CrearClientesController', [
-            '$scope', '$route', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', 'BaseServices',
-            function ($scope, $route, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, BaseServices) {
+    '$scope', '$route', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', 'BaseServices',
+    function($scope, $route, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, BaseServices) {
 
         /**
          *  Objeto  que almacena los filtros obtenidos del formulario
@@ -24,12 +24,13 @@ app.controller('CrearClientesController', [
         $scope.datos = {};
         $scope.titulo = 'Clientes';
 
-        $scope.generarBodyData = function (datos) {
+        $scope.generarBodyData = function(datos) {
             var bodyData = {
                 id: datos.id,
                 nombre: datos.nombre,
                 apellido: datos.apellido,
                 documento: datos.documento,
+                ruc: datos.ruc,
                 telefono: datos.telefono,
                 direccion: datos.direccion,
                 email: datos.email
@@ -37,12 +38,13 @@ app.controller('CrearClientesController', [
             return bodyData;
         };
 
-        $scope.generarParaJSON = function (datos) {
+        $scope.generarParaJSON = function(datos) {
             var bodyData = {
                 id: datos.id,
                 nombre: datos.nombre,
                 apellido: datos.apellido,
                 documento: datos.documento,
+                ruc: datos.ruc,
                 telefono: datos.telefono,
                 direccion: datos.direccion,
                 email: datos.email
@@ -112,21 +114,21 @@ app.controller('CrearClientesController', [
          * @public
          * @name kml3-frontend.module.facturacion.js.controllers.crear-areas-retencion-controller.js#confirmar
          */
-        $scope.confirmar = function () {
+        $scope.confirmar = function() {
 
             $scope.uiBlockuiConfig.bloquear = true;
             BaseServices.insertar($scope.generarBodyData($scope.datos), 'clientes/')
                 .then(
-                    function (response) {
+                    function(response) {
                         try {
                             if (response.status === 201) {
 
                                 $scope.bloqueoFormulario = true;
 
                                 dlg = $dialogs.notify("Notificación", "Sus datos se guardaron con éxito!");
-                                dlg.result.then(function (btn) {
+                                dlg.result.then(function(btn) {
                                     $route.reload();
-                                }, function (btn) {});
+                                }, function(btn) {});
 
                             } else {
                                 if (response.data.messages != null) {
@@ -156,8 +158,8 @@ app.controller('CrearClientesController', [
          * @public
          * @name kml3-frontend.module.facturacion.js.controllers.crear-areas-retencion-controller.js#cancelar
          */
-        $scope.cancelar = function () {
+        $scope.cancelar = function() {
             $location.path('/clientes')
         };
-            }
-        ]);
+    }
+]);

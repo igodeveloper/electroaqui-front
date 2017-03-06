@@ -115,7 +115,7 @@ app.controller('FacturasController', [
                     name: "id",
                     index: "id",
                     align: "center",
-                    width: 50,
+                    width: 70,
                     classes: "wrappedCell",
                     hidden: false
                 },
@@ -124,7 +124,7 @@ app.controller('FacturasController', [
                     name: "cliente",
                     index: "cliente",
                     align: "left",
-                    width: 200,
+                    width: 250,
                     classes: "wrappedCell",
                     hidden: false,
                     formatter: function(cellvalue, options, rowObject) {
@@ -141,7 +141,7 @@ app.controller('FacturasController', [
                     name: "fechaFactura",
                     index: "fechaFactura",
                     align: "center",
-                    width: 150,
+                    width: 180,
                     classes: "wrappedCell",
                     hidden: false,
                     formatter: function(cellValue, options) {
@@ -195,7 +195,7 @@ app.controller('FacturasController', [
                     name: "total",
                     index: "total",
                     align: "right",
-                    width: 120,
+                    width: 180,
                     formatter: 'number',
                     formatoptions: {
                         thousandsSeparator: ".",

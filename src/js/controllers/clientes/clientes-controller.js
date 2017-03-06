@@ -8,8 +8,8 @@
  * @author   <a iván gomez</>
  */
 app.controller('ClientesController', [
-           '$scope', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', 'BaseServices',
-            function ($scope, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, BaseServices) {
+    '$scope', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', 'BaseServices',
+    function($scope, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, BaseServices) {
 
         /**
          *  Objeto  que almacena los filtros obtenidos del formulario
@@ -22,12 +22,13 @@ app.controller('ClientesController', [
         $scope.datos = {};
         //$scope.totalGrilla = 0;
 
-        $scope.generarBodyData = function (datos) {
+        $scope.generarBodyData = function(datos) {
             var bodyData = {
                 id: datos.id,
                 nombre: datos.nombre,
                 apellido: datos.apellido,
                 documento: datos.documento,
+                ruc: datos.ruc,
                 telefono: datos.telefono,
                 direccion: datos.direccion,
                 email: datos.email
@@ -35,12 +36,13 @@ app.controller('ClientesController', [
             return bodyData;
         };
 
-        $scope.generarParaJSON = function (datos) {
+        $scope.generarParaJSON = function(datos) {
             var bodyData = {
                 id: datos.id,
                 nombre: datos.nombre,
                 apellido: datos.apellido,
                 documento: datos.documento,
+                ruc: datos.ruc,
                 telefono: datos.telefono,
                 direccion: datos.direccion,
                 email: datos.email
@@ -127,17 +129,16 @@ app.controller('ClientesController', [
             rowNum: 10,
             rowList: [],
             postData: {
-                cantidad: function () {
+                cantidad: function() {
                     return $scope.tableParams.getGridParam("rowNum");
                 },
-                inicio: function () {
+                inicio: function() {
                     return $scope.tableParams.getRowsStart();
                 },
                 orderBy: "id",
                 orderDir: "ASC"
             },
-            colModel: [
-                {
+            colModel: [{
                     label: "Id",
                     name: "id",
                     index: "id",
@@ -149,7 +150,7 @@ app.controller('ClientesController', [
                     label: "Nombre",
                     name: "nombre",
                     index: "nombre",
-                    align: 'right',
+                    align: 'left',
                     width: 200,
                     hidden: false
                 },
@@ -157,7 +158,7 @@ app.controller('ClientesController', [
                     label: "Apellido",
                     name: "apellido",
                     index: "apellido",
-                    align: 'right',
+                    align: 'left',
                     width: 200,
                     hidden: false
                 },
@@ -173,6 +174,14 @@ app.controller('ClientesController', [
                         thousandsSeparator: ".",
                         decimalPlaces: 0
                     },
+                },
+                {
+                    label: "RUC",
+                    name: "ruc",
+                    index: "ruc",
+                    align: "right",
+                    width: 200,
+                    hidden: false
                 },
                 {
                     label: "Teléfono",
@@ -200,11 +209,11 @@ app.controller('ClientesController', [
                     width: 200,
                     hidden: true
                 },
-                    ],
+            ],
             jsonReader: {
                 repeatitems: false,
                 root: "lista",
-                total: function (data) {
+                total: function(data) {
                     var total = Math.ceil(data.total /
                         $scope.tableParams.getGridParam("rowNum"));
                     return total;
@@ -219,14 +228,14 @@ app.controller('ClientesController', [
             gridview: false,
             hidegrid: false,
             altRows: true,
-            loadError: function (xhr, st, err) {
+            loadError: function(xhr, st, err) {
                 var response = MasterJqgridUtils.processResponseJqgrid(xhr, $scope.tableParams);
                 if (xhr.status !== 404) {
                     $scope.alertErrorServices.addSimpleAlert("operationError", null, response.data.messages);
                     $scope.$apply();
                 }
             },
-            onSortCol: function (index, iCol, sortorder) {
+            onSortCol: function(index, iCol, sortorder) {
                 $scope.tableParams.setGridParam({
                     postData: {
                         orderBy: index,
@@ -236,12 +245,12 @@ app.controller('ClientesController', [
                 $scope.disabled = true;
                 $scope.$apply();
             },
-            onSelectRow: function (id, status, e) {
+            onSelectRow: function(id, status, e) {
                 $scope.$apply($scope.rowSeleccionado = id);
                 $scope.$apply($scope.disabled = false);
             },
-            loadComplete: function (cellvalue) {},
-            onPaging: function () {}
+            loadComplete: function(cellvalue) {},
+            onPaging: function() {}
         };
 
         /** 
@@ -258,18 +267,18 @@ app.controller('ClientesController', [
          * @public
          * @param {string}which identificador del popup definido localmente entre la vista y el contralador
          */
-        $scope.launch = function (which) {
+        $scope.launch = function(which) {
             var dlg = null;
             switch (which) {
 
-            case 'eliminar':
-                dlg = $dialogs.warningConfirm("Por Favor Confirmar", "Esta Seguro que desea eliminar el registro?");
-                dlg.result.then(function (btn) {
-                    $scope.eliminar();
-                }, function (btn) {
+                case 'eliminar':
+                    dlg = $dialogs.warningConfirm("Por Favor Confirmar", "Esta Seguro que desea eliminar el registro?");
+                    dlg.result.then(function(btn) {
+                        $scope.eliminar();
+                    }, function(btn) {
 
-                });
-                break;
+                    });
+                    break;
 
             }; // end switch
         };
@@ -281,7 +290,7 @@ app.controller('ClientesController', [
          * @public
          * @name kml3-frontend.module.facturacion.js.controllers.areas-retencion-controller.js#go
          */
-        $scope.go = function (path) {
+        $scope.go = function(path) {
             $location.path($location.path() + path);
         };
 
@@ -291,14 +300,13 @@ app.controller('ClientesController', [
          * @public
          * @name kml3-frontend.module.facturacion.js.controllers.areas-retencion-controller.js#modificar
          */
-        $scope.modificar = function () {
+        $scope.modificar = function() {
             // codigo seleccionado de ejemplo, aqui se le debe pasar el codigo de la fila seleccionada
             if ($scope.rowSeleccionado) {
 
                 var fila = $scope.tableParams.getGridParam("userData")[$scope.rowSeleccionado - 1];
 
                 $scope.selectedRow = $scope.tableParams.getRowData($scope.rowSeleccionado);
-                console.log(fila);
                 // Navigator utilizado para pasar filtros entre controller
                 Navigator.goTo($location.path() + '/modificar', {
                     dataM: fila
@@ -312,13 +320,13 @@ app.controller('ClientesController', [
          * @name kml3-frontend.module.facturacion.js.controllers.areas-retencion-controller.js#eliminar
          * @public
          */
-        $scope.eliminar = function () {
+        $scope.eliminar = function() {
             $scope.uiBlockuiConfig.bloquear = true;
             if ($scope.rowSeleccionado) {
                 $scope.selectedRow = $scope.tableParams.getRowData($scope.rowSeleccionado);
 
                 BaseServices.eliminar($scope.selectedRow.id, 'clientes/').then(
-                    function (response) {
+                    function(response) {
                         try {
                             if (response.status === 200) {
                                 $scope.alertSuccesServices.addSimpleAlert("success", null, "Los datos se eliminaron correctamente");
@@ -362,7 +370,7 @@ app.controller('ClientesController', [
          * @name kml3-frontend.module.facturacion.js.controllers.areas-retencion-controller.js#limpiar
          * @public
          */
-        $scope.limpiar = function () {
+        $scope.limpiar = function() {
 
             MasterUtils.deleteValues($scope.datos);
 
@@ -380,7 +388,7 @@ app.controller('ClientesController', [
          * @name kml3-frontend.module.facturacion.js.controllers.areas-retencion-controller.js#buscar
          * @public
          */
-        $scope.buscar = function () {
+        $scope.buscar = function() {
             $scope.disabled = true;
             MasterUtils.deleteUndefinedValues($scope.datos);
             /*var post = $scope.tableParams.getGridParam("postData");
@@ -400,4 +408,5 @@ app.controller('ClientesController', [
             });
             $scope.tableParams.reloadGrid();
         };
-}]);
+    }
+]);

@@ -55,6 +55,15 @@
                     <div class="custom-error" ng-show="myForm.input4.$dirty &&  myForm.input4.$invalid"> <span ng-show="myForm.input4.$error.required">Requerido! </span> </div>
                 </div>
             </div>
+            <!-- clientes.ruc -->
+            <div class="form-group">
+                <label class="col-lg-3 control-label">RUC</label>
+                <div ng-class="{'has-error':myForm.inputR.$invalid}">
+                    <div class="input-group col-lg-5">
+                        <input type="text" class="form-control input-sm" name="inputR" ng-model="datos.ruc" placeholder="" maxlength="10" uppercase ng-required="false" focus-me="false" /> </div>
+                    <div class="custom-error" ng-show="myForm.inputR.$dirty &&  myForm.inputR.$invalid"> <span ng-show="myForm.inputR.$error.required">Requerido! </span> </div>
+                </div>
+            </div>
             <!-- clientes.telefono -->
             <div class="form-group">
                 <label class="col-lg-3 control-label">Telefono</label>

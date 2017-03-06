@@ -24,8 +24,8 @@ app.controller('CuotasFacturasController', [
          */
         $scope.titulo = 'Facturas';
         $scope.detalle = [];
-        $scope.fac = {};
-        $scope.fac.totalFactura = 0;
+        //$scope.fac = {};
+        // $scope.fac.totalFactura = 0;
         $scope.datos = {};
 
         /**
@@ -111,7 +111,6 @@ app.controller('CuotasFacturasController', [
                     fechaVencimiento: fecha.setMonth(fecha.getMonth() + 1),
                     fechaPago: ""
                 };
-                console.log(obj);
                 $scope.detalle.push(obj);
             }
         };
@@ -155,6 +154,12 @@ app.controller('CuotasFacturasController', [
                                 $scope.bloqueoFormulario = true;
                                 dlg = $dialogs.notify("Notificación", "Sus datos se guardaron con éxito!");
                                 $args.dataM.chequera = 'S';
+                                $args.dataM.ruc = $scope.datos.ruc;
+                                $args.dataM.documento = $scope.datos.documento;
+                                $args.dataM.telefono = $scope.datos.telefono;
+                                $args.dataM.cliente = $scope.datos.cliente;
+                                $args.dataM.idCliente = $scope.datos.idCliente;
+                                console.log($args.dataM);
                                 dlg.result.then(function(btn) {
                                     Navigator.goTo($location.path('/facturas/consultar'), {
                                         dataM: $args.dataM
@@ -191,6 +196,7 @@ app.controller('CuotasFacturasController', [
         };
 
         $scope.chequera = function() {
+            $scope.clientes();
             dlg = $dialogs.create(
                 'partials/modales/chequera-modal.html',
                 'ChequeraController', {
@@ -211,39 +217,25 @@ app.controller('CuotasFacturasController', [
         };
         $scope.clientes = function() {
             angular.forEach($scope.clientesLista, function(value, key) {
-                if (value.id == $scope.fac.idCliente) {
+                if (value.id == parseInt($scope.datos.idCliente)) {
                     $scope.datos.cliente = value.nombre + " " + value.apellido;
                     $scope.datos.ruc = value.documento;
                     $scope.datos.documento = value.documento;
-                    $scope.fac.telefono = value.telefono;
+                    $scope.datos.telefono = value.telefono;
                 }
             });
         };
         $scope.init = function() {
-            /**
-             *  Objeto que donde se almacena los dato ingresados en los formularios
-             *  @type {Object}
-             *  @field
-             */
-            $scope.getListas('clientes', 'clientesLista', {});
-            if ($args) {
-                /**
-                 *  Objeto  que almacena los filtros obtenidos del formulario
-                 *  @public
-                 *  @type {Object}
-                 *  @field
-                 *  @name kml3-frontend.js.controllers.modificar-rubros-controller
-                 */
-                $scope.datos = $args.dataM;
 
+            if ($args) {
+                $scope.getListas('clientes', 'clientesLista', {});
+                $scope.datos = $args.dataM;
                 $scope.datos.factura = $args.dataM.talonario + "-" + ("0000000" + $args.dataM.numeroComprobante).slice(-7);
                 $scope.datos.fechaFactura = new Date($args.dataM.fechaFactura);
                 if ($scope.datos.chequera == "S") {
                     $scope.getListas('chequera', 'detalle', { "idFactura": $scope.datos.id });
-
                 } else {
                     $scope.datos.cuotas = 1;
-
                 }
                 $scope.calculaCuota();
                 $scope.clientes();
