@@ -109,7 +109,8 @@ app.controller('CuotasFacturasController', [
                     montoTotal: $scope.datos.montoCuotas,
                     fechaEmision: fechaEmision.setMonth(fechaEmision.getMonth() + 0),
                     fechaVencimiento: fecha.setMonth(fecha.getMonth() + 1),
-                    fechaPago: ""
+                    fechaPago: "",
+                    estado: "PENDIENTE"
                 };
                 $scope.detalle.push(obj);
             }
@@ -159,7 +160,6 @@ app.controller('CuotasFacturasController', [
                                 $args.dataM.telefono = $scope.datos.telefono;
                                 $args.dataM.cliente = $scope.datos.cliente;
                                 $args.dataM.idCliente = $scope.datos.idCliente;
-                                console.log($args.dataM);
                                 dlg.result.then(function(btn) {
                                     Navigator.goTo($location.path('/facturas/consultar'), {
                                         dataM: $args.dataM

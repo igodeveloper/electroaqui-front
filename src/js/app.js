@@ -149,8 +149,12 @@ app.config(['$routeProvider', '$controllerProvider',
 
         });
 
+        $routeProvider.when('/chequera', {
+            templateUrl: 'partials/chequera/chequera-partial.html',
+            controller: 'ChequerasController',
+            titulo: 'Chequera'
 
-
+        });
 
         $httpProvider.responseInterceptors.push(function($q) {
             return function(promise) {

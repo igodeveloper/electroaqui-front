@@ -9,14 +9,7 @@
     <div ui-breadcrumb/>
     <ui-blockui data-ui-blockui-config="uiBlockuiConfig" />
 
-    <div>
-        <!-- begin alert directive -->
-        <ui-alert alert-service="alertSuccesServices" alert-config="alertSuccessConfig" id="id_alertSuccessBox">
-        </ui-alert>
-
-        <ui-alert alert-service="alertErrorServices" alert-config="alertErrorConfig" id="id_alertErrorBox"></ui-alert>
-        <!-- end alert directive -->
-    </div>
+   
     <div class="col-lg-12 col-lg-offset-0">
         <div class="panel panel-default">
             <!-- begin panel -->
@@ -25,7 +18,7 @@
                 <!-- form-horizontal contenedor principarl botones inptus-->
                 <form class="form-horizontal" role="form" name="busquedaForm">
                     <div class="row">
-                        <div class="col-lg-9">
+                        <div class="col-lg-10">
                             <!-- facturas.id_cliente -->
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Cliente</label>
@@ -36,30 +29,37 @@
                                     </select>
                                 </div>
                             </div>
-                            <!-- facturas.talonario -->
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Factura</label>
-                                <div class="input-group col-lg-3">
-                                    <input type="text" class="form-control input-sm" placeholder="001-001" ng-model="datos.talonario" uppercase focus-me="false" />
+                            <!-- chequera.fecha_emision -->
+                            <div class="form-group"> <label class="col-lg-3 control-label">FechaEmision</label>
+                                <div class="input-group col-lg-4">
+                                    <ui-datetimepicker name="input13" disable-timepicker='true' ng-model='datos.FechaEmision' date-format='dd/MM/yyyy' placeholder='Seleccione una Fecha'  required='false'>
+                                        </ui-datetimepicker>                                     
                                 </div>
-                                <div class="input-group col-lg-5">
-                                    <input type="text" class="form-control input-sm" ng-model="datos.numeroComprobante" placeholder="0000002" uppercase focus-me="false" />                                    </div>
+                                <div class="input-group col-lg-4">
+                                    <ui-datetimepicker name="input13" disable-timepicker='true' ng-model='datos.FechaEmision' date-format='dd/MM/yyyy' placeholder='Seleccione una Fecha'  required='false'>
+                                        </ui-datetimepicker>                                     
+                                </div>
                             </div>
-                            <!-- facturas.condicion -->
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Condicion</label>
-                                <div class="input-group col-lg-8">
-
-                                    <select ui-select2 class=" form-control input-sm" name="input2" ng-model="datos.condicion" placeholder="Seleccionar">
-                                        <option value="">Todos</option>
-                                        <option value="CT">Contado</option>
-                                        <option value="CR">Credito</option>
-
-                                    </select>
+                            <!-- chequera.fecha_vencimiento -->
+                            <div class="form-group"> <label class="col-lg-3 control-label">FechaVencimiento</label>
+                                <div class="input-group col-lg-4">
+                                    <ui-datetimepicker name="input13" disable-timepicker='true' ng-model='datos.fechaVencimiento' date-format='dd/MM/yyyy' placeholder='Seleccione una Fecha'  required='false'>
+                                        </ui-datetimepicker> 
                                 </div>
+                                <div class="input-group col-lg-4">
+                                    <ui-datetimepicker name="input13" disable-timepicker='true' ng-model='datos.fechaVencimiento' date-format='dd/MM/yyyy' placeholder='Seleccione una Fecha'  required='false'>
+                                        </ui-datetimepicker> 
+                                </div>
+                            </div>
+                            <!-- chequera.fecha_pago -->
+                            <div class="form-group"> <label class="col-lg-3 control-label">FechaPago</label>
+                                <div class="input-group col-lg-8"> <ui-datetimepicker name="input13" disable-timepicker='true' ng-model='datos.fechaPago' date-format='dd/MM/yyyy' placeholder='Seleccione una Fecha'>
+                                        </ui-datetimepicker>  </div>
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        <br/>
+                        <br/>
+                        <div class="col-lg-2">
                             <div class="form-horizontal">
                                 <button type="submit" ng-click="buscar()" class="btn btn-custom btn-sm">
                                     Buscar <i class="icon-search icon-large"></i>
@@ -79,31 +79,15 @@
         <!-- end panel -->
         <!-- begin Grupo de Botones-->
         <div class="form-inline">
-
             <!-- begin boton modificar estandar-->
             <div class="form-group">
-                <button type="button" class="btn btn-info btn-sm" ng-click="modificar()" ng-disabled="!rowSeleccionado">
-                    <i class="icon icon-search"></i>&nbsp;&nbsp;Consultar
+                <button type="button" class="btn btn-success btn-sm" ng-click="cobrar()" ng-disabled="disabled">
+                    <i class="icon icon-money"></i>&nbsp;&nbsp;Cobrar
                 </button>
             </div>
-
-            <!-- begin boton agregar estandar-->
-            <div class="form-group">
-                <button type="button" class="btn btn-success btn-sm" ng-click="go('/agregar')">
-                    <i class="icon icon-plus"></i>&nbsp;&nbsp;Agregar
-                </button>
-            </div>
-
-            <!-- begin boton agregar estandar-->
-            <div class="form-group">
-                <button type="button" class="btn btn-custom btn-sm" ng-click="cuotas()" ng-disabled="!rowSeleccionado">
-                    <i class="icon icon-plus"></i>&nbsp;&nbsp;Cuotas
-                </button>
-            </div>
-
             <!-- begin boton eliminar estandar-->
             <div class="form-group">
-                <button type="button" class="btn btn-danger btn-sm" ng-click="launch('anular')" ng-disabled="!rowSeleccionado">
+                <button type="button" class="btn btn-danger btn-sm" ng-click="launch('anular')" ng-disabled="disabled">
                     <i class="icon icon-trash"></i>&nbsp;&nbsp;Anular
                 </button>
             </div>

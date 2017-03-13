@@ -16,7 +16,6 @@ app.controller('ChequeraController', ['$scope', 'serviciosjqgrid', '$modalInstan
         $scope.imprimir = function() {
             var table = document.getElementById('chequera').innerHTML;
             var myWindow = window.open('', '', 'width=800, height=600');
-
             myWindow.document.write(table);
             myWindow.print();
             $modalInstance.dismiss('canceled');
