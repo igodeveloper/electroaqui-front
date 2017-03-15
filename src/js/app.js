@@ -150,9 +150,15 @@ app.config(['$routeProvider', '$controllerProvider',
         });
 
         $routeProvider.when('/chequera', {
-            templateUrl: 'partials/chequera/chequera-partial.html',
+            templateUrl: 'partials/chequera/chequeras-partial.html',
             controller: 'ChequerasController',
             titulo: 'Chequera'
+
+        });
+        $routeProvider.when('/chequera/cobrar', {
+            templateUrl: 'partials/chequera/cobrar-chequeras-partial.html',
+            controller: 'CobrarChequerasController',
+            titulo: 'Cobrar'
 
         });
 

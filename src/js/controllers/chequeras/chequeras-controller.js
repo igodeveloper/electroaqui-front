@@ -252,6 +252,24 @@ app.controller('ChequerasController', [
                     width: 200,
                     classes: "wrappedCell",
                     hidden: true
+                },
+                {
+                    label: "talonario",
+                    name: "idCliente",
+                    index: "idCliente",
+                    align: "center",
+                    width: 200,
+                    classes: "wrappedCell",
+                    hidden: true
+                },
+                {
+                    label: "idCliente",
+                    name: "idCliente",
+                    index: "idCliente",
+                    align: "center",
+                    width: 200,
+                    classes: "wrappedCell",
+                    hidden: true
                 }
             ],
             jsonReader: {
@@ -297,11 +315,11 @@ app.controller('ChequerasController', [
                 if (data.lista) {
                     var row;
                     for (var i = 0; i < data.lista.length; i++) {
-                        
-                         if (data.lista[i].estado == 'PENDIENTE') {
-                             row = $("#" + (i + 1));
-                             row.addClass("infoTree");
-                         }
+                        var hoy = new Date().getTime();
+                        if (data.lista[i].fechaVencimiento < hoy) {
+                            row = $("#" + (i + 1));
+                            row.addClass("infoTree");
+                        }
 
                     }
                 }
@@ -315,7 +333,7 @@ app.controller('ChequerasController', [
             $location.path($location.path() + path);
         };
 
-        $scope.modificar = function () {
+        $scope.cobrar = function () {
             // codigo seleccionado de ejemplo, aqui se le debe pasar el codigo de la fila seleccionada
             if ($scope.rowSeleccionado) {
 
@@ -323,7 +341,7 @@ app.controller('ChequerasController', [
 
                 $scope.selectedRow = $scope.tableParams.getRowData($scope.rowSeleccionado);
                 // Navigator utilizado para pasar filtros entre controller
-                Navigator.goTo($location.path() + '/modificar', {
+                Navigator.goTo($location.path() + '/cobrar', {
                     dataM: fila
                 });
             }

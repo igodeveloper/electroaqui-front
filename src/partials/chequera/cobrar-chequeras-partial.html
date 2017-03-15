@@ -1,0 +1,140 @@
+<section>
+    <!-- Titulo de la pagina -->
+    <h1>{{titulo}}</h1>
+
+    <div ui-breadcrumb></div>
+    <ui-blockui data-ui-blockui-config="uiBlockuiConfig" />
+
+    <div>
+        <!-- begin alert directive -->
+        <ui-alert alert-service="alertSuccesServices" alert-config="alertSuccessConfig" id="id_alertSuccessBox">
+        </ui-alert>
+
+        <ui-alert alert-service="alertErrorServices" alert-config="alertErrorConfig" id="id_alertErrorBox"></ui-alert>
+        <!-- end alert directive -->
+    </div>
+    <form class="form-horizontal" name="myForm" novalidate ng-submit="confirmar()">
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Datos Clientes</div>
+                    <div class="panel-body">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Cliente</label>
+                                <div ng-class="{'has-error':myForm.input2.$invalid}">
+                                    <div class="input-group col-sm-8">
+                                        <select ui-select2 class=" form-control" name="input2" ng-model="datos.idCliente" placeholder="Seleccionar" disabled>
+                                            <option value="">Seleccione</option>
+                                            <option ng-repeat="l in clientesLista" value="{{l.id}}">{{l.nombre}} {{l.apellido}} </option>
+                                        </select>
+                                    </div>
+                                    <div class="custom-error" ng-show="myForm.input2.$dirty &&  myForm.input2.$invalid"> <span ng-show="myForm.input2.$error.required">Requerido! </span> <span ng-show="myForm.input2.$error.numerico">                      El campo debe ser numerico                  </span>                                        </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Factura</label>
+                                <div ng-class="{'has-error':myForm.input12.$invalid}">
+                                    <div class="input-group col-sm-8">
+                                        <input type="text" class="form-control " name="input12" ng-model="datos.factura" ng-required="true" disabled/>
+                                    </div>
+                                    <div class="custom-error" ng-show="myForm.input12.$dirty &&  myForm.input12.$invalid"> <span ng-show="myForm.input12.$error.required">Requerido! </span> <span ng-show="myForm.input12.$error.numerico">                      El campo debe ser numerico                  </span>                                        </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Cuotas</label>
+                                <div ng-class="{'has-error':myForm.input3.$invalid}">
+                                    <div class="input-group col-sm-8">
+                                        <input type="number" class="form-control " name="input3" ng-model="datos.cuota" ng-disabled="true" validate-number ng-required="true"
+                                            ng-change="calculaCuota()" ng-disabled="datos.chequera == 'S'" min="1" />
+                                    </div>
+                                    <div class="custom-error" ng-show="myForm.input3.$dirty &&  myForm.input3.$invalid"> <span ng-show="myForm.input3.$error.required">Requerido! </span> <span ng-show="myForm.input3.$error.numerico">                      El campo debe ser numerico                  </span>                                        </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Monto Cuota</label>
+                                <div ng-class="{'has-error':myForm.input0.$invalid}">
+                                    <div class="input-group col-sm-8">
+                                        <strong>
+                                            Gs. <span id="currency-default">{{datos.monto | number:0}}</span>
+                                        </strong>
+                                    </div>
+                                    <div class="custom-error" ng-show="myForm.input0.$dirty &&  myForm.input0.$invalid"> <span ng-show="myForm.input0.$error.required">Requerido! </span> <span ng-show="myForm.input0.$error.numerico">                      El campo debe ser numerico                  </span>                                        </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Monto Total</label>
+                                <div ng-class="{'has-error':myForm.input4.$invalid}">
+                                    <div class="input-group col-sm-8">
+                                        <strong>
+                                            Gs. <span id="currency-default">{{datos.montoTotal | number:0}}</span>
+                                        </strong>
+                                    </div>
+                                    <div class="custom-error" ng-show="myForm.input4.$dirty &&  myForm.input4.$invalid"> <span ng-show="myForm.input4.$error.required">Requerido! </span> <span ng-show="myForm.input4.$error.numerico">                      El campo debe ser numerico                  </span>                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Dias de Atraso</label>
+                                <div ng-class="{'has-error':myForm.inputAtraso.$invalid}">
+                                    <div class="input-group col-sm-4">
+                                        <input type="number" class="form-control " name="inputAtraso" ng-model="datos.diasAtraso" ng-disabled="true" validate-number
+                                            ng-required="true" />
+                                    </div>
+                                    <div class="custom-error" ng-show="myForm.inputAtraso.$dirty &&  myForm.inputAtraso.$invalid"> <span ng-show="myForm.inputAtraso.$error.required">Requerido! </span> <span ng-show="myForm.inputAtraso.$error.numerico">                      El campo debe ser numerico                  </span>                                        </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Dias de gracia</label>
+                                <div ng-class="{'has-error':myForm.inputGracias.$invalid}">
+                                    <div class="input-group col-sm-4">
+                                        <input type="number" class="form-control " name="inputGracias" ng-model="datos.diasGracia" min="0" ng-disabled="!datos.diasAtraso>0"
+                                            validate-number ng-required="datos.diasAtraso>0" ng-change="calculaInteres()" />
+                                    </div>
+                                    <div class="custom-error" ng-show="myForm.inputGracias.$dirty &&  myForm.inputGracias.$invalid">
+                                        <span ng-show="myForm.inputGracias.$error.required">Requerido! </span>
+                                        <span ng-show="myForm.inputGracias.$error.numerico"> El campo debe ser numerico </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Intereses diarios</label>
+                                <div ng-class="{'has-error':myForm.inputPorce.$invalid}">
+                                    <div class="input-group col-sm-4">
+                                        <input type="number" class="form-control " name="inputPorce" ng-model="datos.intereses" min="0"  ng-disabled="!datos.diasAtraso>0"
+                                            validate-number ng-required="datos.diasAtraso>0" ng-change="calculaInteres()" />
+                                    </div>
+                                    <div class="custom-error" ng-show="myForm.inputPorce.$dirty &&  myForm.inputPorce.$invalid"> <span ng-show="myForm.inputPorce.$error.required">Requerido! </span> <span ng-show="myForm.inputPorce.$error.numerico">                      El campo debe ser numerico                  </span>                                        </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Monto Intereses</label>
+                                <div ng-class="{'has-error':myForm.inputintere.$invalid}">
+                                    <div class="input-group col-sm-4">
+                                        <strong>
+                                            Gs. <span id="currency-default">{{datos.montoIntereses | number:0}}</span>
+                                        </strong>
+                                    </div>
+                                    <div class="custom-error" ng-show="myForm.inputintere.$dirty &&  myForm.inputintere.$invalid"> <span ng-show="myForm.inputintere.$error.required">Requerido! </span> <span ng-show="myForm.inputintere.$error.numerico">                      El campo debe ser numerico                  </span>                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <fieldset>
+                    <div class="text-center">
+                        <button type="submit" ng-disabled="myForm.$invalid" class="btn btn-success btn-sm">
+                        <i class="icon icon-check"></i>&nbsp;&nbsp;Guardar
+                    </button>
+                        <button ng-click="cancelar()" type="button" class="btn btn-danger btn-sm">
+                        <i class="icon icon-remove"></i>&nbsp;&nbsp;Cancelar
+                    </button>
+                    </div>
+                </fieldset>
+            </div>
+    </form>
+    <!-- end form -->
+</section>

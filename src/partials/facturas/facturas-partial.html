@@ -30,7 +30,7 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Cliente</label>
                                 <div class="input-group col-lg-8">
-                                    <select ui-select2 class="form-control input-sm" onfocus="true" name="input2" ng-model="datos.idCliente" placeholder="Seleccionar">
+                                    <select ui-select2 class="form-control input-sm"  ng-focus="true" name="input2" ng-model="datos.idCliente" placeholder="Seleccionar">
                                         <option value="">Todos</option>
                                         <option ng-repeat="l in clientesLista" value="{{l.id}}"> {{l.documento}} - {{l.nombre}} {{l.apellido}} </option>
                                     </select>
