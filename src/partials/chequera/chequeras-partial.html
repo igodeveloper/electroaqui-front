@@ -21,8 +21,8 @@
                         <div class="col-lg-10">
                             <!-- facturas.id_cliente -->
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Cliente</label>
-                                <div class="input-group col-lg-8">
+                                <label class="col-lg-2 control-label">Cliente</label>
+                                <div class="input-group col-lg-9">
                                     <select ui-select2 class="form-control input-sm" onfocus="true" name="input2" ng-model="datos.idCliente" placeholder="Seleccionar">
                                         <option value="">Todos</option>
                                         <option ng-repeat="l in clientesLista" value="{{l.id}}"> {{l.documento}} - {{l.nombre}} {{l.apellido}} </option>
@@ -30,30 +30,40 @@
                                 </div>
                             </div>
                             <!-- chequera.fecha_emision -->
-                            <div class="form-group"> <label class="col-lg-3 control-label">FechaEmision</label>
-                                <div class="input-group col-lg-4">
-                                    <ui-datetimepicker name="input13" disable-timepicker='true' ng-model='datos.FechaEmision' date-format='dd/MM/yyyy' placeholder='Seleccione una Fecha'  required='false'>
+                            <div class="form-group"> <label class="col-lg-2 control-label">Fecha Emision</label>
+                            <div class="input-group col-lg-3">
+                                    <ui-datetimepicker name="input13" disable-timepicker='true' ng-model='datos.FechaEmision' date-format='dd/MM/yyyy' placeholder='Emision'  required='false'>
                                         </ui-datetimepicker>                                     
                                 </div>
-                                <div class="input-group col-lg-4">
-                                    <ui-datetimepicker name="input13" disable-timepicker='true' ng-model='datos.FechaEmision' date-format='dd/MM/yyyy' placeholder='Seleccione una Fecha'  required='false'>
+                                <div class="input-group col-lg-3">
+                                    <ui-datetimepicker name="input13" disable-timepicker='true' ng-model='datos.FechaEmisionDesde' date-format='dd/MM/yyyy' placeholder='Desde'  required='false'>
+                                        </ui-datetimepicker>                                     
+                                </div>
+                                <div class="input-group col-lg-3">
+                                    <ui-datetimepicker name="input13" disable-timepicker='true' ng-model='datos.FechaEmisionHasta' date-format='dd/MM/yyyy' placeholder='Hasta'  required='false'>
                                         </ui-datetimepicker>                                     
                                 </div>
                             </div>
                             <!-- chequera.fecha_vencimiento -->
-                            <div class="form-group"> <label class="col-lg-3 control-label">FechaVencimiento</label>
-                                <div class="input-group col-lg-4">
-                                    <ui-datetimepicker name="input13" disable-timepicker='true' ng-model='datos.fechaVencimiento' date-format='dd/MM/yyyy' placeholder='Seleccione una Fecha'  required='false'>
+                            <div class="form-group"> <label class="col-lg-2 control-label">FechaVencimiento</label>
+                                <div class="input-group col-lg-3">
+                                    <ui-datetimepicker name="input13" disable-timepicker='true' ng-model='datos.fechaVencimiento' date-format='dd/MM/yyyy' placeholder='Vencimiento'  required='false'>
                                         </ui-datetimepicker> 
                                 </div>
-                                <div class="input-group col-lg-4">
-                                    <ui-datetimepicker name="input13" disable-timepicker='true' ng-model='datos.fechaVencimiento' date-format='dd/MM/yyyy' placeholder='Seleccione una Fecha'  required='false'>
+                                <div class="input-group col-lg-3">
+                                    <ui-datetimepicker name="input13" disable-timepicker='true' ng-model='datos.fechaVencimientoDesde' date-format='dd/MM/yyyy' placeholder='Desde'  required='false'>
+                                        </ui-datetimepicker> 
+                                </div>
+                                <div class="input-group col-lg-3">
+                                    <ui-datetimepicker name="input13" disable-timepicker='true' ng-model='datos.fechaVencimientoHasta' date-format='dd/MM/yyyy' placeholder='Hasta'  required='false'>
                                         </ui-datetimepicker> 
                                 </div>
                             </div>
                             <!-- chequera.fecha_pago -->
-                            <div class="form-group"> <label class="col-lg-3 control-label">FechaPago</label>
-                                <div class="input-group col-lg-8"> <ui-datetimepicker name="input13" disable-timepicker='true' ng-model='datos.fechaPago' date-format='dd/MM/yyyy' placeholder='Seleccione una Fecha'>
+                            <div class="form-group"> <label class="col-lg-2 control-label">FechaPago</label>
+                                <div class="input-group col-lg-3"> 
+                                    <ui-datetimepicker name="input13" disable-timepicker='true' ng-model='datos.fechaPago' 
+                                    date-format='dd/MM/yyyy' placeholder='Seleccione una Fecha'>
                                         </ui-datetimepicker>  </div>
                             </div>
                         </div>

@@ -190,6 +190,7 @@ app.controller('VerFacturasController', [
                 $scope.fac = $args.dataM;
                 // $scope.getFactura($args.dataM.id);
                 $scope.fac.facturas = $args.dataM.talonario + "-" + ("0000000" + $args.dataM.numeroComprobante).slice(-7);
+                $scope.fac.condicionText = ($scope.fac.condicion == 'CT')?"CONTADO":"CREDITO";
                 $scope.clientes();
                 $scope.getListas('facturas-detalle', 'detalle', {
                     idFacturas: $args.dataM.id

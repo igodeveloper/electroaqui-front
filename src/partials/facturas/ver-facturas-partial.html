@@ -62,18 +62,30 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">Datos Factura</div>
                     <div class="panel-body">
-                        <div class="form-group text-center">
-                            <label class="col-sm-12">Timbrado Nro: {{fac.timbrado}}</label>
+                         <div class="form-group">
+                            <label class="col-sm-3 control-label">RUC</label>
+                            <div class="col-sm-9">
+                                <p class="form-control-static">{{800123999-9}}</p>
+                            </div>
                         </div>
-                        <div class="form-group text-center">
-                            <label class="col-sm-12">Vigencia: {{fac.vigencia}}</label>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Timbrado</label>
+                            <div class="col-sm-9">
+                                <p class="form-control-static">{{111444555}}</p>
+                            </div>
                         </div>
-                        <div class="form-group text-center">
-                            <label class="col-sm-12">RUC: {{fac.ruc}}</label>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Condicion</label>
+                            <div class="col-sm-9">
+                                <p class="form-control-static">{{fac.condicionText}}</p>
+                            </div>
                         </div>
-                        <div class="form-group text-center">
-                            <label class="col-sm-12">Factura: {{fac.facturas}}</label>
-                        </div>
+                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Factura</label>
+                            <div class="col-sm-9">
+                                <p class="form-control-static">{{fac.facturas}}</p>
+                            </div>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -111,8 +123,24 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">Totales</div>
                     <div class="panel-body">
-                        Total Factura : {{fac.total}} Total IVA : {{fac.totalIva}} Total totalExcenta : {{fac.totalExcenta}}
-
+                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Total</label>
+                            <div class="col-sm-9">
+                               Gs.{{fac.total | number}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">IVA</label>
+                            <div class="col-sm-9">
+                                Gs.{{fac.totalIva | number}}</p>
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Excenta</label>
+                            <div class="col-sm-9">
+                              Gs.{{fac.totalExcenta | number}}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

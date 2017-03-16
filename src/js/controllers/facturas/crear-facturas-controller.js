@@ -214,7 +214,7 @@ app.controller('CrearFacturasController', [
                 totalIva: $scope.fac.totalIva,
                 totalExcenta: $scope.fac.totalExcenta,
                 idEstado: 3,
-                condicion: "CT",
+                condicion: $scope.fac.condicion,
                 chequera: "N",
                 fechaFactura: new Date()
             }
@@ -227,7 +227,8 @@ app.controller('CrearFacturasController', [
 
 
         };
-
+        $scope.fac.talonario = '001-001';
+        $scope.fac.condicion = 'CR';
         $scope.getListas('clientes', 'clientesLista');
         $scope.getListas('productos', 'productosLista');
     }

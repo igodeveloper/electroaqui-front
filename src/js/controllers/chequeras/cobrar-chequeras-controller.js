@@ -8,7 +8,7 @@
  * @author   <a iván gomez</>
  */
 /**
- * Se define el controller y sus dependencias.
+ * Se dfine el controller y sus dependencias.
  */
 app.controller('CobrarChequerasController', [
     '$scope', '$route', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', '$args', 'BaseServices',
@@ -27,7 +27,8 @@ app.controller('CobrarChequerasController', [
                 fechaVencimiento: datos.fechaVencimiento,
                 fechaPago: datos.fechaPago,
                 idCliente: datos.idCliente,
-                estado: datos.estado
+                estado: datos.estado,
+                numeroFiscal: datos.numeroFiscal
 
             }
             return bodyData;
@@ -46,7 +47,9 @@ app.controller('CobrarChequerasController', [
                 fechaVencimiento: datos.fechaVencimiento,
                 fechaPago: datos.fechaPago,
                 idCliente: datos.idCliente,
-                estado: datos.estado
+                estado: datos.estado,
+                numeroFiscal: datos.numeroFiscal
+                
 
             }
             return bodyData;
@@ -117,7 +120,7 @@ app.controller('CobrarChequerasController', [
         $scope.confirmar = function () {
 
             $scope.uiBlockuiConfig.bloquear = true;
-            BaseServices.modificar($scope.generarBodyData($scope.datos), 'clientes/')
+            BaseServices.modificar($scope.generarBodyData($scope.datos), 'chequera/')
                 .then(
                     function (response) {
                         try {
@@ -234,12 +237,17 @@ app.controller('CobrarChequerasController', [
                  *  @name kml3-frontend.js.controllers.modificar-rubros-controller
                  */
                 $scope.datos = $args.dataM;
-                $scope.datos.factura = $args.dataM.talonario + "-" + ("0000000" + $args.dataM.numeroComprobante).slice(-7);
-                var hoy = new Date().getTime();
+                console.log($scope.datos);
+                var hoy = new Date();
                 var dif = $scope.restaFechas($filter('date')(new Date($args.dataM.fechaVencimiento), 'dd/MM/yyyy'), $filter('date')(new Date(hoy), 'dd/MM/yyyy'));
+                $scope.datos.fechaPago = new Date($args.dataM.fechaPago);
+                if($scope.datos.estado == "PENDIENTE"){
+                    $scope.datos.estado = 'PAGADO';
+                }
                 if (dif > 0) {
                     $scope.datos.diasAtraso = parseInt(dif);
                     $scope.datos.intereses = 0.0001;
+                    
                 } else {
                     $scope.datos.diasAtraso = parseInt(0);
                 }

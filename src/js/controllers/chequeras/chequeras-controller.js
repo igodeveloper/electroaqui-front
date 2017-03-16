@@ -307,7 +307,7 @@ app.controller('ChequerasController', [
                     var row;
                     for (var i = 0; i < data.lista.length; i++) {
                         var hoy = new Date().getTime();
-                        if (data.lista[i].fechaVencimiento < hoy) {
+                        if (data.lista[i].fechaVencimiento < hoy && data.lista[i].estado == "PENDIENTE") {
                             row = $("#" + (i + 1));
                             row.addClass("infoTree");
                         }
