@@ -152,9 +152,10 @@ app.controller('CrearFacturasController', [
         };
         $scope.detalles = function() {
             angular.forEach($scope.productosLista, function(value, key) {
+                console.log(value);
                 if (value.id == $scope.det.producto) {
                     $scope.det.descripcion = value.descripcion;
-                    $scope.det.precio = value.precio;
+                    $scope.det.precio = value.precioLista;
                 }
             });
         };

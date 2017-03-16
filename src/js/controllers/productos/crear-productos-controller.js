@@ -33,7 +33,9 @@ app.controller('CrearProductosController', [
                 precioFinal: datos.precioFinal,
                 precioLista: datos.precioLista,
                 costo: datos.costo,
-                factorVenta: datos.factorVenta
+                factorVenta: datos.factorVenta,
+                costoOculto:datos.costoOculto,
+                proveedor:datos.proveedor
             }
             return bodyData;
         };
@@ -48,7 +50,9 @@ app.controller('CrearProductosController', [
                 precioFinal: datos.precioFinal,
                 precioLista: datos.precioLista,
                 costo: datos.costo,
-                factorVenta: datos.factorVenta
+                factorVenta: datos.factorVenta,
+                costoOculto:datos.costoOculto,
+                proveedor:datos.proveedor
             }
             return bodyData;
         };

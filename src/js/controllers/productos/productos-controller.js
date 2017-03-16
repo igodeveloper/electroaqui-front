@@ -148,6 +148,13 @@ app.controller('ProductosController', [
                     width: 50,
 
                     hidden: false
+                },{
+                    label: "Proveedor",
+                    name: "proveedor",
+                    index: "proveedor",
+                    align:"left",
+                    width: 120,
+                    hidden: false
                 },
                 {
                     label: "idTipoProducto",
@@ -160,7 +167,7 @@ app.controller('ProductosController', [
                     label: "Tipo Producto",
                     name: "tipoProducto",
                     index: "tipoProducto",
-                    width: 200,
+                    width: 150,
                     hidden: false,
                     formatter: function(cellvalue, options, rowObject) {
                         var texto = 'No Disponible';
@@ -183,7 +190,7 @@ app.controller('ProductosController', [
                     label: "Marcas",
                     name: "marcas",
                     index: "marcas",
-                    width: 200,
+                    width: 150,
                     hidden: false,
                     formatter: function(cellvalue, options, rowObject) {
                         var texto = 'No Disponible';
@@ -216,6 +223,18 @@ app.controller('ProductosController', [
                     label: "Costo",
                     name: "costo",
                     index: "costo",
+                    align: "right",
+                    width: 100,
+                    hidden: false,
+                    formatter: 'number',
+                    formatoptions: {
+                        thousandsSeparator: ".",
+                        decimalPlaces: 0
+                    },
+                },{
+                    label: "Costo Oculto",
+                    name: "costoOculto",
+                    index: "costoOculto",
                     align: "right",
                     width: 100,
                     hidden: false,

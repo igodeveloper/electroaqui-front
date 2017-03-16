@@ -201,16 +201,15 @@ app.controller('CobrarChequerasController', [
             var dias = Math.floor(dif / (1000 * 60 * 60 * 24));
             return dias;
         };
-        $scope.calculaInteres = function() {
+        $scope.calculaInteres = function () {
             var dias = parseInt($scope.datos.diasAtraso) - parseInt($scope.datos.diasGracia);
-            console.log("dias",dias);
-            if(dias > 0){
-                console.log("interes",parseInt($scope.datos.monto)* dias * $scope.datos.intereses);
-                $scope.datos.montoInteres =  parseInt($scope.datos.monto)* dias * $scope.datos.intereses; 
-            
-            }else{
+            if (dias > 0) {
+                $scope.datos.montoIntereses = parseInt($scope.datos.monto) * dias * $scope.datos.intereses;
+
+            } else {
                 $scope.datos.montoInteres = 0;
             }
+
             $scope.datos.montoTotal = parseInt($scope.datos.montoTotal) + parseInt($scope.datos.montoInteres);
         };
         /**
@@ -237,14 +236,14 @@ app.controller('CobrarChequerasController', [
                 $scope.datos = $args.dataM;
                 $scope.datos.factura = $args.dataM.talonario + "-" + ("0000000" + $args.dataM.numeroComprobante).slice(-7);
                 var hoy = new Date().getTime();
-                var dif = $scope.restaFechas($filter('date')(new Date($args.dataM.fechaVencimiento), 'dd/MM/yyyy'),$filter('date')(new Date(hoy), 'dd/MM/yyyy'));
-                if(dif > 0){
+                var dif = $scope.restaFechas($filter('date')(new Date($args.dataM.fechaVencimiento), 'dd/MM/yyyy'), $filter('date')(new Date(hoy), 'dd/MM/yyyy'));
+                if (dif > 0) {
                     $scope.datos.diasAtraso = parseInt(dif);
                     $scope.datos.intereses = 0.0001;
-                }else{
+                } else {
                     $scope.datos.diasAtraso = parseInt(0);
                 }
-        } else {
+            } else {
                 $scope.cancelar();
             }
 

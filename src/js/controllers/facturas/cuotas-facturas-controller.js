@@ -110,7 +110,8 @@ app.controller('CuotasFacturasController', [
                     fechaEmision: fechaEmision.setMonth(fechaEmision.getMonth() + 0),
                     fechaVencimiento: fecha.setMonth(fecha.getMonth() + 1),
                     fechaPago: "",
-                    estado: "PENDIENTE"
+                    estado: "PENDIENTE",
+                    numeroFiscal: $scope.datos.factura
                 };
                 $scope.detalle.push(obj);
             }

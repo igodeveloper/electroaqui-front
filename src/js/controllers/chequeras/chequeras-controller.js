@@ -119,6 +119,15 @@ app.controller('ChequerasController', [
                     }
                 },
                 {
+                    label: "Factura",
+                    name: "numeroFiscal",
+                    index: "numeroFiscal",
+                    align: "center",
+                    width: 120,
+                    classes: "wrappedCell",
+                    hidden: false
+                },
+                {
                     label: "idFactura",
                     name: "idFactura",
                     index: "idFactura",
@@ -128,11 +137,11 @@ app.controller('ChequerasController', [
                     hidden: true
                 },
                 {
-                    label: "Nro Cuota",
+                    label: "Cuota",
                     name: "cuota",
                     index: "cuota",
                     align: "center",
-                    width: 80,
+                    width: 70,
                     classes: "wrappedCell",
                     hidden: false
                 },
@@ -159,7 +168,7 @@ app.controller('ChequerasController', [
                     align: "center",
                     width: 120,
                     classes: "wrappedCell",
-                    hidden: false
+                    hidden: true
                 },
                 {
                     label: "Vencimiento",
@@ -173,7 +182,7 @@ app.controller('ChequerasController', [
                         }
                     },
                     align: "center",
-                    width: 120,
+                    width: 100,
                     classes: "wrappedCell",
                     hidden: false
                 },
@@ -189,7 +198,7 @@ app.controller('ChequerasController', [
                             return '';
                         }
                     },
-                    width: 120,
+                    width: 100,
                     classes: "wrappedCell",
                     hidden: false
                 },
@@ -243,24 +252,6 @@ app.controller('ChequerasController', [
                     width: 100,
                     classes: "wrappedCell",
                     hidden: false
-                },
-                {
-                    label: "idCliente",
-                    name: "idCliente",
-                    index: "idCliente",
-                    align: "center",
-                    width: 200,
-                    classes: "wrappedCell",
-                    hidden: true
-                },
-                {
-                    label: "talonario",
-                    name: "idCliente",
-                    index: "idCliente",
-                    align: "center",
-                    width: 200,
-                    classes: "wrappedCell",
-                    hidden: true
                 },
                 {
                     label: "idCliente",
