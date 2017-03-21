@@ -4,6 +4,7 @@ app.controller('ChequerasController', [
 
         $scope.titulo = 'Chequera';
         $scope.datos = {};
+        $scope.disabled = true;
 
         $scope.generarBodyData = function (datos) {
             var bodyData = {
@@ -337,28 +338,75 @@ app.controller('ChequerasController', [
                 });
             }
         };
+        $scope.launch = function(which) {
+            var dlg = null;
+            switch (which) {
 
-        $scope.eliminar = function () {
+                case 'anular':
+                    dlg = $dialogs.warningConfirm("Por Favor Confirmar", "Esta Seguro que desea anular el pago?");
+                    dlg.result.then(function(btn) {
+                        $scope.anular();
+                    }, function(btn) {
+
+                    });
+                    break;
+
+            }; // end switch
+        };
+
+        $scope.anular = function () {
             $scope.uiBlockuiConfig.bloquear = true;
             if ($scope.rowSeleccionado) {
                 $scope.selectedRow = $scope.tableParams.getRowData($scope.rowSeleccionado);
+                var bodyData = {
+                    id: parseInt($scope.selectedRow.id),
+                    // idFactura: $scope.selectedRow.idFactura,
+                    interes: 0,
+                    // cuota: $scope.selectedRow.cuota,
+                    // monto: $scope.selectedRow.monto,
+                    montoInteres: 0,
+                    montoTotal: parseInt($scope.selectedRow.monto),
+                    fechaPago: null,
+                    estado: "PENDIENTE",
+                    // fechaEmision: $scope.selectedRow.fechaEmision,
+                    // fechaVencimiento: $scope.selectedRow.fechaVencimiento,
+                    // idCliente: $scope.selectedRow.idCliente,
+                }
+                // BaseServices.modificar($scope.generarBodyData(bodyData), 'chequera/')
+                BaseServices.modificar(bodyData, 'chequera/')
 
-                BaseServices.eliminar($scope.selectedRow.id, 'Chequera/').then(
-                    function (response) {
-                        try {
-                            if (response.status === 200) {
-                                $scope.alertSuccesServices.addSimpleAlert("success", null, "Los datos se eliminaron correctamente");
+                    .then(
+                        function (response) {
+                            try {
+                                if (response.status === 200) {
+                                    $scope.uiBlockuiConfig.bloquear = false;
+                                    dlg = $dialogs.notify("Notificación", "El pago se anulo con éxito!");
+                                    dlg.result.then(function (btn) {
+                                        // $scope.buscar();
+                                    }, function (btn) {});
 
-                                MasterUtils.deleteUndefinedValues($scope.datos);
-                                $scope.tableParams.setGridParam({
-                                    postData: {
-                                        filtros: null
+                                    MasterUtils.deleteUndefinedValues($scope.datos);
+                                    $scope.tableParams.setGridParam({
+                                        postData: {
+                                            filtros: null
+                                        }
+                                    });
+                                    $scope.tableParams.reloadGrid();
+
+                                } else {
+                                    $scope.uiBlockuiConfig.bloquear = false;
+                                    if (response.data.messages != null) {
+                                        $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
+                                            response.data.messages);
+                                    } else {
+                                        $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
+                                            "Ha ocurrido un error inesperado, por favor inténtelo más tarde");
                                     }
-                                });
-                                $scope.tableParams.reloadGrid();
-
-                            } else {
+                                }
+                            } catch (err) {
+                                $scope.uiBlockuiConfig.bloquear = false;
                                 if (response.data.messages != null) {
+
                                     $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
                                         response.data.messages);
                                 } else {
@@ -366,18 +414,9 @@ app.controller('ChequerasController', [
                                         "Ha ocurrido un error inesperado, por favor inténtelo más tarde");
                                 }
                             }
-                        } catch (err) {
-                            if (response.data.messages != null) {
-
-                                $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
-                                    response.data.messages);
-                            } else {
-                                $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
-                                    "Ha ocurrido un error inesperado, por favor inténtelo más tarde");
-                            }
+                            $scope.uiBlockuiConfig.bloquear = false;
                         }
-                    }
-                );
+                    );
                 $scope.uiBlockuiConfig.bloquear = false;
             }
         };

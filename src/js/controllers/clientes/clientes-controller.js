@@ -113,6 +113,7 @@ app.controller('ClientesController', [
          * @public
          */
         var urlAccess = MasterUrl.serviceRest + 'clientes/';
+        console.log(urlAccess);
 
         /**
          *  Objeto de configuración de la directiva jqgrid

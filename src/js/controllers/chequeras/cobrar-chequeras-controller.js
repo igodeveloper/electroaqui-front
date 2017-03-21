@@ -120,6 +120,7 @@ app.controller('CobrarChequerasController', [
         $scope.confirmar = function () {
 
             $scope.uiBlockuiConfig.bloquear = true;
+            $scope.datos.estado = 'PAGADO';
             BaseServices.modificar($scope.generarBodyData($scope.datos), 'chequera/')
                 .then(
                     function (response) {
@@ -165,18 +166,9 @@ app.controller('CobrarChequerasController', [
             $location.path('/chequera')
         };
 
-        /**
-         * Funcion del controller, se encarga de gestionar los accesos a popUps y la vuelta de los
-         * mismos.
-         * @function launch()
-         * @public
-         * @param {string}which identificador del popup definido localmente entre la vista y el contralador
-         */
-        $scope.launch = function (which) {
-            var dlg = null;
-            switch (which) {
+        $scope.anular = function(){
 
-            }; // end switch
+
         };
         $scope.getListas = function (path, lista, obj) {
             var url = path + '/';
@@ -240,9 +232,12 @@ app.controller('CobrarChequerasController', [
                 console.log($scope.datos);
                 var hoy = new Date();
                 var dif = $scope.restaFechas($filter('date')(new Date($args.dataM.fechaVencimiento), 'dd/MM/yyyy'), $filter('date')(new Date(hoy), 'dd/MM/yyyy'));
-                $scope.datos.fechaPago = new Date($args.dataM.fechaPago);
+               
                 if($scope.datos.estado == "PENDIENTE"){
-                    $scope.datos.estado = 'PAGADO';
+                     $scope.datos.fechaPago = new Date();
+                }else{
+                    $scope.datos.diasGracia = 0;
+                     $scope.datos.fechaPago = new Date($args.dataM.fechaPago);
                 }
                 if (dif > 0) {
                     $scope.datos.diasAtraso = parseInt(dif);

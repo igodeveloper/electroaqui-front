@@ -71,7 +71,7 @@ app.factory('BaseServices', ['$http', 'SynchronousRequest',
              * @returns {lista}
              */
             listar: function(filtro, inicio, cantidad, orderBy, orderDir, path) {
-
+                
                 var filtrosJson = angular.toJson(filtro);
 
                 if ((filtrosJson.length > 2) && (filtro != null)) {
@@ -221,6 +221,7 @@ app.factory('BaseServices', ['$http', 'SynchronousRequest',
 
             getAll: function(path, datos, cantidad) {
                 var url = MasterUrl.serviceRest + path;
+                console.log(url);
                 return $http.get(url, {
                     params: {
                         filtros: datos,
