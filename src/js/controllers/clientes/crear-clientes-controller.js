@@ -12,7 +12,7 @@
  */
 app.controller('CrearClientesController', [
     '$scope', '$route', 'serviciosjqgrid', '$location', '$dialogs', 'AlertServices', 'Navigator', '$filter', 'BaseServices',
-    function($scope, $route, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, BaseServices) {
+    function ($scope, $route, serviciosjqgrid, $location, $dialogs, alertServices, Navigator, $filter, BaseServices) {
 
         /**
          *  Objeto  que almacena los filtros obtenidos del formulario
@@ -22,9 +22,10 @@ app.controller('CrearClientesController', [
          *  @name kml3-frontend.module.facturacion.js.controllers.crear-areas-retencion-controller.js#datos
          */
         $scope.datos = {};
+        $scope.datos.id = '';
         $scope.titulo = 'Clientes';
 
-        $scope.generarBodyData = function(datos) {
+        $scope.generarBodyData = function (datos) {
             var bodyData = {
                 id: datos.id,
                 nombre: datos.nombre,
@@ -38,7 +39,7 @@ app.controller('CrearClientesController', [
             return bodyData;
         };
 
-        $scope.generarParaJSON = function(datos) {
+        $scope.generarParaJSON = function (datos) {
             var bodyData = {
                 id: datos.id,
                 nombre: datos.nombre,
@@ -114,32 +115,25 @@ app.controller('CrearClientesController', [
          * @public
          * @name kml3-frontend.module.facturacion.js.controllers.crear-areas-retencion-controller.js#confirmar
          */
-        $scope.confirmar = function() {
+        $scope.confirmar = function () {
 
             $scope.uiBlockuiConfig.bloquear = true;
             BaseServices.insertar($scope.generarBodyData($scope.datos), 'clientes/')
                 .then(
-                    function(response) {
-                        try {
-                            if (response.status === 201) {
+                function (response) {
+                    try {
+                        if (response.status === 201) {
 
-                                $scope.bloqueoFormulario = true;
+                            $scope.bloqueoFormulario = true;
 
-                                dlg = $dialogs.notify("Notificación", "Sus datos se guardaron con éxito!");
-                                dlg.result.then(function(btn) {
-                                    $route.reload();
-                                }, function(btn) {});
+                            dlg = $dialogs.notify("Notificación", "Sus datos se guardaron con éxito!");
+                            dlg.result.then(function (btn) {
+                                Navigator.goTo($location.path('/clientes/modificar'), {
+                                    dataM: $scope.generarBodyData($scope.datos)
+                                });
+                            }, function (btn) { });
 
-                            } else {
-                                if (response.data.messages != null) {
-                                    $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
-                                        response.data.messages);
-                                } else {
-                                    $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
-                                        "Ha ocurrido un error inesperado, por favor inténtelo más tarde");
-                                }
-                            }
-                        } catch (err) {
+                        } else {
                             if (response.data.messages != null) {
                                 $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
                                     response.data.messages);
@@ -148,8 +142,17 @@ app.controller('CrearClientesController', [
                                     "Ha ocurrido un error inesperado, por favor inténtelo más tarde");
                             }
                         }
-                        $scope.uiBlockuiConfig.bloquear = false;
+                    } catch (err) {
+                        if (response.data.messages != null) {
+                            $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
+                                response.data.messages);
+                        } else {
+                            $scope.alertErrorServices.addSimpleAlert("operationFailure", null,
+                                "Ha ocurrido un error inesperado, por favor inténtelo más tarde");
+                        }
                     }
+                    $scope.uiBlockuiConfig.bloquear = false;
+                }
                 );
         };
         /**
@@ -158,7 +161,7 @@ app.controller('CrearClientesController', [
          * @public
          * @name kml3-frontend.module.facturacion.js.controllers.crear-areas-retencion-controller.js#cancelar
          */
-        $scope.cancelar = function() {
+        $scope.cancelar = function () {
             $location.path('/clientes')
         };
     }
