@@ -25,7 +25,7 @@ app.config(['$routeProvider', '$controllerProvider',
         $routeProvider.when('/', {
             templateUrl: 'partials/home-partial.html',
             controller: 'HomeController',
-            titulo: 'Electro Aqui'
+            titulo: 'Celle Cars'
         });
         $routeProvider.when('/login', {
             templateUrl: 'partials/login-tmpl.html',
